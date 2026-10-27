@@ -1,8 +1,8 @@
 import {useEffect,useRef,useState} from 'react';
 import {planWorkbook,readImportFile,type MasterTarget,type WorkbookPlan} from './bulkImport';
 
-type Props={masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
-export function BulkUploadAll({masters,onClose,onImport}:Props){
+type Props={masters:MasterTarget[];file:File;onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
+export function BulkUploadAll({masters,file,onClose,onImport}:Props){
  const [plan,setPlan]=useState<WorkbookPlan|null>(null);
  const [fileName,setFileName]=useState('');
  const [error,setError]=useState('');
@@ -21,6 +21,7 @@ export function BulkUploadAll({masters,onClose,onImport}:Props){
   }catch(err){if(alive.current)setError(err instanceof Error?err.message:'Could not read this file.');}
   finally{if(alive.current)setBusy(false);}
  }
+ useEffect(()=>{void choose(file)},[file]);
  const total=plan?plan.plans.reduce((n,p)=>n+p.rows.length,0):0;
  async function confirmImport(){
   if(!plan)return;

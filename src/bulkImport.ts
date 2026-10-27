@@ -50,7 +50,7 @@ export function mappedRows(rows:string[][],headerRow:number,mapping:number[],wid
 }
 
 export type MasterTarget={name:string;headers:string[]};
-export type SheetPlan={master:string;sheet:string;headerRow:number;mapped:number;total:number;rows:string[][];note:string};
+export type SheetPlan={master:string;sheet:string;headerRow:number;mapped:number;total:number;rows:string[][];note:string;file?:string};
 export type WorkbookPlan={plans:SheetPlan[];unmatchedSheets:{name:string;reason:string}[];missingTabs:string[]};
 const ALIASES:Record<string,string>={organization:'organization',organisation:'organization',organizations:'organization',organisations:'organization',org:'organization',agent:'agents',agents:'agents',skill:'skills',skills:'skills',rule:'rules',rules:'rules',tool:'tools',tools:'tools',tooling:'tools'};
 // Tolerant sheet-name match: case, spaces and punctuation ignored; a trailing "master(s)" is ignored.
@@ -75,4 +75,32 @@ export function planWorkbook(sheets:ImportSheet[],masters:MasterTarget[]):Workbo
   plans.push({master:master.name,sheet:sheet.name,headerRow,mapped,total:master.headers.length,rows,note:`${mapped} of ${master.headers.length} columns matched`});
  }
  return {plans,unmatchedSheets,missingTabs:masters.filter(m=>!used.has(m.name)).map(m=>m.name)};
+}
+
+export type SourceFile={name:string;sheets:ImportSheet[]};
+// Folder/zip import: each workbook's sheets fill tabs by sheet name (planWorkbook rules);
+// each CSV fills the current tab unless its filename matches a tab name. Rows for the same
+// tab stay in separate plans; the caller combines them before appending.
+export function planFiles(files:SourceFile[],masters:MasterTarget[],current:string):WorkbookPlan{
+ const plans:SheetPlan[]=[];const unmatchedSheets:WorkbookPlan['unmatchedSheets']=[];
+ for(const file of files){
+  if(/\.csv$/i.test(file.name)){
+   const key=sheetKey(file.name.replace(/\.csv$/i,''));
+   if(key==='filetype'){unmatchedSheets.push({name:file.name,reason:'Read-only, never imported'});continue;}
+   const master=masters.find(m=>sheetKey(m.name)===key)||masters.find(m=>sheetKey(m.name)===sheetKey(current));
+   if(!master){unmatchedSheets.push({name:file.name,reason:'No master tab with this name'});continue;}
+   const rows=file.sheets[0]?.rows||[];
+   const headerRow=detectHeader(rows,master.headers);
+   const width=rows.length?Math.max(...rows.map(r=>r.length)):0;
+   const mapping=autoMap(Array.from({length:width},(_,i)=>rows[headerRow]?.[i]||''),master.headers);
+   const mapped=mapping.filter(i=>i>=0).length;
+   if(!mapped){unmatchedSheets.push({name:file.name,reason:`No column headings match ${master.name}`});continue;}
+   plans.push({master:master.name,sheet:file.name,headerRow,mapped,total:master.headers.length,rows:mappedRows(rows,headerRow,mapping,master.headers.length),note:`${mapped} of ${master.headers.length} columns matched`,file:file.name});
+  }else{
+   const plan=planWorkbook(file.sheets,masters);
+   plans.push(...plan.plans.map(p=>({...p,file:file.name})));
+   unmatchedSheets.push(...plan.unmatchedSheets.map(s=>({...s,name:`${file.name} \u00b7 ${s.name}`})));
+  }
+ }
+ return {plans,unmatchedSheets,missingTabs:masters.filter(m=>!plans.some(p=>p.master===m.name)).map(m=>m.name)};
 }

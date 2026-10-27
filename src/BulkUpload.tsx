@@ -1,8 +1,8 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {autoMap,detectHeader,mappedRows,readImportFile,type ImportSheet} from './bulkImport';
 
-type Props={master:string;headers:string[];onClose:()=>void;onImport:(values:string[][])=>Promise<void>};
-export function BulkUpload({master,headers,onClose,onImport}:Props){
+type Props={master:string;headers:string[];file:File;onClose:()=>void;onImport:(values:string[][])=>Promise<void>};
+export function BulkUpload({master,headers,file,onClose,onImport}:Props){
  const [sheets,setSheets]=useState<ImportSheet[]>([]);
  const [sheetIndex,setSheetIndex]=useState(0);
  const [headerRow,setHeaderRow]=useState(0);
@@ -34,6 +34,7 @@ export function BulkUpload({master,headers,onClose,onImport}:Props){
   catch(err){if(alive.current)setError(err instanceof Error?err.message:'Could not read this file.');}
   finally{if(alive.current)setBusy(false);}
  }
+ useEffect(()=>{void choose(file)},[file]);
  async function confirmImport(){
   setBusy(true);setError('');
   try{await onImport(prepared.rows);onClose();}
