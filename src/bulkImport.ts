@@ -48,3 +48,31 @@ export function mappedRows(rows:string[][],headerRow:number,mapping:number[],wid
   return values;
  }).filter(row=>row.some(v=>v.trim()));
 }
+
+export type MasterTarget={name:string;headers:string[]};
+export type SheetPlan={master:string;sheet:string;headerRow:number;mapped:number;total:number;rows:string[][];note:string};
+export type WorkbookPlan={plans:SheetPlan[];unmatchedSheets:{name:string;reason:string}[];missingTabs:string[]};
+const ALIASES:Record<string,string>={organization:'organization',organisation:'organization',organizations:'organization',organisations:'organization',org:'organization',agent:'agents',agents:'agents',skill:'skills',skills:'skills',rule:'rules',rules:'rules',tool:'tools',tools:'tools',tooling:'tools'};
+// Tolerant sheet-name match: case, spaces and punctuation ignored; a trailing "master(s)" is ignored.
+export function sheetKey(name:string):string{
+ const key=normalizeHeader(name).replace(/masters?$/,'');
+ return ALIASES[key]||key;
+}
+export function planWorkbook(sheets:ImportSheet[],masters:MasterTarget[]):WorkbookPlan{
+ const plans:SheetPlan[]=[];const unmatchedSheets:{name:string;reason:string}[]=[];const used=new Set<string>();
+ for(const sheet of sheets){
+  const master=masters.find(m=>sheetKey(m.name)===sheetKey(sheet.name));
+  if(!master){unmatchedSheets.push({name:sheet.name,reason:sheetKey(sheet.name)==='filetype'?'Read-only, never imported':'No master tab with this name'});continue;}
+
+  if(used.has(master.name)){unmatchedSheets.push({name:sheet.name,reason:`Duplicate of the sheet already used for ${master.name}`});continue;}
+  const headerRow=detectHeader(sheet.rows,master.headers);
+  const width=Math.max(...sheet.rows.map(r=>r.length));
+  const mapping=autoMap(Array.from({length:width},(_,i)=>sheet.rows[headerRow]?.[i]||''),master.headers);
+  const mapped=mapping.filter(i=>i>=0).length;
+  if(!mapped){unmatchedSheets.push({name:sheet.name,reason:`No column headings match ${master.name}`});continue;}
+  used.add(master.name);
+  const rows=mappedRows(sheet.rows,headerRow,mapping,master.headers.length);
+  plans.push({master:master.name,sheet:sheet.name,headerRow,mapped,total:master.headers.length,rows,note:`${mapped} of ${master.headers.length} columns matched`});
+ }
+ return {plans,unmatchedSheets,missingTabs:masters.filter(m=>!used.has(m.name)).map(m=>m.name)};
+}
