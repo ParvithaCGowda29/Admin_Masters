@@ -1,7 +1,12 @@
 import type { DataProvider } from '@refinedev/core';
 import workbook from './workbook.json';
 export type RecordRow = {id:string;values:string[];sourceRow?:number};
-const KEY='bullm-masters-v1';
+// Scope edits to the exact shipped workbook. Older snapshots remain untouched
+// under their old key, but cannot hide updated workbook rows after a pull.
+const revision=JSON.stringify(workbook);
+let hash=2166136261;
+for(let i=0;i<revision.length;i++)hash=Math.imul(hash^revision.charCodeAt(i),16777619);
+const KEY=`bullm-masters-v2-${(hash>>>0).toString(16)}`;
 export function loadRows(name:string):RecordRow[]{
  const sheet=workbook.sheets.find(s=>s.name===name)!;
  if(sheet.readOnly)return structuredClone(sheet.rows);
