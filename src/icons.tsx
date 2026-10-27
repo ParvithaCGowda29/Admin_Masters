@@ -7,3 +7,5 @@ export function IconUpload({size}:IconProps){return <svg {...base(size)}><path s
 export function IconStack2({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></svg>}
 export function IconFolder({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>}
 export function IconArchive({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/><path d="M10 12l4 0"/></svg>}
+
+export function IconPlus({size}:IconProps){return <svg {...base(size)}><path d="M12 5v14M5 12h14"/></svg>}
