@@ -1,0 +1,3674 @@
+{
+  "readme": [
+    [
+      "Section",
+      "Context / master",
+      "Details / evidence",
+      "Search tag"
+    ],
+    [
+      "Private review v0.2 - 7 Oct 2026",
+      "Manufacturing only",
+      "BAM 0.2 columns retained. Private copy of Manufacturing Masters v0.1; source unchanged. All resource additions are proposals, not configured integrations.",
+      "mfg-review"
+    ],
+    [
+      "1. STRUCTURE",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Tab",
+      "Rows",
+      "What it is",
+      "Source"
+    ],
+    [
+      "README",
+      "-",
+      "This tab: structure, column definitions, build rules, guideline layer, verdict",
+      ""
+    ],
+    [
+      "Organization",
+      "3 contexts + 1 sample + 1 blank + 2 resource references",
+      "Tenant / company context. Columns: BAM 0.2 (15)",
+      "Unit #1 = BAM 0.2 sample. Unit #2-4 = Manufacturing Template rows ORG-EMS, ORG-CAB, ORG-CORE"
+    ],
+    [
+      "Rules",
+      "1 sample + 5 policies + 2 resource references",
+      "Policies and costing rules. Columns: BAM 0.2 (12)",
+      "Rule #1 = BAM 0.2 sample. Rule #2-6 = RULE-BOM, OFFER, EXCESS, REPORT, CORE"
+    ],
+    [
+      "Agents",
+      "1 sample + 4 roles + 1 blank + 1 resource binding",
+      "Agent definitions. Columns: BAM 0.2 (12)",
+      "Agent #1 = BAM 0.2 sample. Agent #2-5 = AG-INTAKE, OFFER, COST, QA"
+    ],
+    [
+      "Skills",
+      "1 sample + 7 workflows + 8 resource examples",
+      "Workflow skills. Columns: BAM 0.2 (12)",
+      "Skill #1 = BAM 0.2 sample. Skill #2-8 = SK-INTAKE, BOM, OFFER, COST, ANALYZE, EXPORT, CORE"
+    ],
+    [
+      "Filetype",
+      "43.0",
+      "All 43 file types, FROZEN: verbatim copy of the BAM 0.2 Filetype tab (names, order, labels, values). Not renamed, added, removed or reordered",
+      "BAM 0.2 Filetype tab"
+    ],
+    [
+      "2. COLUMN DEFINITIONS",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Each of the 5 master tabs keeps the first three rows of the BAM 0.2 source tab as is: Metadata (numbering), Name (column name), Description (what goes in the column). Column names and descriptions are on those rows of each tab. No columns were added or removed.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Row labels: 'Unit #n', 'Rule #n', 'Agent #n', 'Skill #n'. The stable ID from the Manufacturing Template (ORG-, RULE-, AG-, SK-) is written inside the row, see section 3.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "3. HOW MANUFACTURING TEMPLATE (OPTION 1) ROWS WERE MAPPED INTO BAM 0.2 COLUMNS",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Tab",
+      "Template field",
+      "Goes into BAM 0.2 column",
+      "Note"
+    ],
+    [
+      "Organization",
+      "Stable context ID",
+      "Code",
+      "Unit #2-4"
+    ],
+    [
+      "Organization",
+      "Client or internal namespace",
+      "Org Name",
+      ""
+    ],
+    [
+      "Organization",
+      "Manufacturing branch of context + context scope",
+      "Org Details",
+      "Written as 'Domain: ...; Applies to: ...'. BAM 'Type' (HQ/Branch/Dept) has no equivalent, left blank"
+    ],
+    [
+      "Organization",
+      "Source store reference",
+      "Data Sources",
+      ""
+    ],
+    [
+      "Organization",
+      "Owner / access",
+      "Employees",
+      ""
+    ],
+    [
+      "Organization",
+      "Assets, Certifications, Misc",
+      "Assets, Certifications, Misc / Audit",
+      "Only ORG-EMS had values. Status goes to the end of Misc / Audit"
+    ],
+    [
+      "Organization",
+      "Status",
+      "Misc / Audit",
+      "BAM 0.2 has no Status column"
+    ],
+    [
+      "Rules",
+      "Stable key, applies-to, policy",
+      "Domain Rule",
+      "One text cell: 'RULE-x: applies to. Policy: ...'"
+    ],
+    [
+      "Rules",
+      "Validation / stop condition",
+      "Rules (DFM/Sourcing)",
+      ""
+    ],
+    [
+      "Rules",
+      "Source fields needed, approval, status",
+      "Misc",
+      "One text cell"
+    ],
+    [
+      "Rules",
+      "",
+      "PCB Panelization, Components, Materials, Box Build, Machine HR Rates, Outsourced, Routing, RAG Reference",
+      "Template rules are policy rules, not cost categories. These BAM columns are blank for them"
+    ],
+    [
+      "Agents",
+      "Agent role",
+      "Agent Name",
+      ""
+    ],
+    [
+      "Agents",
+      "Stable key, allowed input, required output",
+      "Description",
+      "One text cell"
+    ],
+    [
+      "Agents",
+      "Review gate, status",
+      "Misc",
+      ""
+    ],
+    [
+      "Agents",
+      "",
+      "Model, Repo, API, MCP Server, Script, Prompt, Eval, Logs",
+      "Template has no equivalent. Blank"
+    ],
+    [
+      "Skills",
+      "Stable key + workflow step",
+      "Skill",
+      ""
+    ],
+    [
+      "Skills",
+      "Source input reference",
+      "Documents",
+      ""
+    ],
+    [
+      "Skills",
+      "Critical keys extracted",
+      "RFQ / Inquiries",
+      "Closest BAM column"
+    ],
+    [
+      "Skills",
+      "Output contract",
+      "Templates",
+      "Closest BAM column"
+    ],
+    [
+      "Skills",
+      "Validation / human review",
+      "HITL Governance",
+      ""
+    ],
+    [
+      "Skills",
+      "Status",
+      "Misc",
+      ""
+    ],
+    [
+      "Skills",
+      "",
+      "Currency, Supplier Master, Commodity Pricing, Shipping & Logistics, RAG Reference",
+      "Template has no equivalent. Blank"
+    ],
+    [
+      "Rows that do not map cleanly: all Rules and Skills template rows, because BAM 0.2 columns are cost/data categories while template rows describe policies and workflow steps. Their content was kept whole in the closest column, nothing was dropped.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "4. RULES FOLLOWED TO BUILD THIS SHEET",
+      "",
+      "",
+      ""
+    ],
+    [
+      "#",
+      "Rule",
+      "Origin",
+      ""
+    ],
+    [
+      "1.0",
+      "Exactly 5 masters plus README: Organization, Rules, Agents, Skills, Filetype. One tab per master.",
+      "Owner request 5 Oct 2026",
+      ""
+    ],
+    [
+      "2.0",
+      "Structure is BAM 0.2: its column names, column order and 3 header rows are kept exactly.",
+      "Owner said yes 5 Oct 2026, 6:05 PM, to rebuilding on BAM 0.2 columns [Inherited source claim; owner approval not independently verified for this review.]",
+      ""
+    ],
+    [
+      "3.0",
+      "Both originals stay untouched. This is a new file.",
+      "Owner instruction [Inherited source claim; owner approval not independently verified for this review.]",
+      ""
+    ],
+    [
+      "4.0",
+      "Filetype keeps all 43 file types, unchanged and frozen. No columns added to that tab.",
+      "Owner: 'do not change the 43 filetypes'",
+      ""
+    ],
+    [
+      "5.0",
+      "Capture only relevant columns, not all report data. Admin holds critical info once a file loads.",
+      "Owner rule (admin masters workstream)",
+      ""
+    ],
+    [
+      "6.0",
+      "Files are not duplicated. Store S3 / Postgres / DuckDB pointers only.",
+      "Owner rule",
+      ""
+    ],
+    [
+      "7.0",
+      "Consistent naming across tabs: row labels 'Unit/Rule/Agent/Skill #n', stable IDs written inside the row.",
+      "Owner rule",
+      ""
+    ],
+    [
+      "8.0",
+      "Keep 'BAM' naming.",
+      "Owner instruction [Inherited source claim; owner approval not independently verified for this review.]",
+      ""
+    ],
+    [
+      "9.0",
+      "Description / stable-key rows copied from template tabs are not data rows and are not carried over.",
+      "Build rule",
+      ""
+    ],
+    [
+      "10.0",
+      "Template content that has no BAM column is not dropped: it is placed in the closest column or Misc, and listed in section 3.",
+      "Build rule",
+      ""
+    ],
+    [
+      "11.0",
+      "Status is kept inside Misc cells. Nothing here is Approved, all content is Proposed or Illustrative.",
+      "Build rule",
+      ""
+    ],
+    [
+      "12.0",
+      "Intent classes and routing are proposals. Jev/Laya accuracy is untested on our files. Percentages in section 6 are estimates, not measured.",
+      "Build rule",
+      ""
+    ],
+    [
+      "5. FREEZE",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Frozen from this version: tab names, column names and order, row labels, and the 43 filetypes. Any change goes through a new version number and owner sign-off, not an in-place edit. Content rows (values) can still be filled and corrected.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "6. HOW THE FOUR GUIDELINES ARE SERVED (percentages are estimates, not measured; weights are a proposal)",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Guideline",
+      "How served now that BAM 0.2 columns are frozen",
+      "Option 1 / Option 2 / this sheet (estimate)",
+      "Weight"
+    ],
+    [
+      "G1 FDEs know which docs are needed and where they fit",
+      "BAM 0.2's README-style columns plus this README. Per-master docs in section 7. The earlier extra columns were removed to keep BAM 0.2 frozen",
+      "70% / 75% / 80%",
+      "0.25"
+    ],
+    [
+      "G2 Intent via Jev / Laya",
+      "Intent classification is a proposed contract; exact Jev/Laya product identity, availability and evaluation remain unverified. No operational classifier is claimed.",
+      "40% / 35% / 55%",
+      "0.2"
+    ],
+    [
+      "G3 Context for Cognee, OKF, LLM",
+      "BAM 0.2 Metadata/Description rows, Organization as graph root, section 7 context line",
+      "80% / 70% / 75%",
+      "0.3"
+    ],
+    [
+      "G4 Data lands in the right master",
+      "Routing per master and per file type in sections 7 and 9",
+      "55% / 45% / 70%",
+      "0.25"
+    ],
+    [
+      "Weighted overall",
+      "Sum of help % x weight (this sheet 0.8x25+0.55x20+0.75x30+0.7x25 = 71%)",
+      "63% / 58% / 71%",
+      "1.0"
+    ],
+    [
+      "This sheet's column was re-estimated after the extra guideline columns were removed. Judgment, not measured.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "7. GUIDELINE LAYER PER MASTER (kept here, not in the tabs)",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Master",
+      "Docs the FDE should refer to",
+      "Intent class (Choice option for Jev / Laya)",
+      "Upload route and context for Cognee / OKF / LLM"
+    ],
+    [
+      "Organization",
+      "Org profile, certifications, systems and device inventory",
+      "Organization context (who/where/access)",
+      "Docs about company, sites, certs, systems, customers -> Organization. Tenant scope and graph root node"
+    ],
+    [
+      "Rules",
+      "Costing standards, DFM/sourcing rules, SOP policy docs",
+      "Rule / policy",
+      "Policy, formula, validation, DFM docs -> Rules. Deterministic policy and stop conditions"
+    ],
+    [
+      "Agents",
+      "Agent specs, OpenAPI/MCP specs, scripts, prompts",
+      "Agent / tool definition",
+      "Agent specs, prompts, OpenAPI/MCP, scripts -> Agents. Which agent may read what and what it returns"
+    ],
+    [
+      "Skills",
+      "RFQ, BOM, supplier quote, FX, stock files, report templates",
+      "Instruction / workflow step",
+      "SOPs, RFQ/BOM/quote/stock inputs, templates -> Skills. Maps loaded content to a workflow stage"
+    ],
+    [
+      "8. VERDICT: Option 1 (Manufacturing Admin Backend, EMS + Core, Template) vs Option 2 (BAM - Admin Master Tabs 0.2)",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Criterion",
+      "Option 1 (Mfg Template)",
+      "Option 2 (BAM 0.2)",
+      "Fact or judgment"
+    ],
+    [
+      "Owner's choice",
+      "Not chosen. Owner said on 1 Oct 2026 he would rather keep Option 2 for manufacturing",
+      "Chosen as manufacturing master. Owner confirmed it as the frozen structure on 5 Oct 2026 [Inherited source claim; owner approval not independently verified for this review.]",
+      "Fact"
+    ],
+    [
+      "Breadth for FDEs",
+      "Lean, 5-7 columns per tab",
+      "Wide: Org 14 columns, Rules 11, Agents 11, Skills 11, with a description per column",
+      "Fact (read live)"
+    ],
+    [
+      "Ready-to-fill coverage",
+      "Several example rows (3, 5, 4, 7)",
+      "One sample row per tab",
+      "Fact"
+    ],
+    [
+      "Cognee / RAG mapping",
+      "README gives join key and guardrails",
+      "README maps columns to ISATVON element, RAG node type, Cognee graph role, sources and storage",
+      "Fact"
+    ],
+    [
+      "Noise",
+      "Low. Pointers, stop conditions, approval gates",
+      "Higher. Mock values and long free text",
+      "Judgment"
+    ],
+    [
+      "Governance fields",
+      "Status, validation / stop condition, approval",
+      "No status or approval column",
+      "Fact"
+    ],
+    [
+      "Evidence base",
+      "Reverse-engineered from two customers' reports",
+      "Generic EMS/PCBA framing",
+      "Fact (per memory)"
+    ],
+    [
+      "Overall",
+      "Better as a governance template",
+      "Better as the structure FDEs fill and the RAG graph reads",
+      "Judgment"
+    ],
+    [
+      "Verdict (judgment): Option 2 (BAM 0.2) is the better base. It is now the frozen structure. Option 1's rows were kept as content, and its Status/stop-condition/approval ideas live inside Misc cells.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "9. FILETYPE DEFAULT ROUTING (kept here so the Filetype tab stays identical to source)",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Record ID",
+      "File format",
+      "Intent class",
+      "Default route"
+    ],
+    [
+      "Filetype #1",
+      ".cpp",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #2",
+      ".eml",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #3",
+      ".go",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #4",
+      ".js",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #5",
+      ".json",
+      "Rule / policy",
+      "Intent-based routing; Rules is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #6",
+      ".md",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #7",
+      ".msg",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #8",
+      ".py",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #9",
+      ".sql",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #10",
+      ".txt",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #11",
+      ".xml",
+      "Rule / policy",
+      "Intent-based routing; Rules is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #12",
+      ".yaml",
+      "Rule / policy",
+      "Intent-based routing; Rules is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #13",
+      "FastMCP Spec",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #14",
+      "ODB++",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #15",
+      "OpenAPI",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #16",
+      "Swagger",
+      "Agent / tool definition",
+      "Intent-based routing; Agents is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #17",
+      "Web URL / HTML",
+      "Knowledge source",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #18",
+      ".csv",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #19",
+      ".docx",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #20",
+      ".parquet",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #21",
+      ".pdf – Text-based",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #22",
+      ".tar.gz",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #23",
+      ".xlsx",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #24",
+      ".zip",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #25",
+      "Google Docs",
+      "Instruction / workflow step",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #26",
+      "Google Sheets",
+      "Source data (RFQ / BOM / quote)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #27",
+      ".dwg",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #28",
+      ".dxf",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #29",
+      ".iges",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #30",
+      ".jpeg",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #31",
+      ".jpg",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #32",
+      ".mp3",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #33",
+      ".mp4",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #34",
+      ".pdf – Scanned/Image",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #35",
+      ".png",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #36",
+      ".step",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #37",
+      ".stp",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #38",
+      ".tiff",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #39",
+      ".wav",
+      "Evidence / media",
+      "Intent-based routing; Organization is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #40",
+      "Gerber RS-274X",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #41",
+      "Gerber X2",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #42",
+      "Gerber X3",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Filetype #43",
+      "IPC-2581",
+      "Design artifact (CAD / PCB)",
+      "Intent-based routing; Skills is a prior only. Scanned RFQ/quote -> Skills; company evidence -> Organization; policy -> Rules; adapter definition -> Agents."
+    ],
+    [
+      "Routes are proposals. Confirm by intent class; mixed files are split by content.",
+      "",
+      "",
+      ""
+    ],
+    [
+      "10. MANUFACTURING RESOURCE UPDATE",
+      "13 proposed resources",
+      "Organization 2, Rules 2, Agents 1, Skills 8. This is manufacturing-native, not the marketing resource list.",
+      "mfg-resources"
+    ],
+    [
+      "Search",
+      "All six tabs",
+      "Ctrl+F searches the current tab; Edit > Find and replace > All sheets searches the workbook. Header filters support native tab filtering. Filetype values unchanged; its tag aliases live in the registry below.",
+      "mfg-search"
+    ],
+    [
+      "Intake contract",
+      "UI / API / WhatsApp",
+      "Proposed requirement, not installed: extract source reference/version and tenant/RFQ/revision/scenario/FG keys; classify Organization/Rules/Agents/Skills intent; Filetype selects parser, not business destination. Mixed files split by content; low confidence or missing keys -> human review.",
+      "mfg-intake"
+    ],
+    [
+      "Example route",
+      "Scanned supplier quote",
+      "PaddleOCR -> candidate text/table extraction -> SK-OFFER with supplier, MPN, price/currency, MOQ/pack, lead time, validity and page/cell evidence -> RULE-OFFER checks -> reviewer.",
+      "mfg-scan-quote"
+    ],
+    [
+      "Example route",
+      "QuoteWin export / native BOM",
+      "QuoteWin supported export/interface TBD -> supplier/cost records in Skills, system binding in Organization. Native BOM/volume workbook -> deterministic parser -> SK-BOM / SK-COST.",
+      "mfg-quote-route"
+    ],
+    [
+      "Privacy / approval",
+      "Manufacturing",
+      "Raw client files remain in governed stores. Tags/resource refs carry no permission to read a client system, send a quote, replace a part, buy materials or deploy a connector.",
+      "mfg-gates"
+    ],
+    [
+      "11. SEARCH TAG REGISTRY",
+      "Master",
+      "Record / purpose",
+      "Source / reference"
+    ],
+    [
+      "mfg-org-01",
+      "Organization",
+      "Unit #1",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Organization row 4"
+    ],
+    [
+      "mfg-org-02",
+      "Organization",
+      "Unit #2",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Organization row 5"
+    ],
+    [
+      "mfg-org-03",
+      "Organization",
+      "Unit #3",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Organization row 6"
+    ],
+    [
+      "mfg-org-04",
+      "Organization",
+      "Unit #4",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Organization row 7"
+    ],
+    [
+      "mfg-rule-01",
+      "Rules",
+      "Rule #1",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 4"
+    ],
+    [
+      "mfg-rule-02",
+      "Rules",
+      "Rule #2",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 5"
+    ],
+    [
+      "mfg-rule-03",
+      "Rules",
+      "Rule #3",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 6"
+    ],
+    [
+      "mfg-rule-04",
+      "Rules",
+      "Rule #4",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 7"
+    ],
+    [
+      "mfg-rule-05",
+      "Rules",
+      "Rule #5",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 8"
+    ],
+    [
+      "mfg-rule-06",
+      "Rules",
+      "Rule #6",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Rules row 9"
+    ],
+    [
+      "mfg-ag-01",
+      "Agents",
+      "Agent #1",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Agents row 4"
+    ],
+    [
+      "mfg-ag-02",
+      "Agents",
+      "Agent #2",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Agents row 5"
+    ],
+    [
+      "mfg-ag-03",
+      "Agents",
+      "Agent #3",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Agents row 6"
+    ],
+    [
+      "mfg-ag-04",
+      "Agents",
+      "Agent #4",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Agents row 7"
+    ],
+    [
+      "mfg-ag-05",
+      "Agents",
+      "Agent #5",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Agents row 8"
+    ],
+    [
+      "mfg-sk-01",
+      "Skills",
+      "Skill #1",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 4"
+    ],
+    [
+      "mfg-sk-02",
+      "Skills",
+      "Skill #2",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 5"
+    ],
+    [
+      "mfg-sk-03",
+      "Skills",
+      "Skill #3",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 6"
+    ],
+    [
+      "mfg-sk-04",
+      "Skills",
+      "Skill #4",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 7"
+    ],
+    [
+      "mfg-sk-05",
+      "Skills",
+      "Skill #5",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 8"
+    ],
+    [
+      "mfg-sk-06",
+      "Skills",
+      "Skill #6",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 9"
+    ],
+    [
+      "mfg-sk-07",
+      "Skills",
+      "Skill #7",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 10"
+    ],
+    [
+      "mfg-sk-08",
+      "Skills",
+      "Skill #8",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | Skills row 11"
+    ],
+    [
+      "mfg-sources",
+      "Organization",
+      "MFG-RES-001",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-systems",
+      "Organization",
+      "MFG-RES-002",
+      "https://supplyframe.com/quoting-solutions-for-ems | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-bom-qa",
+      "Rules",
+      "MFG-RES-003",
+      "https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-quote-gate",
+      "Rules",
+      "MFG-RES-004",
+      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-bull-run",
+      "Agents",
+      "MFG-RES-005",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-quotewin",
+      "Skills",
+      "MFG-RES-006",
+      "https://supplyframe.com/quoting-solutions-for-ems"
+    ],
+    [
+      "mfg-paddle",
+      "Skills",
+      "MFG-RES-007",
+      "https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/PP-StructureV3.html"
+    ],
+    [
+      "mfg-bom-read",
+      "Skills",
+      "MFG-RES-008",
+      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-offers",
+      "Skills",
+      "MFG-RES-009",
+      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-fx-rate",
+      "Skills",
+      "MFG-RES-010",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-stock",
+      "Skills",
+      "MFG-RES-011",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-cad-mto",
+      "Skills",
+      "MFG-RES-012",
+      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-report",
+      "Skills",
+      "MFG-RES-013",
+      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai"
+    ],
+    [
+      "mfg-rd-001",
+      "README",
+      "Section",
+      "README row 1"
+    ],
+    [
+      "mfg-rd-002",
+      "README",
+      "Private review v0.2 - 7 Oct 2026",
+      "README row 2"
+    ],
+    [
+      "mfg-rd-004",
+      "README",
+      "1. STRUCTURE",
+      "README row 4"
+    ],
+    [
+      "mfg-rd-005",
+      "README",
+      "Tab",
+      "README row 5"
+    ],
+    [
+      "mfg-rd-006",
+      "README",
+      "README",
+      "README row 6"
+    ],
+    [
+      "mfg-rd-007",
+      "README",
+      "Organization",
+      "README row 7"
+    ],
+    [
+      "mfg-rd-008",
+      "README",
+      "Rules",
+      "README row 8"
+    ],
+    [
+      "mfg-rd-009",
+      "README",
+      "Agents",
+      "README row 9"
+    ],
+    [
+      "mfg-rd-010",
+      "README",
+      "Skills",
+      "README row 10"
+    ],
+    [
+      "mfg-rd-011",
+      "README",
+      "Filetype",
+      "README row 11"
+    ],
+    [
+      "mfg-rd-013",
+      "README",
+      "2. COLUMN DEFINITIONS",
+      "README row 13"
+    ],
+    [
+      "mfg-rd-014",
+      "README",
+      "Each of the 5 master tabs keeps the first three rows of the BAM 0.2 source tab as is: Metadata (numb",
+      "README row 14"
+    ],
+    [
+      "mfg-rd-015",
+      "README",
+      "Row labels: 'Unit #n', 'Rule #n', 'Agent #n', 'Skill #n'. The stable ID from the Manufacturing Templ",
+      "README row 15"
+    ],
+    [
+      "mfg-rd-017",
+      "README",
+      "3. HOW MANUFACTURING TEMPLATE (OPTION 1) ROWS WERE MAPPED INTO BAM 0.2 COLUMNS",
+      "README row 17"
+    ],
+    [
+      "mfg-rd-018",
+      "README",
+      "Tab",
+      "README row 18"
+    ],
+    [
+      "mfg-rd-019",
+      "README",
+      "Organization",
+      "README row 19"
+    ],
+    [
+      "mfg-rd-020",
+      "README",
+      "Organization",
+      "README row 20"
+    ],
+    [
+      "mfg-rd-021",
+      "README",
+      "Organization",
+      "README row 21"
+    ],
+    [
+      "mfg-rd-022",
+      "README",
+      "Organization",
+      "README row 22"
+    ],
+    [
+      "mfg-rd-023",
+      "README",
+      "Organization",
+      "README row 23"
+    ],
+    [
+      "mfg-rd-024",
+      "README",
+      "Organization",
+      "README row 24"
+    ],
+    [
+      "mfg-rd-025",
+      "README",
+      "Organization",
+      "README row 25"
+    ],
+    [
+      "mfg-rd-026",
+      "README",
+      "Rules",
+      "README row 26"
+    ],
+    [
+      "mfg-rd-027",
+      "README",
+      "Rules",
+      "README row 27"
+    ],
+    [
+      "mfg-rd-028",
+      "README",
+      "Rules",
+      "README row 28"
+    ],
+    [
+      "mfg-rd-029",
+      "README",
+      "Rules",
+      "README row 29"
+    ],
+    [
+      "mfg-rd-030",
+      "README",
+      "Agents",
+      "README row 30"
+    ],
+    [
+      "mfg-rd-031",
+      "README",
+      "Agents",
+      "README row 31"
+    ],
+    [
+      "mfg-rd-032",
+      "README",
+      "Agents",
+      "README row 32"
+    ],
+    [
+      "mfg-rd-033",
+      "README",
+      "Agents",
+      "README row 33"
+    ],
+    [
+      "mfg-rd-034",
+      "README",
+      "Skills",
+      "README row 34"
+    ],
+    [
+      "mfg-rd-035",
+      "README",
+      "Skills",
+      "README row 35"
+    ],
+    [
+      "mfg-rd-036",
+      "README",
+      "Skills",
+      "README row 36"
+    ],
+    [
+      "mfg-rd-037",
+      "README",
+      "Skills",
+      "README row 37"
+    ],
+    [
+      "mfg-rd-038",
+      "README",
+      "Skills",
+      "README row 38"
+    ],
+    [
+      "mfg-rd-039",
+      "README",
+      "Skills",
+      "README row 39"
+    ],
+    [
+      "mfg-rd-040",
+      "README",
+      "Skills",
+      "README row 40"
+    ],
+    [
+      "mfg-rd-041",
+      "README",
+      "Rows that do not map cleanly: all Rules and Skills template rows, because BAM 0.2 columns are cost/d",
+      "README row 41"
+    ],
+    [
+      "mfg-rd-043",
+      "README",
+      "4. RULES FOLLOWED TO BUILD THIS SHEET",
+      "README row 43"
+    ],
+    [
+      "mfg-rd-044",
+      "README",
+      "#",
+      "README row 44"
+    ],
+    [
+      "mfg-rd-045",
+      "README",
+      "1.0",
+      "README row 45"
+    ],
+    [
+      "mfg-rd-046",
+      "README",
+      "2.0",
+      "README row 46"
+    ],
+    [
+      "mfg-rd-047",
+      "README",
+      "3.0",
+      "README row 47"
+    ],
+    [
+      "mfg-rd-048",
+      "README",
+      "4.0",
+      "README row 48"
+    ],
+    [
+      "mfg-rd-049",
+      "README",
+      "5.0",
+      "README row 49"
+    ],
+    [
+      "mfg-rd-050",
+      "README",
+      "6.0",
+      "README row 50"
+    ],
+    [
+      "mfg-rd-051",
+      "README",
+      "7.0",
+      "README row 51"
+    ],
+    [
+      "mfg-rd-052",
+      "README",
+      "8.0",
+      "README row 52"
+    ],
+    [
+      "mfg-rd-053",
+      "README",
+      "9.0",
+      "README row 53"
+    ],
+    [
+      "mfg-rd-054",
+      "README",
+      "10.0",
+      "README row 54"
+    ],
+    [
+      "mfg-rd-055",
+      "README",
+      "11.0",
+      "README row 55"
+    ],
+    [
+      "mfg-rd-056",
+      "README",
+      "12.0",
+      "README row 56"
+    ],
+    [
+      "mfg-rd-058",
+      "README",
+      "5. FREEZE",
+      "README row 58"
+    ],
+    [
+      "mfg-rd-059",
+      "README",
+      "Frozen from this version: tab names, column names and order, row labels, and the 43 filetypes. Any c",
+      "README row 59"
+    ],
+    [
+      "mfg-rd-061",
+      "README",
+      "6. HOW THE FOUR GUIDELINES ARE SERVED (percentages are estimates, not measured; weights are a propos",
+      "README row 61"
+    ],
+    [
+      "mfg-rd-062",
+      "README",
+      "Guideline",
+      "README row 62"
+    ],
+    [
+      "mfg-rd-063",
+      "README",
+      "G1 FDEs know which docs are needed and where they fit",
+      "README row 63"
+    ],
+    [
+      "mfg-rd-064",
+      "README",
+      "G2 Intent via Jev / Laya",
+      "README row 64"
+    ],
+    [
+      "mfg-rd-065",
+      "README",
+      "G3 Context for Cognee, OKF, LLM",
+      "README row 65"
+    ],
+    [
+      "mfg-rd-066",
+      "README",
+      "G4 Data lands in the right master",
+      "README row 66"
+    ],
+    [
+      "mfg-rd-067",
+      "README",
+      "Weighted overall",
+      "README row 67"
+    ],
+    [
+      "mfg-rd-068",
+      "README",
+      "This sheet's column was re-estimated after the extra guideline columns were removed. Judgment, not m",
+      "README row 68"
+    ],
+    [
+      "mfg-rd-070",
+      "README",
+      "7. GUIDELINE LAYER PER MASTER (kept here, not in the tabs)",
+      "README row 70"
+    ],
+    [
+      "mfg-rd-071",
+      "README",
+      "Master",
+      "README row 71"
+    ],
+    [
+      "mfg-rd-072",
+      "README",
+      "Organization",
+      "README row 72"
+    ],
+    [
+      "mfg-rd-073",
+      "README",
+      "Rules",
+      "README row 73"
+    ],
+    [
+      "mfg-rd-074",
+      "README",
+      "Agents",
+      "README row 74"
+    ],
+    [
+      "mfg-rd-075",
+      "README",
+      "Skills",
+      "README row 75"
+    ],
+    [
+      "mfg-rd-077",
+      "README",
+      "8. VERDICT: Option 1 (Manufacturing Admin Backend, EMS + Core, Template) vs Option 2 (BAM - Admin Ma",
+      "README row 77"
+    ],
+    [
+      "mfg-rd-078",
+      "README",
+      "Criterion",
+      "README row 78"
+    ],
+    [
+      "mfg-rd-079",
+      "README",
+      "Owner's choice",
+      "README row 79"
+    ],
+    [
+      "mfg-rd-080",
+      "README",
+      "Breadth for FDEs",
+      "README row 80"
+    ],
+    [
+      "mfg-rd-081",
+      "README",
+      "Ready-to-fill coverage",
+      "README row 81"
+    ],
+    [
+      "mfg-rd-082",
+      "README",
+      "Cognee / RAG mapping",
+      "README row 82"
+    ],
+    [
+      "mfg-rd-083",
+      "README",
+      "Noise",
+      "README row 83"
+    ],
+    [
+      "mfg-rd-084",
+      "README",
+      "Governance fields",
+      "README row 84"
+    ],
+    [
+      "mfg-rd-085",
+      "README",
+      "Evidence base",
+      "README row 85"
+    ],
+    [
+      "mfg-rd-086",
+      "README",
+      "Overall",
+      "README row 86"
+    ],
+    [
+      "mfg-rd-087",
+      "README",
+      "Verdict (judgment): Option 2 (BAM 0.2) is the better base. It is now the frozen structure. Option 1'",
+      "README row 87"
+    ],
+    [
+      "mfg-rd-089",
+      "README",
+      "9. FILETYPE DEFAULT ROUTING (kept here so the Filetype tab stays identical to source)",
+      "README row 89"
+    ],
+    [
+      "mfg-rd-090",
+      "README",
+      "Record ID",
+      "README row 90"
+    ],
+    [
+      "mfg-rd-091",
+      "README",
+      "Filetype #1",
+      "README row 91"
+    ],
+    [
+      "mfg-rd-092",
+      "README",
+      "Filetype #2",
+      "README row 92"
+    ],
+    [
+      "mfg-rd-093",
+      "README",
+      "Filetype #3",
+      "README row 93"
+    ],
+    [
+      "mfg-rd-094",
+      "README",
+      "Filetype #4",
+      "README row 94"
+    ],
+    [
+      "mfg-rd-095",
+      "README",
+      "Filetype #5",
+      "README row 95"
+    ],
+    [
+      "mfg-rd-096",
+      "README",
+      "Filetype #6",
+      "README row 96"
+    ],
+    [
+      "mfg-rd-097",
+      "README",
+      "Filetype #7",
+      "README row 97"
+    ],
+    [
+      "mfg-rd-098",
+      "README",
+      "Filetype #8",
+      "README row 98"
+    ],
+    [
+      "mfg-rd-099",
+      "README",
+      "Filetype #9",
+      "README row 99"
+    ],
+    [
+      "mfg-rd-100",
+      "README",
+      "Filetype #10",
+      "README row 100"
+    ],
+    [
+      "mfg-rd-101",
+      "README",
+      "Filetype #11",
+      "README row 101"
+    ],
+    [
+      "mfg-rd-102",
+      "README",
+      "Filetype #12",
+      "README row 102"
+    ],
+    [
+      "mfg-rd-103",
+      "README",
+      "Filetype #13",
+      "README row 103"
+    ],
+    [
+      "mfg-rd-104",
+      "README",
+      "Filetype #14",
+      "README row 104"
+    ],
+    [
+      "mfg-rd-105",
+      "README",
+      "Filetype #15",
+      "README row 105"
+    ],
+    [
+      "mfg-rd-106",
+      "README",
+      "Filetype #16",
+      "README row 106"
+    ],
+    [
+      "mfg-rd-107",
+      "README",
+      "Filetype #17",
+      "README row 107"
+    ],
+    [
+      "mfg-rd-108",
+      "README",
+      "Filetype #18",
+      "README row 108"
+    ],
+    [
+      "mfg-rd-109",
+      "README",
+      "Filetype #19",
+      "README row 109"
+    ],
+    [
+      "mfg-rd-110",
+      "README",
+      "Filetype #20",
+      "README row 110"
+    ],
+    [
+      "mfg-rd-111",
+      "README",
+      "Filetype #21",
+      "README row 111"
+    ],
+    [
+      "mfg-rd-112",
+      "README",
+      "Filetype #22",
+      "README row 112"
+    ],
+    [
+      "mfg-rd-113",
+      "README",
+      "Filetype #23",
+      "README row 113"
+    ],
+    [
+      "mfg-rd-114",
+      "README",
+      "Filetype #24",
+      "README row 114"
+    ],
+    [
+      "mfg-rd-115",
+      "README",
+      "Filetype #25",
+      "README row 115"
+    ],
+    [
+      "mfg-rd-116",
+      "README",
+      "Filetype #26",
+      "README row 116"
+    ],
+    [
+      "mfg-rd-117",
+      "README",
+      "Filetype #27",
+      "README row 117"
+    ],
+    [
+      "mfg-rd-118",
+      "README",
+      "Filetype #28",
+      "README row 118"
+    ],
+    [
+      "mfg-rd-119",
+      "README",
+      "Filetype #29",
+      "README row 119"
+    ],
+    [
+      "mfg-rd-120",
+      "README",
+      "Filetype #30",
+      "README row 120"
+    ],
+    [
+      "mfg-rd-121",
+      "README",
+      "Filetype #31",
+      "README row 121"
+    ],
+    [
+      "mfg-rd-122",
+      "README",
+      "Filetype #32",
+      "README row 122"
+    ],
+    [
+      "mfg-rd-123",
+      "README",
+      "Filetype #33",
+      "README row 123"
+    ],
+    [
+      "mfg-rd-124",
+      "README",
+      "Filetype #34",
+      "README row 124"
+    ],
+    [
+      "mfg-rd-125",
+      "README",
+      "Filetype #35",
+      "README row 125"
+    ],
+    [
+      "mfg-rd-126",
+      "README",
+      "Filetype #36",
+      "README row 126"
+    ],
+    [
+      "mfg-rd-127",
+      "README",
+      "Filetype #37",
+      "README row 127"
+    ],
+    [
+      "mfg-rd-128",
+      "README",
+      "Filetype #38",
+      "README row 128"
+    ],
+    [
+      "mfg-rd-129",
+      "README",
+      "Filetype #39",
+      "README row 129"
+    ],
+    [
+      "mfg-rd-130",
+      "README",
+      "Filetype #40",
+      "README row 130"
+    ],
+    [
+      "mfg-rd-131",
+      "README",
+      "Filetype #41",
+      "README row 131"
+    ],
+    [
+      "mfg-rd-132",
+      "README",
+      "Filetype #42",
+      "README row 132"
+    ],
+    [
+      "mfg-rd-133",
+      "README",
+      "Filetype #43",
+      "README row 133"
+    ],
+    [
+      "mfg-rd-134",
+      "README",
+      "Routes are proposals. Confirm by intent class; mixed files are split by content.",
+      "README row 134"
+    ],
+    [
+      "mfg-ft-01",
+      "Filetype",
+      "Filetype #1 | .cpp",
+      "Filetype row 4; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-02",
+      "Filetype",
+      "Filetype #2 | .eml",
+      "Filetype row 5; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-03",
+      "Filetype",
+      "Filetype #3 | .go",
+      "Filetype row 6; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-04",
+      "Filetype",
+      "Filetype #4 | .js",
+      "Filetype row 7; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-05",
+      "Filetype",
+      "Filetype #5 | .json",
+      "Filetype row 8; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-06",
+      "Filetype",
+      "Filetype #6 | .md",
+      "Filetype row 9; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-07",
+      "Filetype",
+      "Filetype #7 | .msg",
+      "Filetype row 10; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-08",
+      "Filetype",
+      "Filetype #8 | .py",
+      "Filetype row 11; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-09",
+      "Filetype",
+      "Filetype #9 | .sql",
+      "Filetype row 12; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-10",
+      "Filetype",
+      "Filetype #10 | .txt",
+      "Filetype row 13; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-11",
+      "Filetype",
+      "Filetype #11 | .xml",
+      "Filetype row 14; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-12",
+      "Filetype",
+      "Filetype #12 | .yaml",
+      "Filetype row 15; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-13",
+      "Filetype",
+      "Filetype #13 | FastMCP Spec",
+      "Filetype row 16; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-14",
+      "Filetype",
+      "Filetype #14 | ODB++",
+      "Filetype row 17; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-15",
+      "Filetype",
+      "Filetype #15 | OpenAPI",
+      "Filetype row 18; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-16",
+      "Filetype",
+      "Filetype #16 | Swagger",
+      "Filetype row 19; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-17",
+      "Filetype",
+      "Filetype #17 | Web URL / HTML",
+      "Filetype row 20; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-18",
+      "Filetype",
+      "Filetype #18 | .csv",
+      "Filetype row 21; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-19",
+      "Filetype",
+      "Filetype #19 | .docx",
+      "Filetype row 22; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-20",
+      "Filetype",
+      "Filetype #20 | .parquet",
+      "Filetype row 23; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-21",
+      "Filetype",
+      "Filetype #21 | .pdf – Text-based",
+      "Filetype row 24; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-22",
+      "Filetype",
+      "Filetype #22 | .tar.gz",
+      "Filetype row 25; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-23",
+      "Filetype",
+      "Filetype #23 | .xlsx",
+      "Filetype row 26; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-24",
+      "Filetype",
+      "Filetype #24 | .zip",
+      "Filetype row 27; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-25",
+      "Filetype",
+      "Filetype #25 | Google Docs",
+      "Filetype row 28; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-26",
+      "Filetype",
+      "Filetype #26 | Google Sheets",
+      "Filetype row 29; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-27",
+      "Filetype",
+      "Filetype #27 | .dwg",
+      "Filetype row 30; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-28",
+      "Filetype",
+      "Filetype #28 | .dxf",
+      "Filetype row 31; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-29",
+      "Filetype",
+      "Filetype #29 | .iges",
+      "Filetype row 32; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-30",
+      "Filetype",
+      "Filetype #30 | .jpeg",
+      "Filetype row 33; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-31",
+      "Filetype",
+      "Filetype #31 | .jpg",
+      "Filetype row 34; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-32",
+      "Filetype",
+      "Filetype #32 | .mp3",
+      "Filetype row 35; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-33",
+      "Filetype",
+      "Filetype #33 | .mp4",
+      "Filetype row 36; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-34",
+      "Filetype",
+      "Filetype #34 | .pdf – Scanned/Image",
+      "Filetype row 37; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-35",
+      "Filetype",
+      "Filetype #35 | .png",
+      "Filetype row 38; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-36",
+      "Filetype",
+      "Filetype #36 | .step",
+      "Filetype row 39; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-37",
+      "Filetype",
+      "Filetype #37 | .stp",
+      "Filetype row 40; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-38",
+      "Filetype",
+      "Filetype #38 | .tiff",
+      "Filetype row 41; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-39",
+      "Filetype",
+      "Filetype #39 | .wav",
+      "Filetype row 42; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-40",
+      "Filetype",
+      "Filetype #40 | Gerber RS-274X",
+      "Filetype row 43; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-41",
+      "Filetype",
+      "Filetype #41 | Gerber X2",
+      "Filetype row 44; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-42",
+      "Filetype",
+      "Filetype #42 | Gerber X3",
+      "Filetype row 45; original six columns unchanged"
+    ],
+    [
+      "mfg-ft-43",
+      "Filetype",
+      "Filetype #43 | IPC-2581",
+      "Filetype row 46; original six columns unchanged"
+    ]
+  ],
+  "sheets": [
+    {
+      "name": "Organization",
+      "headers": [
+        "Name ",
+        "Org Name",
+        "Type",
+        "Code",
+        "Location",
+        "Org Details",
+        "Employees",
+        "Customers",
+        "Offerings",
+        "Competencies",
+        "Data Sources",
+        "Systems/Tools",
+        "Assets",
+        "Certifications",
+        "Misc / Audit"
+      ],
+      "descriptions": [
+        "Description ",
+        "Company Name",
+        "Headquarters/Branch/Department",
+        "Code for the Headquarters/Branch/Department",
+        "Address",
+        "What the company/branch does",
+        "User Role",
+        "Client Accounts",
+        "Product/Assembly Lines",
+        "Employee Skill Mapping",
+        "Knowledge Bases & Vector Stores",
+        "ERP & API Integration Endpoints",
+        "HW, SW & Client Devices",
+        "Quality & Regulatory Standards",
+        "Dynamic Overrides & Audit Logs"
+      ],
+      "rows": [
+        {
+          "id": "Organization-4",
+          "values": [
+            "Unit #1",
+            "Illustrative EMS manufacturer (not an actual client)",
+            "Branch",
+            "BU-AERO-01",
+            "Austin, TX",
+            "Tier-1 EMS Contract Manufacturer handling high-reliability electronics RFQs",
+            "Sourcing Engineers, Team Lead, Cost Estimators",
+            "Raytheon, Honeywell, Lockheed",
+            "High-Mix Low-Volume SMT Assembly, PCB Fabrication, Box Build",
+            "IPC-A-610 Class 3, AS9100D, RFQ Automated Cost Estimation",
+            "PostgreSQL (ERP_PROD), Pinecone (RFQ_Docs_Vector)",
+            "SAP S/4HANA, DigiKey API, BuLLM Quote Engine",
+            "On-Prem GPU Cluster (2x H100 Nodes)",
+            "ISO 9001, AS9100D, ITAR Registered",
+            "Security Compliance Audit Log v2.4; Search tag: mfg-org-01; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Organization-5",
+          "values": [
+            "Unit #2",
+            "Client tenant TBD",
+            "",
+            "ORG-EMS",
+            "",
+            "Domain: Electronics / EMS. Applies to: RFQ ID + revision + scenario + FG",
+            "Estimator/QA approval TBD",
+            "",
+            "",
+            "",
+            "RFQ/BOM/supplier/FX/inventory source refs TBD",
+            "",
+            "On-Prem GPU Cluster (2x H100 Nodes)",
+            "ISO 9001, AS9100D, ITAR Registered",
+            "Security Compliance Audit Log v2.4; Status: Proposed; Search tag: mfg-org-02; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Organization-6",
+          "values": [
+            "Unit #3",
+            "Client tenant TBD",
+            "",
+            "ORG-CAB",
+            "",
+            "Domain: Cable assembly. Applies to: RFQ + assembly + line hierarchy",
+            "Harness engineer TBD",
+            "",
+            "",
+            "",
+            "Harness BOM source ref TBD",
+            "",
+            "",
+            "",
+            "Status: Proposed; Search tag: mfg-org-03; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Organization-7",
+          "values": [
+            "Unit #4",
+            "Client tenant TBD",
+            "",
+            "ORG-CORE",
+            "",
+            "Domain: Machining / sheet metal / piping. Applies to: Project + drawing revision",
+            "Engineering reviewer TBD",
+            "",
+            "",
+            "",
+            "CAD/MTO source refs TBD",
+            "",
+            "",
+            "",
+            "Status: Illustrative; Search tag: mfg-org-04; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Organization-9",
+          "values": [
+            "Unit #6",
+            "Manufacturing source registry",
+            "Manufacturing resource reference",
+            "MFG-RES-001",
+            "",
+            "Tenant-scoped refs for RFQ, BOM, CAD/MTO, supplier offers and report templates.",
+            "",
+            "",
+            "",
+            "",
+            "tenant, project, RFQ, revision, scenario, FG, source ID/version, owner/access",
+            "Governed S3/Postgres/DuckDB reference registry",
+            "",
+            "",
+            "RESOURCE MFG-RES-001; Search tag: mfg-sources; Status: Proposed / not configured; Related: ORG-EMS / ORG-CAB / ORG-CORE; Source: https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD; Do not copy raw files into masters; no guessed access."
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Organization-10",
+          "values": [
+            "Unit #7",
+            "Client systems binding",
+            "Manufacturing resource reference",
+            "MFG-RES-002",
+            "",
+            "Approved ERP/quoting/inventory system and endpoint registry; QuoteWin is an example, not an installed connector.",
+            "",
+            "",
+            "",
+            "",
+            "system, client owner, credentials reference, access, schema/version",
+            "Source-system binding manifest; adapter details TBD",
+            "",
+            "",
+            "RESOURCE MFG-RES-002; Search tag: mfg-systems; Status: Proposed / not configured; Related: ORG-EMS / AG-OFFER; Source: https://supplyframe.com/quoting-solutions-for-ems | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD; Confirm licensed access and supported interface before connecting."
+          ],
+          "sourceRow": 10
+        }
+      ],
+      "removedRows": [
+        8
+      ],
+      "notes": [],
+      "readOnly": false
+    },
+    {
+      "name": "Rules",
+      "headers": [
+        "Name ",
+        "Domain Rule",
+        "PCB Panelization",
+        "Components (BOM)",
+        "Materials & Finish",
+        "Box Build",
+        "Machine HR Rates",
+        "Outsourced Services",
+        "Assembly Routing",
+        "Rules (DFM/Sourcing)",
+        "Misc",
+        "RAG Reference"
+      ],
+      "descriptions": [
+        "Description ",
+        "Live Costing & Margin Price Break Sheet",
+        "Base PCB Dimensions & Yields",
+        "SMT / PTH Part Line Items",
+        "Laminates & Surface Coatings",
+        "Enclosures & Mechanical Assembly",
+        "Machine Center Rate Database",
+        "Third-Party Subcontract Costs",
+        "Calculated Assembly Labor Steps",
+        "Automated Margin & Constraint Checks",
+        "Cost Adjustments & Overrides",
+        "[\"Example\", \"Links / Path\", \"Entity / Node Type\", \"Security / Access Level\", \"Refresh Frequency\", \"ID Field\", \"Parent Entity\"]"
+      ],
+      "rows": [
+        {
+          "id": "Rules-4",
+          "values": [
+            "Rule #1",
+            "Engineering rules, BOM costing formulas, and PCBA manufacturing guidelines",
+            "2x2 Array, 1.6mm FR4 Tg180, Edge Rail 10mm, Breakaway Tabs",
+            "Active/Passive SMT, BGA/QFP IC Packages, MSD Level 3-6 handling",
+            "ENIG (Electroless Nickel Immersion Gold), Lead-Free HASL",
+            "IP67 Aluminum Enclosure, Wire Harness Assembly, Torque Specs",
+            "SMT Line: $120/hr, Manual Assembly: $45/hr, Testing: $65/hr",
+            "X-Ray Inspection ($150/lot), Conformal Coating Subcontract",
+            "Paste Print  Pick & Place  Reflow  AOI  Wave Solder  ICT",
+            "Min trace 4mil, Flag single-source parts, Flag lead time > 16 weeks",
+            "Standard Scrap Rate: 1.5%, Waste Factor: 2.0%; Search tag: mfg-rule-01; Existing source content, proposed/mock - not verified deployment",
+            "{\"Example\": \"PCBA Costing Standard\", \"Links / Path\": \"s3://domain-rules/pcba_costing_v1.json\", \"Entity / Node Type\": \"DomainKnowledge\", \"Security / Access Level\": \"Internal\", \"Refresh Frequency\": \"Quarterly\", \"ID Field\": \"DOM-PCBA-01\", \"Parent Entity\": \"ORG-001\"}"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Rules-5",
+          "values": [
+            "Rule #2",
+            "RULE-BOM: EMS; Scrub BOM / CBOM. Policy: Compare source and costed BOM; count unique/shared/missing lines",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Stop on unresolved MPN, qty/unit or uncosted line",
+            "Source fields needed after load: FG, parent line, CPN, MPN, qty, UoM, commodity. Approval: Version and QA owner TBD. Status: Proposed; Search tag: mfg-rule-02; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Rules-6",
+          "values": [
+            "Rule #3",
+            "RULE-OFFER: EMS; CBOM / BOM Matrix. Policy: Convert with approved FX; check pack/MOQ and offer validity",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Expired offer, missing FX or supplier exception -> review",
+            "Source fields needed after load: supplier offer, original currency/price, FX as-of, MOQ, pack, stock, lead time, expiry, NCNR. Approval: Finance/sourcing approval TBD. Status: Proposed; Search tag: mfg-rule-03; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Rules-7",
+          "values": [
+            "Rule #4",
+            "RULE-EXCESS: EMS; excess inventory / cashflow. Policy: Compute shortage, rounded buy, excess and cost",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Missing stock snapshot, rate or term -> review",
+            "Source fields needed after load: scenario qty, batch qty, stock as-of, scrap class, MOQ, pack, supplier terms. Approval: Finance approval TBD. Status: Proposed; Search tag: mfg-rule-04; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Rules-8",
+          "values": [
+            "Rule #5",
+            "RULE-REPORT: EMS; analytics / revision / NRE. Policy: Group lead time/ABC, track one-time NRE, compare same-basis revisions",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Mismatch, double NRE or unsupported formula -> review",
+            "Source fields needed after load: FG, CPN, old/new revision, lead weeks, NRE type, converted cost. Approval: QA/finance approval TBD. Status: Proposed; Search tag: mfg-rule-05; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Rules-9",
+          "values": [
+            "Rule #6",
+            "RULE-CORE: Core manufacturing extension. Policy: Engineer-selected routing and costing policy",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "No quote without sourced specs and rates",
+            "Source fields needed after load: part, revision, material, drawing/MTO reference, process. Approval: Engineer approval TBD. Status: Illustrative; Search tag: mfg-rule-06; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Rules-10",
+          "values": [
+            "Rule #7",
+            "MFG-RES-003: BOM validation checklist. Link the documented v3.0 checklist: input scrub, MCL, settings, cross-reference and output BOM validation.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "155 documented checks are reference scope, not proof they run in BuLLM; QA approval required.",
+            "RESOURCE MFG-RES-003; Search tag: mfg-bom-qa; Status: Proposed / not configured; Related: RULE-BOM / RULE-REPORT / AG-QA; Source: https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD; Input keys: check ID, criticality, source/version, input/output row references; Output: Versioned checks and exception queue",
+            ""
+          ],
+          "sourceRow": 10
+        },
+        {
+          "id": "Rules-11",
+          "values": [
+            "Rule #8",
+            "MFG-RES-004: Quote approval and export gate. Follow documented review/halt or Approve & Continue before quote exports.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "No automatic external quote delivery, purchase, substitution or unsourced costs.",
+            "RESOURCE MFG-RES-004; Search tag: mfg-quote-gate; Status: Proposed / not configured; Related: RULE-OFFER / RULE-REPORT / SK-EXPORT; Source: https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD; Input keys: RFQ/run ID, BOM/pricing evidence, reviewer, approval timestamp, template version; Output: Readiness and approval reference",
+            ""
+          ],
+          "sourceRow": 11
+        }
+      ],
+      "removedRows": [],
+      "notes": [],
+      "readOnly": false
+    },
+    {
+      "name": "Agents",
+      "headers": [
+        "Name ",
+        "Agent Name",
+        "Description",
+        "Model",
+        "Repo",
+        "API",
+        "MCP Server",
+        "Script",
+        "Prompt",
+        "Eval",
+        " Logs",
+        "Misc"
+      ],
+      "descriptions": [
+        "Context ",
+        "Name of the Agent",
+        "What the agent does",
+        "LLMs (Local/Public)",
+        "Tool Repositories",
+        "OpenAPI Schemas",
+        "FastMCP Proxy Gateway",
+        "Pre-Compiled Executable Python/JS Scripts",
+        "Prompt to generate output",
+        "Benchmark",
+        "Test Logs",
+        "Any other info to be added by FDE"
+      ],
+      "rows": [
+        {
+          "id": "Agents-4",
+          "values": [
+            "Agent #1",
+            "BOM Parser",
+            "Parses BOM files",
+            "Llama-3.3-70B",
+            "github.com/org/rfq-bom-parser-agent",
+            "OpenAPI v3 for Mouser Pricing & Stock APIs",
+            "mcp://supplier-api-proxy:8080",
+            "parse_bom_aggrid.py",
+            "bom_extraction_prompt.txt",
+            "Benchmark Accuracy: 98.4%",
+            "Mean Latency: 1.2s per BOM item",
+            "Search tag: mfg-ag-01; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Agents-5",
+          "values": [
+            "Agent #2",
+            "Intake / BOM extraction",
+            "AG-INTAKE. Allowed input: RFQ/scenario, workbook pointer, FG, BOM fields. Required output: Normalized keys and source references",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Review gate: Missing required fields -> review. Status: Proposed; Search tag: mfg-ag-02; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Agents-6",
+          "values": [
+            "Agent #3",
+            "Offer normalization",
+            "AG-OFFER. Allowed input: Approved supplier/offer/FX source references. Required output: Price, currency, MOQ, pack, lead, stock with provenance",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Review gate: Stale/ambiguous offer -> review. Status: Proposed; Search tag: mfg-ag-03; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Agents-7",
+          "values": [
+            "Agent #4",
+            "Costing / excess",
+            "AG-COST. Allowed input: Approved rules, normalized BOM, offer and inventory refs. Required output: Costed line/scenario and shortage calculation trace",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Review gate: No unsourced numeric inputs. Status: Proposed; Search tag: mfg-ag-04; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Agents-8",
+          "values": [
+            "Agent #5",
+            "Reconciliation / report QA",
+            "AG-QA. Allowed input: Input/output refs, rule versions and exceptions. Required output: Mismatch queue and report-readiness status",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Review gate: Human approval before external report. Status: Proposed; Search tag: mfg-ag-05; Existing source content, proposed/mock - not verified deployment"
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Agents-10",
+          "values": [
+            "Agent #7",
+            "BuLLM manufacturing runtime binding",
+            "MFG-RES-005: Bind existing intake, offer, cost and QA role IDs to approved manufacturing resources; no new deployed agents claimed.; Allowed inputs: tenant, RFQ/revision/scenario/FG, allowed resource IDs, policy version; Output: Normalized outputs and auditable execution/exception references",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "RESOURCE MFG-RES-005; Search tag: mfg-bull-run; Status: Proposed / not configured; Related: AG-INTAKE / AG-OFFER / AG-COST / AG-QA; Source: https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD; Model, repo, API, MCP and script bindings remain TBD until verified."
+          ],
+          "sourceRow": 10
+        }
+      ],
+      "removedRows": [
+        9,
+        11
+      ],
+      "notes": [],
+      "readOnly": false
+    },
+    {
+      "name": "Skills",
+      "headers": [
+        "Name ",
+        "Skill",
+        "Documents",
+        "RFQ / Inquiries",
+        "Currency",
+        "Supplier Master",
+        "Commodity Pricing",
+        "Shipping & Logistics",
+        "Templates",
+        "HITL Governance",
+        "Misc",
+        "RAG Reference"
+      ],
+      "descriptions": [
+        "Description ",
+        "Skills required for the project",
+        "Ingest PDFs/SOWs via Cognee, not LightRAG",
+        "Client RFQ Header Data",
+        "FX Rates for Quotation",
+        "Distributor Matrix",
+        "Raw Spot Price Feeds",
+        "IncoTerms & Freight Rates",
+        "AG Grid Layout Templates",
+        "Circuit Breaker Trigger Rules",
+        "Custom Project Context",
+        "[\"Example\", \"Links / Path\", \"Entity / Node Type\", \"Security / Access Level\", \"Refresh Frequency\", \"ID Field\", \"Parent Entity\"]"
+      ],
+      "rows": [
+        {
+          "id": "Skills-4",
+          "values": [
+            "Skill #1 ",
+            "RFQ Pipeline & Ingestion Status",
+            "RFQ_EG005570.pdf, BOM_Matrix_745.xlsx, Gerber_Files.zip",
+            "Inquiry ID: INQ-9842, Customer: Avionics Corp, Target Qtys: 500 / 1000",
+            "USD (Base), EUR conversion rate 1.08",
+            "Mouser, Arrow Electronics, Future Electronics, Avnet",
+            "Spot market live API prices, Tiered volume discounts",
+            "FOB - Free On Board, Lead time: 6 weeks, Freight: Air Express",
+            "Standard_Quote_Template_v3.xlsx, AG_Grid_BOM_View",
+            "Trigger circuit breaker if price variance > 15% or single-source risk detected",
+            "Quoting Status: In-Progress, Priority: High, Due: 2026-10-15; Search tag: mfg-sk-01; Existing source content, proposed/mock - not verified deployment",
+            "{\"Example\": \"Avionics Flight Control RFQ\", \"Links / Path\": \"s3://rfq-projects/aero-control-2026/\", \"Entity / Node Type\": \"RFQProject\", \"Security / Access Level\": \"Restricted\", \"Refresh Frequency\": \"Real-time\", \"ID Field\": \"PRJ-RFQ-2026-001\", \"Parent Entity\": \"ORG-001\"}"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Skills-5",
+          "values": [
+            "Skill #2 ",
+            "SK-INTAKE: RFQ and scenario intake",
+            "RFQ document / workbook ref",
+            "RFQ ID, revision, FG, Proto/VL-1 qty, batch",
+            "",
+            "",
+            "",
+            "",
+            "Scenario context keyed by RFQ/revision/FG",
+            "Confirm RFQ, revision, FG and scenario quantity from approved source; missing or conflicting keys -> review",
+            "Status: Proposed; Search tag: mfg-sk-02; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Skills-6",
+          "values": [
+            "Skill #3 ",
+            "SK-BOM: BOM scrub",
+            "Scrub BOM / source BOM ref",
+            "assembly, parent, line, CPN, MPN, qty, UoM",
+            "",
+            "",
+            "",
+            "",
+            "Normalized BOM pointers",
+            "Reconcile unique/shared/missing and hierarchy",
+            "Status: Proposed; Search tag: mfg-sk-03; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Skills-7",
+          "values": [
+            "Skill #4 ",
+            "SK-OFFER: Offer and inventory load",
+            "supplier, quote, FX and stock refs",
+            "supplier, MPN, price, currency, MOQ, pack, lead, stock, validity",
+            "",
+            "",
+            "",
+            "",
+            "Selected offer + FX/stock snapshot refs",
+            "Review expiry, substitution, missing inputs",
+            "Status: Proposed; Search tag: mfg-sk-04; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Skills-8",
+          "values": [
+            "Skill #5 ",
+            "SK-COST: Costed BOM and excess",
+            "normalized BOM + selected offers + rule refs",
+            "FG qty, batch, converted unit cost, NRE, stock",
+            "",
+            "",
+            "",
+            "",
+            "Costed BOM / matrix / excess transaction refs",
+            "Recompute totals and detect excess/uncosted",
+            "Status: Proposed; Search tag: mfg-sk-05; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Skills-9",
+          "values": [
+            "Skill #6 ",
+            "SK-ANALYZE: Analysis and revisions",
+            "approved costed runs + supplier terms",
+            "old/new qty/price, lead weeks, spend, NRE",
+            "",
+            "",
+            "",
+            "",
+            "Lead-time, ABC, cashflow, price-control, revision refs",
+            "Compare same basis; prevent repeated NRE",
+            "Status: Proposed; Search tag: mfg-sk-06; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Skills-10",
+          "values": [
+            "Skill #7 ",
+            "SK-EXPORT: Report QA/export",
+            "approved run + target workbook template ref",
+            "RFQ, scenario, FG, summary and validation state",
+            "",
+            "",
+            "",
+            "",
+            "Report artifact pointer and QA result",
+            "Excel-compatible parity check; human signoff",
+            "Status: Proposed; Search tag: mfg-sk-07; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 10
+        },
+        {
+          "id": "Skills-11",
+          "values": [
+            "Skill #8 ",
+            "SK-CORE: Core manufacturing extension",
+            "approved CAD/drawing/MTO ref",
+            "part, material, revision, process",
+            "",
+            "",
+            "",
+            "",
+            "Core-domain RFQ context",
+            "Engineer review; no target report sample",
+            "Status: Illustrative; Search tag: mfg-sk-08; Existing source content, proposed/mock - not verified deployment",
+            ""
+          ],
+          "sourceRow": 11
+        },
+        {
+          "id": "Skills-12",
+          "values": [
+            "Skill #9",
+            "MFG-RES-006: QuoteWin",
+            "https://supplyframe.com/quoting-solutions-for-ems | approved quote/export pointer, BOM/MPN, quantity, supplier, currency, quote validity",
+            "Supplyframe EMS quotation/product-costing example. Candidate quote/RFQ interoperability, not assumed API integration.",
+            "",
+            "",
+            "",
+            "",
+            "Proposed normalized quote/cost records with source refs; interface TBD",
+            "Verify vendor-supported access/export/API, contract and schema; no credentials or live quote invented.",
+            "RESOURCE MFG-RES-006; Search tag: mfg-quotewin; Status: Proposed / not configured; Related: SK-OFFER / SK-COST / AG-OFFER; Source: https://supplyframe.com/quoting-solutions-for-ems; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 12
+        },
+        {
+          "id": "Skills-13",
+          "values": [
+            "Skill #10",
+            "MFG-RES-007: PaddleOCR",
+            "https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/PP-StructureV3.html | PDF/image ref, page/region, language, extracted MPN/qty/UoM, confidence",
+            "Official PP-StructureV3 document parsing supports OCR/layout/table extraction. Candidate for scanned RFQ, supplier quote and drawing title-block text.",
+            "",
+            "",
+            "",
+            "",
+            "Proposed text/table structure plus source page/cell pointers",
+            "Check MPN character ambiguity and table alignment; human review on low confidence. Not CAD geometry interpretation.",
+            "RESOURCE MFG-RES-007; Search tag: mfg-paddle; Status: Proposed / not configured; Related: SK-INTAKE / SK-BOM / AG-INTAKE; Source: https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/PP-StructureV3.html; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 13
+        },
+        {
+          "id": "Skills-14",
+          "values": [
+            "Skill #11",
+            "MFG-RES-008: BOM and volume normalization",
+            "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | RFQ, revision, FG, scenario qty, MPN/CPN, line/parent, qty/UoM",
+            "Read documented spreadsheet BOM/volume inputs and map essential manufacturing keys.",
+            "",
+            "",
+            "",
+            "",
+            "Normalized BOM and scenario references",
+            "Use deterministic spreadsheet parsing for native files; never OCR a readable workbook by default.",
+            "RESOURCE MFG-RES-008; Search tag: mfg-bom-read; Status: Proposed / not configured; Related: SK-INTAKE / SK-BOM; Source: https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 14
+        },
+        {
+          "id": "Skills-15",
+          "values": [
+            "Skill #12",
+            "MFG-RES-009: Supplier pricing and offer binding",
+            "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | supplier, MPN, price breaks, currency, MOQ/pack, stock, lead time, validity/as-of",
+            "Distributor pricing and supplier-quote records for BOM enrichment.",
+            "",
+            "",
+            "",
+            "",
+            "Selected offers with provenance",
+            "API/credential bindings TBD; stale, substituted or ambiguous matches require sourcing review.",
+            "RESOURCE MFG-RES-009; Search tag: mfg-offers; Status: Proposed / not configured; Related: SK-OFFER / AG-OFFER; Source: https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 15
+        },
+        {
+          "id": "Skills-16",
+          "values": [
+            "Skill #13",
+            "MFG-RES-010: Approved FX source",
+            "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | currency pair, rate, as-of timestamp, approved source",
+            "Versioned conversion input for manufacturing supplier offers.",
+            "",
+            "",
+            "",
+            "",
+            "Same-basis converted cost reference",
+            "No sample FX value becomes a live rate; missing/stale FX stops costing.",
+            "RESOURCE MFG-RES-010; Search tag: mfg-fx-rate; Status: Proposed / not configured; Related: RULE-OFFER / SK-COST; Source: https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 16
+        },
+        {
+          "id": "Skills-17",
+          "values": [
+            "Skill #14",
+            "MFG-RES-011: Inventory and excess snapshot",
+            "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | stock as-of, MPN, quantity/UoM, scenario, MOQ/pack, scrap policy, supplier terms",
+            "Stock/terms/MOQ/pack inputs for shortage and rounded-buy/excess calculations.",
+            "",
+            "",
+            "",
+            "",
+            "Shortage/excess calculation input refs",
+            "Do not create orders or treat excess calculation as purchase authority.",
+            "RESOURCE MFG-RES-011; Search tag: mfg-stock; Status: Proposed / not configured; Related: RULE-EXCESS / SK-COST / SK-ANALYZE; Source: https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 17
+        },
+        {
+          "id": "Skills-18",
+          "values": [
+            "Skill #15",
+            "MFG-RES-012: Engineering artifact parser binding",
+            "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | file format, part/assembly, drawing revision, material/process, parser version",
+            "EMS Gerber/IPC and core CAD/drawing/MTO source references.",
+            "",
+            "",
+            "",
+            "",
+            "Proposed structured engineering manifest; no geometry copied into masters",
+            "Engineer signoff; parser support must be tested per Filetype. PaddleOCR cannot replace CAD parsing.",
+            "RESOURCE MFG-RES-012; Search tag: mfg-cad-mto; Status: Proposed / not configured; Related: SK-CORE / SK-BOM / ORG-CORE; Source: https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 18
+        },
+        {
+          "id": "Skills-19",
+          "values": [
+            "Skill #16",
+            "MFG-RES-013: Report templates and parity QA",
+            "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | approved run, source/version, report/template ID, required totals, QA results",
+            "Documented consolidated BOM, quote and readiness package/report outputs.",
+            "",
+            "",
+            "",
+            "",
+            "Versioned report artifact reference",
+            "Excel/formula/total reconciliation and human signoff before external use; no report send configured.",
+            "RESOURCE MFG-RES-013; Search tag: mfg-report; Status: Proposed / not configured; Related: SK-EXPORT / AG-QA; Source: https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai; Checked: 7 Oct 2026; Binding/version/approval: TBD",
+            ""
+          ],
+          "sourceRow": 19
+        }
+      ],
+      "removedRows": [],
+      "notes": [],
+      "readOnly": false
+    },
+    {
+      "name": "Tooling",
+      "headers": [
+        "Name",
+        "Category",
+        "Examples",
+        "Links / Path",
+        "Owner / access",
+        "Status",
+        "Source version / checked_at",
+        "Search tag",
+        "Tenant / account scope",
+        "Entity / Node Type",
+        "Security / Access Level",
+        "Refresh Frequency",
+        "Parent Entity",
+        "Source / evidence ref",
+        "Binding / review state",
+        "Search aliases / category"
+      ],
+      "descriptions": [
+        "Description",
+        "Add-on category specified by user",
+        "Examples only; not configured integrations",
+        "Confirmed URL / repo / document path; otherwise TBD",
+        "Named owner/permissions to confirm",
+        "Record and deployment status",
+        "Registry version/date; tool version or freshness TBD",
+        "Unique searchable category tag",
+        "Tenant and account bindings to confirm",
+        "Type of record",
+        "Confirm actual permissions before use",
+        "Source refresh cadence to confirm",
+        "Organization / tenant record ID",
+        "Origin of category/examples",
+        "Tool binding and approval state",
+        "Category and example keywords"
+      ],
+      "rows": [
+        {
+          "id": "Tooling-4",
+          "values": [
+            "TOOL-MFG-01",
+            "MCP",
+            "WebMCP",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-01",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "MCP; WebMCP"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Tooling-5",
+          "values": [
+            "TOOL-MFG-02",
+            "API",
+            "DataforSEO",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-02",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "API; DataforSEO"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Tooling-6",
+          "values": [
+            "TOOL-MFG-03",
+            "Open Source repos",
+            "OpenSEO",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-03",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Open Source repos; OpenSEO"
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Tooling-7",
+          "values": [
+            "TOOL-MFG-04",
+            "Internal tools",
+            "DigiBull Audit Tool",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-04",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Internal tools; DigiBull Audit Tool"
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Tooling-8",
+          "values": [
+            "TOOL-MFG-05",
+            "3rd party tools",
+            "Ahrefs",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-05",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "3rd party tools; Ahrefs"
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Tooling-9",
+          "values": [
+            "TOOL-MFG-06",
+            "Scripts/Codebase",
+            "Git link",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-06",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Scripts/Codebase; Git link"
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Tooling-10",
+          "values": [
+            "TOOL-MFG-07",
+            "Plugins/Extensions",
+            "Rankmath, GMB Everywhere",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-07",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Plugins/Extensions; Rankmath, GMB Everywhere"
+          ],
+          "sourceRow": 10
+        },
+        {
+          "id": "Tooling-11",
+          "values": [
+            "TOOL-MFG-08",
+            "Analytics tools",
+            "GA4, Search Console, Google Tag Manager, Mixpanel",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-08",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Analytics tools; GA4, Search Console, Google Tag Manager, Mixpanel"
+          ],
+          "sourceRow": 11
+        },
+        {
+          "id": "Tooling-12",
+          "values": [
+            "TOOL-MFG-09",
+            "Research",
+            "Storm - https://storm.genie.stanford.edu/, NotebookLM",
+            "https://storm.genie.stanford.edu/",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-09",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Research; Storm - https://storm.genie.stanford.edu/, NotebookLM"
+          ],
+          "sourceRow": 12
+        },
+        {
+          "id": "Tooling-13",
+          "values": [
+            "TOOL-MFG-10",
+            "Official Documentation",
+            "ISO, Policies (IT, HR, RBAC), Guidelines",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-10",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Official Documentation; ISO, Policies (IT, HR, RBAC), Guidelines"
+          ],
+          "sourceRow": 13
+        },
+        {
+          "id": "Tooling-14",
+          "values": [
+            "TOOL-MFG-11",
+            "Artifacts",
+            "Samples, References, Tech stack",
+            "TBD",
+            "TBD",
+            "Category recorded; configuration TBD",
+            "Registry v0.1 / 2026-10-08; tool version TBD",
+            "mfg-tool-11",
+            "TBD",
+            "ToolingCategory",
+            "TBD",
+            "TBD",
+            "TBD",
+            "User WhatsApp, 2026-10-08: tooling categories and examples",
+            "Not configured; approval TBD",
+            "Artifacts; Samples, References, Tech stack"
+          ],
+          "sourceRow": 14
+        }
+      ],
+      "removedRows": [],
+      "notes": [],
+      "readOnly": false
+    },
+    {
+      "name": "Filetype",
+      "headers": [
+        "Name",
+        "File Format",
+        "Tier",
+        "Purpose",
+        "RAG Ingestion",
+        "Example"
+      ],
+      "descriptions": [
+        "Description ",
+        "Input Filetype",
+        "RAG Tier",
+        "How used?",
+        "How the RAG ingests the input documents",
+        "Link to Sample File"
+      ],
+      "rows": [
+        {
+          "id": "Filetype-4",
+          "values": [
+            "Filetype #1 ",
+            ".cpp",
+            "1.0",
+            "Expose native application, embedded and manufacturing-software logic and dependencies that plain text chunking would miss.",
+            "Prebundle a C/C++ parser such as tree-sitter/Clang tooling: extract namespaces, classes, functions, includes, symbols and call/include relationships; convert to structured metadata before Cognee graph ingestion and OKF provenance mapping.",
+            "https://github.com/tree-sitter/tree-sitter-cpp/blob/master/examples/parser.cc"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Filetype-5",
+          "values": [
+            "Filetype #2 ",
+            ".eml",
+            "1.0",
+            "Turn operational email into searchable decisions, approvals, requests, handoffs and actor relationships while preserving message-level provenance.",
+            "Cognee supports .eml through its document loader. Extract message headers, participants, timestamps, subject, body and attachments; model sender/recipient/thread relationships before graph ingestion. Map original message/resource and extracted claims into OKF sources for provenance.",
+            "https://raw.githubusercontent.com/python/cpython/main/Lib/test/test_email/data/msg_01.txt"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Filetype-6",
+          "values": [
+            "Filetype #3 ",
+            ".go",
+            "1.0",
+            "Capture service, CLI, infrastructure and backend workflow logic written in Go, including package-level relationships.",
+            "Prebundle Go parser/AST tooling: extract packages, structs, interfaces, functions, imports and call/dependency relationships; serialize to structured metadata, ingest into Cognee, and retain repository/file source references in OKF.",
+            "https://github.com/golang/go/blob/master/src/go/ast/ast.go"
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Filetype-7",
+          "values": [
+            "Filetype #4 ",
+            ".js",
+            "1.0",
+            "Capture application and automation logic, API clients, workflow code and module dependencies from JavaScript codebases.",
+            "Prebundle a JavaScript/ESTree-compatible AST parser: extract functions, classes, imports/exports, calls and comments; serialize symbols/edges to structured JSON or Markdown, then ingest into Cognee and preserve repository/file provenance for OKF.",
+            "https://github.com/estree/estree/blob/master/es5.md"
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Filetype-8",
+          "values": [
+            "Filetype #5 ",
+            ".json",
+            "1.0",
+            "Configuration, API payloads, BOMs, manifests and machine-generated metadata where key/value structure should become graph context.",
+            "Cognee TextLoader supports JSON. Parse JSON structurally first when keys/arrays encode domain entities; retain object paths and IDs, then ingest normalized text/records into Cognee. OKF can reference the source resource and record provenance/trust signals for generated concepts.",
+            "https://raw.githubusercontent.com/typicode/demo/master/db.json"
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Filetype-9",
+          "values": [
+            "Filetype #6 ",
+            ".md",
+            "1.0",
+            "Knowledge-base pages, engineering docs, runbooks, ADRs and other already-structured human/agent-readable context; ideal bridge into OKF.",
+            "Ingest directly with Cognee TextLoader. Preserve headings, lists, links and code blocks as semantic structure; chunk/embed/graph in Cognee. Markdown is also the native body format for an OKF concept, with YAML frontmatter carrying type, resource, sources, generated/verified, status and freshness signals.",
+            "https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/README.md"
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Filetype-10",
+          "values": [
+            "Filetype #7 ",
+            ".msg",
+            "1.0",
+            "Extract enterprise context from Outlook messages: decisions, approvals, escalations, commitments and participant relationships.",
+            "Use Cognee's document loader with the docs extra, or a prebundled MSG extractor where Outlook-specific properties/attachments need higher fidelity. Normalize sender/recipients/time/subject/body/attachments, then ingest into Cognee and preserve source identity in OKF.",
+            "https://github.com/TeamMsgExtractor/msg-extractor"
+          ],
+          "sourceRow": 10
+        },
+        {
+          "id": "Filetype-11",
+          "values": [
+            "Filetype #8 ",
+            ".py",
+            "1.0",
+            "Recover executable workflow logic, business rules, agent/tool implementations and dependencies from Python repositories instead of treating code as undifferentiated text.",
+            "Prebundle a Python AST parser before Cognee: extract modules, classes, functions, signatures, imports, docstrings and call/dependency relationships into structured text/JSON; ingest those artifacts into Cognee and link source paths as provenance in OKF.",
+            "https://github.com/python/cpython/blob/main/Lib/ast.py"
+          ],
+          "sourceRow": 11
+        },
+        {
+          "id": "Filetype-12",
+          "values": [
+            "Filetype #9 ",
+            ".sql",
+            "1.0",
+            "Recover database structure, lineage and governed calculation logic; especially useful for enterprise analytics and workflow dependencies.",
+            "Preparse SQL as DDL/query syntax: extract schemas, tables, columns, constraints, joins, referenced objects and statements. Send schema/lineage metadata to Cognee rather than only raw SQL text; represent sanctioned computations in OKF as Attested Computation when applicable.",
+            "https://github.com/sqlite/sqlite/blob/master/test/schema.test"
+          ],
+          "sourceRow": 12
+        },
+        {
+          "id": "Filetype-13",
+          "values": [
+            "Filetype #10 ",
+            ".txt",
+            "1.0",
+            "Runbooks, SOPs, requirements, notes and logs that are already textual; lowest-friction source for entity, relationship and procedural-context extraction.",
+            "Use Cognee TextLoader to normalize UTF-8/plain text directly. Preserve filename, MIME type, extension and content hash; then chunk/embed/graph with Cognee. Emit selected enterprise concepts as OKF Markdown with YAML frontmatter and source provenance.",
+            "https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/README.md"
+          ],
+          "sourceRow": 13
+        },
+        {
+          "id": "Filetype-14",
+          "values": [
+            "Filetype #11 ",
+            ".xml",
+            "1.0",
+            "System configuration, integrations, structured BOM/engineering metadata and XML-based enterprise interchange formats.",
+            "Cognee TextLoader supports XML, but preparse XML trees when hierarchy/attributes are meaningful. Convert elements, attributes, IDs and references into structured records before graph ingestion; retain original resource and source metadata in OKF.",
+            "https://www.w3.org/TR/xml/#sec-well-formed"
+          ],
+          "sourceRow": 14
+        },
+        {
+          "id": "Filetype-15",
+          "values": [
+            "Filetype #12 ",
+            ".yaml",
+            "1.0",
+            "Configuration, CI/CD, infrastructure, manifests and API/tool definitions where hierarchy and keys carry workflow meaning.",
+            "Cognee TextLoader supports YAML. Parse mappings/lists/anchors structurally where configuration semantics matter, normalize to deterministic JSON/text for Cognee, and retain the original file as an OKF source/resource.",
+            "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml"
+          ],
+          "sourceRow": 15
+        },
+        {
+          "id": "Filetype-16",
+          "values": [
+            "Filetype #13 ",
+            "FastMCP Spec",
+            "1.0",
+            "Give FDE agents context about available MCP tools, their schemas, capabilities and where each tool fits in an enterprise workflow.",
+            "Parse MCP/FastMCP server declarations and tool metadata into server, tool, input-schema, output and resource/prompt relationships; ingest the normalized manifest into Cognee and expose tool concepts/resources through OKF references.",
+            "https://github.com/jlowin/fastmcp/blob/main/examples/echo.py"
+          ],
+          "sourceRow": 16
+        },
+        {
+          "id": "Filetype-17",
+          "values": [
+            "Filetype #14 ",
+            "ODB++",
+            "1.0",
+            "High-fidelity PCB manufacturing context for FDEs: board structure, connectivity, components and fabrication/assembly data beyond natural-language documents.",
+            "Prebundle an ODB++ archive/parser: unpack the job, extract layer stack, nets, components, drill/rout, materials and manufacturing attributes into normalized JSON. Ingest the structured engineering entities/relationships into Cognee and attach job/source provenance through OKF.",
+            "https://odbplusplus.com/design/"
+          ],
+          "sourceRow": 17
+        },
+        {
+          "id": "Filetype-18",
+          "values": [
+            "Filetype #15 ",
+            "OpenAPI",
+            "1.0",
+            "Give FDE agents machine-readable knowledge of enterprise APIs, contracts, payloads, authentication requirements and service relationships.",
+            "Parse OpenAPI JSON/YAML deterministically before Cognee: extract paths, operations, parameters, request/response schemas, security schemes and component references as entities/edges. Ingest structured output into Cognee; publish API concepts in OKF with resource/source links and lifecycle metadata.",
+            "https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v3.0/petstore.yaml"
+          ],
+          "sourceRow": 18
+        },
+        {
+          "id": "Filetype-19",
+          "values": [
+            "Filetype #16 ",
+            "Swagger",
+            "1.0",
+            "Understand legacy API contracts and map operations to services, data objects and integration workflows.",
+            "Parse Swagger/OpenAPI 2.0 definitions into endpoints, HTTP methods, parameters, definitions, responses and security metadata; normalize to structured JSON/Markdown before Cognee and retain the specification URI as OKF provenance.",
+            "https://petstore.swagger.io/v2/swagger.json"
+          ],
+          "sourceRow": 19
+        },
+        {
+          "id": "Filetype-20",
+          "values": [
+            "Filetype #17 ",
+            "Web URL / HTML",
+            "1.0",
+            "Bring public/internal web documentation, wiki pages, product docs and web-based runbooks into the enterprise context graph while retaining source URLs.",
+            "For a webpage URL, Cognee fetches HTML and extracts text with its URL crawler; direct binary-file URLs should be downloaded by the ingestion gateway first rather than passed as webpage URLs. Normalize page text/metadata, ingest into Cognee, and store the canonical resource URL in OKF frontmatter/sources.",
+            "https://docs.cognee.ai/core-concepts/main-operations/legacy-operations/add"
+          ],
+          "sourceRow": 20
+        },
+        {
+          "id": "Filetype-21",
+          "values": [
+            "Filetype #18 ",
+            ".csv",
+            "2.0",
+            "Flat master data, exports, mappings and transactional extracts such as Part Number→Supplier or Customer→Account relationships.",
+            "Cognee auto-detects CSV and can ingest it via dlt; schema and foreign-key relationships can be built deterministically without LLM extraction. Infer/declare headers and types, preserve row/source identifiers, then graph domain entities; expose resulting concepts and sources in OKF.",
+            "https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv"
+          ],
+          "sourceRow": 21
+        },
+        {
+          "id": "Filetype-22",
+          "values": [
+            "Filetype #19 ",
+            ".docx",
+            "2.0",
+            "Enterprise policies, SOPs, proposals, requirements and reports authored in Microsoft Word.",
+            "Use Cognee UnstructuredLoader with cognee[docs]. Extract headings, paragraphs, tables, lists and document metadata to normalized text while preserving hierarchy; ingest into Cognee and retain the original document as OKF provenance.",
+            "https://github.com/python-openxml/python-docx/tree/master/tests/test_files"
+          ],
+          "sourceRow": 22
+        },
+        {
+          "id": "Filetype-23",
+          "values": [
+            "Filetype #20 ",
+            ".parquet",
+            "2.0",
+            "Large analytical datasets and event/transaction exports where columnar schema and selected records provide enterprise context efficiently.",
+            "Use DuckDB/PyArrow to inspect schema and selectively read columnar rows; derive table/field metadata and domain relationships without converting the entire file to prose. Feed structured summaries/entities to Cognee; publish source URI/schema provenance through OKF.",
+            "https://github.com/apache/parquet-testing/tree/master/data"
+          ],
+          "sourceRow": 23
+        },
+        {
+          "id": "Filetype-24",
+          "values": [
+            "Filetype #21 ",
+            ".pdf – Text-based",
+            "2.0",
+            "Contracts, manuals, reports, specifications and procedures where text is embedded and page/layout context may matter.",
+            "Use Cognee PyPdfLoader for standard extraction or AdvancedPdfLoader with cognee[docs] when layout/tables matter. Preserve page/source metadata, normalize extracted text, then chunk/embed/graph. Generate OKF concepts with the PDF URI in resource/sources and trust/freshness fields as needed.",
+            "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+          ],
+          "sourceRow": 24
+        },
+        {
+          "id": "Filetype-25",
+          "values": [
+            "Filetype #22 ",
+            ".tar.gz",
+            "2.0",
+            "Portable bundles of repositories, logs, datasets or engineering artifacts that must be unpacked before semantic processing.",
+            "Decompress at the ingestion gateway, record archive manifest/path/hash, then route every contained file through its format-specific parser. Ingest extracted content into Cognee with archive→member relationships; carry archive/member resources into OKF sources for provenance.",
+            "https://github.com/libarchive/libarchive/tree/master/libarchive/test"
+          ],
+          "sourceRow": 25
+        },
+        {
+          "id": "Filetype-26",
+          "values": [
+            "Filetype #23 ",
+            ".xlsx",
+            "2.0",
+            "Operational workbooks, BOMs, cost sheets, trackers and master data where row/column structure, formulas and sheet relationships are business context.",
+            "Use Cognee's document loader for workbook extraction, but prebundle openpyxl/structured table extraction for enterprise fidelity: enumerate sheets, named ranges, headers, formulas and cell tables; route heavy calculations to deterministic code, ingest entities/relationships into Cognee, and preserve workbook/sheet provenance in OKF.",
+            "https://github.com/SheetJS/test_files/tree/master/xlsx"
+          ],
+          "sourceRow": 26
+        },
+        {
+          "id": "Filetype-27",
+          "values": [
+            "Filetype #24 ",
+            ".zip",
+            "2.0",
+            "Common enterprise delivery package for documents, datasets, code and engineering files containing mixed formats.",
+            "Decompress at the ingestion gateway, preserve archive/member paths and hashes, then dispatch each member to the appropriate Cognee loader or prebundled parser. Model archive→member relationships and retain both levels as OKF provenance.",
+            "https://github.com/libarchive/libarchive/tree/master/libarchive/test"
+          ],
+          "sourceRow": 27
+        },
+        {
+          "id": "Filetype-28",
+          "values": [
+            "Filetype #25 ",
+            "Google Docs",
+            "2.0",
+            "Collaborative enterprise documentation, meeting notes, policies and evolving runbooks that need a stable graph representation with source traceability.",
+            "Use Google Drive/Docs API to export document content to Markdown/text with headings, lists, tables, comments/metadata as permitted; feed the normalized export to Cognee. Store the canonical Drive resource URI and source metadata in OKF rather than treating the exported copy as the authoritative identity.",
+            "https://developers.google.com/docs/api/samples"
+          ],
+          "sourceRow": 28
+        },
+        {
+          "id": "Filetype-29",
+          "values": [
+            "Filetype #26 ",
+            "Google Sheets",
+            "2.0",
+            "Collaborative trackers, operational masters, planning sheets and lightweight databases where tabular relationships matter.",
+            "Use Google Sheets API to read sheets, ranges, formulas and typed values; normalize each logical table with workbook/sheet/range identifiers before Cognee. Use deterministic processing for calculations and preserve the canonical spreadsheet URI/range as OKF provenance.",
+            "https://developers.google.com/sheets/api/samples"
+          ],
+          "sourceRow": 29
+        },
+        {
+          "id": "Filetype-30",
+          "values": [
+            "Filetype #27 ",
+            ".dwg",
+            "3.0",
+            "Native AutoCAD engineering drawings where geometry, layers, annotations and title-block metadata define manufacturing/project context.",
+            "Use a CAD-specific parser/converter before Cognee. Extract layers, blocks, entities, title block, annotations and embedded BOM references into structured JSON/text; do not rely on generic image ingestion for engineering semantics. Graph parts/layers/documents and preserve drawing revision/source in OKF.",
+            "https://github.com/LibreDWG/libredwg/tree/master/test/test-data"
+          ],
+          "sourceRow": 30
+        },
+        {
+          "id": "Filetype-31",
+          "values": [
+            "Filetype #28 ",
+            ".dxf",
+            "3.0",
+            "Exchange-format CAD drawings where vector entities and layer semantics need deterministic extraction before semantic graphing.",
+            "Parse DXF sections/entities/layers/blocks with a CAD library such as ezdxf/LibreDWG; extract title-block text, dimensions, annotations and entity relationships into JSON before Cognee. Preserve file/revision provenance in OKF.",
+            "https://github.com/mozman/ezdxf/tree/master/examples"
+          ],
+          "sourceRow": 31
+        },
+        {
+          "id": "Filetype-32",
+          "values": [
+            "Filetype #29 ",
+            ".iges",
+            "3.0",
+            "Legacy neutral 3D CAD exchange used to expose product geometry and part/assembly context to FDE workflows.",
+            "Use a 3D CAD/STEP-IGES geometry parser such as Open CASCADE to extract product/assembly names, topology, bounding boxes and available attributes; serialize engineering metadata to JSON/text before Cognee and preserve model/source revision in OKF.",
+            "https://github.com/Open-Cascade-SAS/OCCT/tree/master/samples"
+          ],
+          "sourceRow": 32
+        },
+        {
+          "id": "Filetype-33",
+          "values": [
+            "Filetype #30 ",
+            ".jpeg",
+            "3.0",
+            "Photos, screenshots, scanned pages, labels, diagrams and visual evidence requiring semantic description or OCR.",
+            "Cognee ImageLoader uses a vision-capable LLM to describe images. For enterprise ingestion, add OCR/layout extraction when text/tables are present; store extracted description/text plus image metadata in Cognee and keep the original image resource as OKF provenance.",
+            "https://github.com/python-pillow/Pillow/tree/main/Tests/images"
+          ],
+          "sourceRow": 33
+        },
+        {
+          "id": "Filetype-34",
+          "values": [
+            "Filetype #31 ",
+            ".jpg",
+            "3.0",
+            "Photos, screenshots, scanned records and diagrams that carry enterprise context unavailable as native text.",
+            "Cognee ImageLoader uses a vision-capable LLM to describe images. Add OCR/layout extraction for text-heavy images, normalize captions/text/objects for graph ingestion, and retain image identity/source in OKF.",
+            "https://github.com/python-pillow/Pillow/tree/main/Tests/images"
+          ],
+          "sourceRow": 34
+        },
+        {
+          "id": "Filetype-35",
+          "values": [
+            "Filetype #32 ",
+            ".mp3",
+            "3.0",
+            "Calls, interviews, meetings and field recordings where spoken decisions, requirements and entities need to become searchable context.",
+            "Cognee AudioLoader transcribes audio with a Whisper-compatible model. Add timestamps/speaker segmentation when available, normalize transcript segments and metadata, then ingest into Cognee; retain recording URI and generated/verified provenance in OKF.",
+            "https://github.com/anars/blank-audio"
+          ],
+          "sourceRow": 35
+        },
+        {
+          "id": "Filetype-36",
+          "values": [
+            "Filetype #33 ",
+            ".mp4",
+            "3.0",
+            "Training videos, inspections, demos and recorded workflows where both spoken and visual context matter.",
+            "Preprocess video with audio transcription plus scene/keyframe segmentation; run OCR/vision on relevant frames, align transcript and visual events by timestamp, then ingest normalized segments into Cognee. Preserve original video/time ranges as OKF sources.",
+            "https://sample-videos.com/"
+          ],
+          "sourceRow": 36
+        },
+        {
+          "id": "Filetype-37",
+          "values": [
+            "Filetype #34 ",
+            ".pdf – Scanned/Image",
+            "3.0",
+            "Scanned contracts, invoices, drawings, legacy records and signed documents that cannot be reliably indexed through text extraction alone.",
+            "Detect pages with no usable text layer; rasterize pages and run OCR/vision extraction before Cognee. Preserve page number, bounding/layout references and OCR confidence where available; normalize extracted text/tables and retain the original PDF/page as OKF source provenance.",
+            "https://www.loc.gov/preservation/digital/formats/fdd/fdd000030.shtml"
+          ],
+          "sourceRow": 37
+        },
+        {
+          "id": "Filetype-38",
+          "values": [
+            "Filetype #35 ",
+            ".png",
+            "3.0",
+            "Screenshots, diagrams, schematics, dashboards and scanned forms used as evidence or workflow context.",
+            "Cognee ImageLoader can describe PNGs with a vision-capable LLM. Add OCR/layout/table extraction for screenshots, schematics and scanned forms; ingest extracted text/objects/relations and preserve image source metadata in OKF.",
+            "https://github.com/python-pillow/Pillow/tree/main/Tests/images"
+          ],
+          "sourceRow": 38
+        },
+        {
+          "id": "Filetype-39",
+          "values": [
+            "Filetype #36 ",
+            ".step",
+            "3.0",
+            "Neutral 3D CAD exchange for manufacturing/aerospace/automotive workflows requiring assembly and part context.",
+            "Parse STEP with a 3D geometry kernel such as Open CASCADE; extract assembly tree, product/part names, geometry metadata, bounding boxes and available properties into structured JSON before Cognee. Preserve model/revision source in OKF.",
+            "https://github.com/Open-Cascade-SAS/OCCT/tree/master/samples"
+          ],
+          "sourceRow": 39
+        },
+        {
+          "id": "Filetype-40",
+          "values": [
+            "Filetype #37 ",
+            ".stp",
+            "3.0",
+            "Alternate STEP extension used for neutral 3D CAD exchange and assembly/part context.",
+            "Treat as STEP content: parse with a 3D geometry kernel, extract assembly/product structure, part names, bounding boxes and attributes, serialize to JSON/text, then ingest into Cognee with model/revision provenance in OKF.",
+            "https://github.com/Open-Cascade-SAS/OCCT/tree/master/samples"
+          ],
+          "sourceRow": 40
+        },
+        {
+          "id": "Filetype-41",
+          "values": [
+            "Filetype #38 ",
+            ".tiff",
+            "3.0",
+            "High-resolution scans, archival documents, engineering images and document-imaging workflows.",
+            "Use image/OCR preprocessing before Cognee. For multipage TIFF, preserve page/frame boundaries; extract text, tables and visual descriptions, then ingest normalized artifacts and retain page-level source provenance in OKF.",
+            "https://github.com/python-pillow/Pillow/tree/main/Tests/images"
+          ],
+          "sourceRow": 41
+        },
+        {
+          "id": "Filetype-42",
+          "values": [
+            "Filetype #39 ",
+            ".wav",
+            "3.0",
+            "Meetings, calls, voice notes and machine/field recordings where speech provides enterprise workflow context.",
+            "Cognee AudioLoader transcribes WAV with a Whisper-compatible model. Preserve timestamps and audio metadata; optionally add diarization, then ingest transcript segments into Cognee and keep the recording URI as OKF source provenance.",
+            "https://github.com/anars/blank-audio"
+          ],
+          "sourceRow": 42
+        },
+        {
+          "id": "Filetype-43",
+          "values": [
+            "Filetype #40 ",
+            "Gerber RS-274X",
+            "3.0",
+            "Legacy PCB fabrication artwork requiring deterministic vector parsing before it can contribute manufacturing context.",
+            "Use a Gerber parser before Cognee to decode apertures, flashes, draws, regions and coordinates; combine copper/mask/silkscreen layers plus drill data into a structured PCB manifest. Graph layers/nets/features and retain job/layer provenance in OKF.",
+            "https://github.com/curtacircuitos/pcb-tools/tree/master/examples"
+          ],
+          "sourceRow": 43
+        },
+        {
+          "id": "Filetype-44",
+          "values": [
+            "Filetype #41 ",
+            "Gerber X2",
+            "3.0",
+            "PCB fabrication data with richer standardized attributes than RS-274X, improving layer/component semantics for FDEs.",
+            "Parse Gerber X2 commands plus file/aperture attributes; extract layer function, component/pad attributes and geometry into a structured PCB manifest before Cognee. Preserve layer/job provenance and revision signals in OKF.",
+            "https://www.ucamco.com/en/gerber"
+          ],
+          "sourceRow": 44
+        },
+        {
+          "id": "Filetype-45",
+          "values": [
+            "Filetype #42 ",
+            "Gerber X3",
+            "3.0",
+            "Newer Gerber-based PCB manufacturing context where component data should be available to engineering agents.",
+            "Parse Gerber X3 including component information in addition to X2-style attributes and geometry; normalize layers, components, pads and manufacturing features into JSON before Cognee and preserve source/revision provenance in OKF.",
+            "https://www.ucamco.com/en/gerber"
+          ],
+          "sourceRow": 45
+        },
+        {
+          "id": "Filetype-46",
+          "values": [
+            "Filetype #43 ",
+            "IPC-2581",
+            "3.0",
+            "Comprehensive PCB design-to-manufacturing exchange that can supply richer assembly/fabrication context than rendered documents.",
+            "Parse the IPC-2581 XML package deterministically: extract stackup, materials, components, nets, BOM, fabrication and assembly attributes; map IDs/references into graph relationships before Cognee. Preserve package/revision provenance in OKF.",
+            "https://www.ipc2581.com/"
+          ],
+          "sourceRow": 46
+        }
+      ],
+      "removedRows": [
+        47,
+        48
+      ],
+      "notes": [
+        "Note: Should be private table. FDE should not be able to edit."
+      ],
+      "readOnly": true
+    }
+  ]
+}

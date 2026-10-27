@@ -1,0 +1,34 @@
+Build or integrate the BuLLM Masters frontend using React + Vite + TypeScript, @refinedev/core and AG Grid Community. Use the supplied project as the working reference. Keep the existing app's other screens and changes untouched. No unnecessary libraries and no paid AG Grid features.
+
+Branding and shell
+Use BuLLM, never BuLLM Quote. Match the reference screenshot's light shell, white left sidebar, subtle gray page background, blue active state, compact header, master-sheet tabs with counts, search toolbar, Bulk Upload and Add Row actions. Use orange #FF9800 for Bu and blue #0084C2 for LLM. Keep mobile navigation usable and keep wide-table scrolling inside the grid.
+
+Source of truth
+Use the attached workbook and src/workbook.json. Do not invent, normalize, trim, title-case, rename, reorder, add or remove named columns. Worksheet row 2 is the literal column header, row 3 is the description, and data starts on row 4. Preserve header whitespace exactly, including "Name " and " Logs". Display descriptions in header tooltips. The first named column is part of the schema. Rules and Skills contain one trailing formatted but unnamed column: omit only that unnamed column.
+
+Views and baseline
+README: preserve every nonblank source row in a searchable guide.
+Organization: 15 columns, 6 records.
+Rules: 12 columns, 8 records.
+Agents: 12 columns, 6 records.
+Skills: 12 columns, 16 records.
+Tooling: 16 columns, 11 records.
+Filetype: 6 columns, 43 records.
+All named columns map directly. Metadata numbering and description rows are not records. Retain all nonblank supplied example/proposal rows and their warnings. Do not claim they are live or configured integrations.
+Remove only source blank placeholders: Organization row 8 (Unit #5 has only its label); Agents row 9 (Agent #6 has only its label) and row 11 (empty); Filetype rows 47-48 (empty). Do not renumber existing row labels. Do not preload empty rows. Add Row may create a single blank row only when the FDE requests it.
+
+Editing and permissions
+Use AG Grid Community for inline editing, column filters, sorting, selection, resizable columns and horizontal scrolling. Keep workbook column order fixed. Support multiline editing, Ctrl+Enter save, Esc cancel and click-outside save. Allow Add Row and confirmed Delete selected for editable masters.
+The workbook's Filetype row 49 states it should be private and FDE must not edit. Do not show that instruction as data. Filetype must be read-only for the FDE with no Add Row, Bulk Upload or delete actions. Keep search/history/export available. Enforce read-only in the provider too, and require backend authorization in production.
+
+Search is mandatory on every master, including Tooling and read-only Filetype, plus README. Search all values, show matching/total counts, support empty results, and reset the query on sheet changes.
+Add a visible Search history control for every view. Store recent searches per sheet, newest first, deduplicated, max 12; record after typing settles. Allow clicking a term to rerun it and clearing history for the active view. Explain that local history is browser-only; do not send terms anywhere.
+
+Bulk upload and export
+Implement CSV Bulk Upload with a downloadable exact-header template. Require literal header text and order, including whitespace. Parse quoted commas, double quotes and multiline cells; accept a UTF-8 BOM and CRLF/LF. Reject malformed quotes, mismatched headers or row widths. Skip completely empty imported records and append without overwriting existing data. Show a useful error or success message. Export current data to CSV using the same exact headers, proper quoting and UTF-8 BOM. Do not imply XLSX upload exists unless separately implemented and tested.
+
+Data layer
+Use Refine's DataProvider and resource hooks for the six masters. Until real endpoints are supplied, use a localStorage provider with schema-checked stored records and stable internal IDs outside the workbook columns. Save edits, adds and deletes with visible feedback and truthful error states. State browser-only persistence and no backend connected in the UI. No fake API endpoints, success responses, authentication or configured integrations. When integrating a real backend, replace the provider and enforce tenant/auth permissions server-side; do not change the exact workbook schema.
+
+Verification
+Run npm ci, npm run build and schema checks. Exercise all views, all search boxes, history recall/clear/per-sheet isolation/persistence, add/edit/delete/cancel, save/reload, CSV template/export, valid import, invalid headers and malformed CSV. Verify Filetype cannot be edited through either UI or provider. Inspect desktop and phone screenshots, including 320 and 390 widths, and fix overflow, unreadable controls, ghost rows or overlapping grid content. Keep all other app screens and dependencies unchanged.

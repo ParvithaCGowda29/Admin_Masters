@@ -1,0 +1,17 @@
+Organization: correct count 6, rendered
+Rules: correct count 8, rendered
+Agents: correct count 6, rendered
+Skills: correct count 16, rendered
+Tooling: correct count 11, rendered
+Filetype: correct count 43, rendered
+Search filters matching row; search history records and recalls the query.
+Search empty state works.
+Add Row + cell edit + local persistence survive reload.
+CSV export contains saved edits.
+Invalid CSV headers rejected.
+Valid exact-header CSV appends records.
+README displays preserved source content.
+Mobile 390: no document overflow, grid scrolls within panel.
+Mobile 320: no document overflow, grid scrolls within panel.
+No browser page errors.
+All seven search/history controls verified: clear, per-sheet isolation, browser persistence. Selected-row deletion and read-only Filetype verified.
