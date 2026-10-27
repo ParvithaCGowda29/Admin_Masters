@@ -15,3 +15,7 @@
 .files-menu button:hover{background:#f2f9fd}
 .uppy-dialog{width:min(760px,calc(100vw - 28px))}
 .uppy-dialog .bulk-body{padding:16px 24px}
+
+.nav-upload-wrap{position:relative;margin-bottom:8px}
+.nav-upload-wrap .nav-upload{margin-bottom:0}
+.nav-upload-wrap .files-menu{left:12px;min-width:min(300px,calc(100vw - 48px));max-width:calc(100vw - 48px)}
