@@ -3,11 +3,27 @@ import {parseCSV} from './csv';
 
 export type ImportSheet={name:string;rows:string[][]};
 export const normalizeHeader=(value:string)=>value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
+// Source workbook labels can differ from the current master schema. Keep aliases
+// explicit so metadata/description rows do not win header detection by accident.
+const HEADER_ALIASES:Record<string,string>={
+ orgid:'orgid',organizationid:'orgid',organisationid:'orgid',code:'orgid',
+ company:'companytype',organizationname:'companytype',organisationname:'companytype',orgname:'companytype',companyname:'companytype',
+ brand:'brandproperties',website:'brandproperties',brandprofile:'brandproperties',websitegbpsocialmedia:'brandproperties',
+ address:'location',registeredaddress:'location',registeredlocation:'location',
+ qualitystandards:'certifications',qualityregulatorystandards:'certifications',certification:'certifications',
+ businesssegmentandofferings:'companysegmentnicheofferings',companysegment:'companysegmentnicheofferings',companydetails:'companysegmentnicheofferings',orgdetails:'companysegmentnicheofferings',offerings:'companysegmentnicheofferings',
+ customer:'customersaudience','clientaccounts':'customersaudience',audience:'customersaudience','customersandaudience':'customersaudience',
+ userrole:'employeesjobrole',employees:'employeesjobrole',
+ knowledgebase:'datasources',knowledgebases:'datasources',
+ erpapiintegrationendpoints:'systemstoolssoftware',systemstools:'systemstoolssoftware',
+ hardware:'assetshardware',notes:'fdenotes',
+};
+const headerKey=(value:string)=>{const key=normalizeHeader(value);return HEADER_ALIASES[key]||key;};
 export function autoMap(headers:string[],targets:string[]):number[]{
  const used=new Set<number>();
  return headers.map(header=>{
-  const key=normalizeHeader(header);
-  const target=key?targets.findIndex((h,i)=>!used.has(i)&&normalizeHeader(h)===key):-1;
+  const key=headerKey(header);
+  const target=key?targets.findIndex((h,i)=>!used.has(i)&&headerKey(h)===key):-1;
   if(target>=0)used.add(target);
   return target;
  });
@@ -37,12 +53,18 @@ export async function readImportFile(file:File):Promise<ImportSheet[]>{
  if(filled.some(s=>s.rows.length>20000||s.rows.some(r=>r.length>200)))throw Error('Use a file with at most 20,000 rows and 200 columns per sheet.');
  return filled;
 }
+export function importDataRows(rows:string[][],headerRow:number):string[][]{
+ return rows.slice(headerRow+1).filter(row=>{
+  const first=normalizeHeader(row[0]||'');
+  return !['description','context','definition','stable'].some(label=>first.startsWith(label));
+ });
+}
 export function mappedRows(rows:string[][],headerRow:number,mapping:number[],width:number):string[][]{
  const targets=mapping.filter(i=>i>=0);
  if(!targets.length)throw Error('Map at least one file column.');
  if(new Set(targets).size!==targets.length)throw Error('Each master column can be mapped only once.');
  if(targets.some(i=>i>=width))throw Error('A mapping is outside the master columns.');
- return rows.slice(headerRow+1).map(row=>{
+ return importDataRows(rows,headerRow).map(row=>{
   const values=Array<string>(width).fill('');
   mapping.forEach((target,index)=>{if(target>=0)values[target]=String(row[index]??'');});
   return values;
@@ -57,6 +79,10 @@ const ALIASES:Record<string,string>={organization:'organization',organisation:'o
 export function sheetKey(name:string):string{
  const key=normalizeHeader(name).replace(/masters?$/,'');
  return ALIASES[key]||key;
+}
+export function matchingSheetIndex(sheets:ImportSheet[],master:string):number{
+ const key=sheetKey(master);
+ return sheets.findIndex(sheet=>sheetKey(sheet.name)===key);
 }
 export function planWorkbook(sheets:ImportSheet[],masters:MasterTarget[]):WorkbookPlan{
  const plans:SheetPlan[]=[];const unmatchedSheets:{name:string;reason:string}[]=[];const used=new Set<string>();
