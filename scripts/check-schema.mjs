@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const data=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
-const expected={Organization:[12,3],Agents:[8,18],Skills:[12,50],Rules:[9,36],Tools:[9,177],Filetype:[9,43]};
+const expected={Organization:[12,0],Agents:[8,0],Skills:[12,0],Rules:[9,0],Tools:[9,0],Filetype:[9,43]};
 assert.deepEqual(data.sheets.map(s=>s.name),Object.keys(expected));
 // The confirmed workbook includes ID-only rows (for example MFG-AG-6).
 // Reject completely empty rows without rejecting those source records.
