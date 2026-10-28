@@ -16,6 +16,8 @@ export function matchesFacets(row:RecordRow,selection:FacetSelection,except?:str
 export function facetOptions(rows:RecordRow[],index:number,selection:FacetSelection){const counts=new Map<string,number>();for(const row of rows.filter(r=>matchesFacets(r,selection,String(index)))){const value=facetValue(row.values[index]||'');counts.set(value,(counts.get(value)||0)+1);}return [...counts].sort(([a],[b])=>a.localeCompare(b));}
 export function readmeForMaster(name:string,readme:string[][]){
  if(name==='Masters')return readme;
- const names=['Organization','Agents','Skills','Rules','Tools','Filetype'];
- return readme.filter(row=>['Layout','Hierarchy','Manufacturing records'].includes(row[0])||names.includes(row[0])&&row[0]===name);
+ // Tab panels stay specific to their own tab: only the workbook row named after the tab
+ // (if one exists) plus the tab's own field guide. Shared cross-master rows like Layout,
+ // Hierarchy and Manufacturing records live under the Masters parent info only.
+ return readme.filter(row=>row[0]===name);
 }

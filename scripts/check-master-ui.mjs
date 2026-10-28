@@ -17,7 +17,7 @@ try{
  assert.deepEqual(facetFields('Tools',['Category','Status']),[{label:'Category',index:0},{label:'Status',index:1}]);
  const readme=[['Layout','Global','Guide'],['Filetype','Untouched','Read-only'],['Sources','Snapshot','Context']];
  assert.deepEqual(readmeForMaster('Masters',readme),readme);
- assert.deepEqual(readmeForMaster('Organization',readme),[readme[0]]);
- assert.deepEqual(readmeForMaster('Filetype',readme),readme.slice(0,2));
+ assert.deepEqual(readmeForMaster('Organization',readme),[]);
+ assert.deepEqual(readmeForMaster('Filetype',readme),[readme[1]]);
  console.log('Masters UI logic checks passed: multi-select OR, cross-facet AND, dynamic counts, source guidance.');
 }finally{await fs.rm(temp,{recursive:true,force:true})}

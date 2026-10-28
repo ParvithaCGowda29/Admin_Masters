@@ -8,8 +8,8 @@ import {utils,write} from 'xlsx';
 // Compile the pure import helpers for Node without adding a test-runner dependency.
 const temp=await mkdtemp(join(process.cwd(),'.bulk-test-'));
 try{
- for(const name of ['csv','bulkImport']){
-  const source=(await readFile(`src/${name}.ts`,'utf8')).replace("'./csv'","'./csv.mjs'");
+ for(const name of ['csv','templates','bulkImport']){
+  const source=(await readFile(`src/${name}.ts`,'utf8')).replace("'./csv'","'./csv.mjs'").replace("'./templates'","'./templates.mjs'");
   await writeFile(join(temp,`${name}.mjs`),ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
  }
  const {autoMap,dedupeRows,detectHeader,mappedRows,readImportFile,planWorkbook,planFiles,sheetKey,matchingSheetIndex,importDataRows}=await import(pathToFileURL(join(temp,'bulkImport.mjs')));
@@ -101,6 +101,19 @@ try{
  const noneMatched=planFiles([{name:'rules.csv',sheets:[{name:'CSV',rows:[['Rule ID','Name'],['R-1','x']]}]}],masters,{type:'all'});
  assert.deepEqual(noneMatched.plans.map(p=>p.master),['Rules']);
  assert.deepEqual(noneMatched.missingTabs.sort(),['Organization','Tools']);
+ // Fill-in list templates are held: never imported into Masters, detected by their exact
+ // blank-template header row even when the file is renamed after a master tab.
+ const employee=[['Employee','Job title','Department','Unit applicability','Verification status'],['Asha','Engineer','Platform','All','Verified']];
+ const held=planWorkbook([{name:'Employee List',rows:employee},{name:'tools',rows:[['tool id','NAME'],['T-9','Jira']]}],masters);
+ assert.deepEqual(held.plans.map(p=>p.master),['Tools']);
+ assert.equal(held.unmatchedSheets.length,1);
+ assert.match(held.unmatchedSheets[0].reason,/not imported into Masters/);
+ const renamed=planFiles([{name:'organization.csv',sheets:[{name:'CSV',rows:employee}]}],masters,{type:'all'});
+ assert.deepEqual(renamed.plans,[]);
+ assert.match(renamed.unmatchedSheets[0].reason,/not imported into Masters/);
+ const heldOnTab=planFiles([{name:'Employee List.xlsx',sheets:[{name:'Employee List',rows:employee}]}],masters,{type:'tab',tab:'Organization'});
+ assert.deepEqual(heldOnTab.plans,[]);
+ assert.match(heldOnTab.unmatchedSheets[0].reason,/not imported into Masters/);
  // dedupeRows: re-imports skip exact repeats, never overwrite changed IDs, and keep batch order.
  assert.deepEqual(dedupeRows([['ORG-1','Alpha',' Austin ']],[['org-1','Alpha','Austin']]),{fresh:[],exact:1,changed:0});
  assert.deepEqual(dedupeRows([['ORG-1','Alpha','Austin']],[['ORG-1','Beta','Austin']]),{fresh:[],exact:0,changed:1});

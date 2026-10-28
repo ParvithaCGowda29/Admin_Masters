@@ -1,8 +1,22 @@
 import {read,utils} from 'xlsx';
 import {parseCSV} from './csv';
+import {TEMPLATES} from './templates';
 
 export type ImportSheet={name:string;rows:string[][]};
 export const normalizeHeader=(value:string)=>value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
+// Fill-in list templates (Employee List, Sample - Customers/Assets/Systems) are held: where
+// these lists live is not decided, so they must never be imported into Masters. Detected by
+// their exact blank-template header row, so a renamed file is still caught.
+const TEMPLATE_KEYS=TEMPLATES.map(t=>({label:t.label,key:t.headers.map(normalizeHeader).join('\u0001')}));
+export function matchingTemplate(headerRow:string[]):string|null{
+ const key=headerRow.map(normalizeHeader).join('\u0001');
+ return TEMPLATE_KEYS.find(t=>t.key===key)?.label||null;
+}
+export function templateInRows(rows:string[][]):string|null{
+ for(const row of rows.slice(0,5)){const label=matchingTemplate(row);if(label)return label;}
+ return null;
+}
+const templateReason=(label:string)=>`${label} template - where these lists should live is not connected yet, so this list is not imported into Masters`;
 // Source workbook labels can differ from the current master schema. Keep aliases
 // explicit so metadata/description rows do not win header detection by accident.
 const HEADER_ALIASES:Record<string,string>={
@@ -87,6 +101,8 @@ export function matchingSheetIndex(sheets:ImportSheet[],master:string):number{
 export function planWorkbook(sheets:ImportSheet[],masters:MasterTarget[]):WorkbookPlan{
  const plans:SheetPlan[]=[];const unmatchedSheets:{name:string;reason:string}[]=[];const used=new Set<string>();
  for(const sheet of sheets){
+  const template=templateInRows(sheet.rows);
+  if(template){unmatchedSheets.push({name:sheet.name,reason:templateReason(template)});continue;}
   const master=masters.find(m=>sheetKey(m.name)===sheetKey(sheet.name));
   if(!master){unmatchedSheets.push({name:sheet.name,reason:sheetKey(sheet.name)==='filetype'?'Read-only, never imported':'No master tab with this name'});continue;}
 
@@ -135,6 +151,8 @@ export type ImportScope={type:'all'}|{type:'tab';tab:string};
 export function planFiles(files:SourceFile[],masters:MasterTarget[],scope:ImportScope):WorkbookPlan{
  const plans:SheetPlan[]=[];const unmatchedSheets:WorkbookPlan['unmatchedSheets']=[];
  const addSheet=(master:MasterTarget,name:string,rows:string[][],file?:string)=>{
+  const template=templateInRows(rows);
+  if(template){unmatchedSheets.push({name,reason:templateReason(template)});return;}
   const headerRow=detectHeader(rows,master.headers);
   const width=rows.length?Math.max(...rows.map(r=>r.length)):0;
   const mapping=autoMap(Array.from({length:width},(_,i)=>rows[headerRow]?.[i]||''),master.headers);

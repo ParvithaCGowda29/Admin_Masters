@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
-import {autoMap,dedupeRows,detectHeader,importDataRows,mappedRows,matchingSheetIndex,readImportFile,type ImportSheet} from './bulkImport';
+import {autoMap,dedupeRows,detectHeader,importDataRows,mappedRows,matchingSheetIndex,templateInRows,readImportFile,type ImportSheet} from './bulkImport';
 import {loadRows} from './provider';
 
 type Props={master:string;headers:string[];file:File;onClose:()=>void;onImport:(values:string[][])=>Promise<void>};
@@ -15,6 +15,7 @@ export function BulkUpload({master,headers,file,onClose,onImport}:Props){
  const alive=useRef(true);
  useEffect(()=>{alive.current=true;const element=dialog.current;element?.showModal();return()=>{alive.current=false;element?.close();};},[]);
  const selected=sheets[sheetIndex];
+ const templateBlock=selected?templateInRows(selected.rows):null;
  const sourceHeaders=selected?.rows[headerRow]||[];
  const width=selected?Math.max(...selected.rows.map(r=>r.length)):0;
  const columns=Array.from({length:width},(_,i)=>sourceHeaders[i]?.trim()||`Column ${i+1}`);
@@ -55,9 +56,10 @@ export function BulkUpload({master,headers,file,onClose,onImport}:Props){
     <table className="mapping-table"><thead><tr><th>File column</th><th>Sample value</th><th>{master} field</th></tr></thead><tbody>{columns.map((name,i)=><tr key={i}><td>{name}<small>Column {i+1}</small></td><td className="bulk-sample">{importDataRows(selected.rows,headerRow).find(r=>r[i]?.trim())?.[i]||'-'}</td><td><select aria-label={`Map column ${i+1}: ${name}`} value={mapping[i]??-1} disabled={busy} onChange={e=>setMapping(current=>current.map((v,j)=>j===i?Number(e.target.value):v))}><option value={-1}>Skip this column</option>{headers.map((h,j)=><option key={j} value={j}>{h}{j===0?' (ID)':''}</option>)}</select></td></tr>)}</tbody></table>
     <p className="bulk-summary">{prepared.fresh.length} new row{prepared.fresh.length===1?'':'s'} ready to append.{prepared.exact>0&&` ${prepared.exact} already present will be skipped.`}{prepared.changed>0&&` ${prepared.changed} use an existing ID with different values and won't be overwritten.`} Existing rows will be kept. Blank mapped rows are skipped.</p>
    </>}
-   {(error||prepared.error)&&<p role="alert" className="bulk-error">{error||prepared.error}</p>}
+   {templateBlock&&<p role="alert" className="bulk-error">This file is the {templateBlock} template. Where these filled lists should live is not connected yet, so it is not imported into Masters.</p>}
+   {!templateBlock&&(error||prepared.error)&&<p role="alert" className="bulk-error">{error||prepared.error}</p>}
    {busy&&<p role="status">{selected?'Importing rows...':'Reading file...'}</p>}
   </div>
-  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!!prepared.error||!prepared.fresh.length} onClick={()=>void confirmImport()}>Import {prepared.fresh.length||''} new row{prepared.fresh.length===1?'':'s'}</button></div>
+  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!!templateBlock||!!prepared.error||!prepared.fresh.length} onClick={()=>void confirmImport()}>Import {prepared.fresh.length||''} new row{prepared.fresh.length===1?'':'s'}</button></div>
  </dialog>;
 }

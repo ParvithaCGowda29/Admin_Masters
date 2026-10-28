@@ -125,6 +125,53 @@ try{
  await page.keyboard.press('Escape');
  report.push('Filetype stays read-only: all three Add files choices are disabled on that tab.');
 
+ // Each tab's info panel is specific to that tab; shared README rows stay under the parent.
+ await page.getByRole('button',{name:'Agents 0',exact:true}).click();
+ await page.getByRole('button',{name:'Information about Agents',exact:true}).hover();
+ const agentsPanel=page.getByRole('region',{name:'Agents information',exact:true});
+ await agentsPanel.waitFor();
+ const agentsText=(await agentsPanel.allTextContents())[0];
+ assert.ok(agentsText.includes('AI agents'));
+ assert.ok(agentsText.includes('Agent Type'));
+ assert.ok(!agentsText.includes('Hierarchy'));
+ assert.ok(!agentsText.includes('Workflow step'));
+ await page.screenshot({path:screenshotDir+'/masters-agents-info.png',fullPage:true});
+ await page.getByRole('heading',{name:'Agents Master',exact:true}).hover();
+ await page.waitForTimeout(300);
+ await page.getByRole('button',{name:'Information about Masters',exact:true}).hover();
+ const parentPanel=page.getByRole('region',{name:'Masters information',exact:true});
+ await parentPanel.waitFor();
+ assert.ok((await parentPanel.allTextContents())[0].includes('Hierarchy'));
+ await page.getByRole('heading',{name:'Agents Master',exact:true}).hover();
+ await page.waitForTimeout(300);
+ report.push('Tab info panels are tab-specific; shared README rows stay under the Masters parent.');
+
+ // Placement B is next to Add files: both controls share one row in the sidebar.
+ const addBox=await page.getByRole('button',{name:'Add files',exact:true}).boundingBox();
+ const tplBox=await page.getByRole('button',{name:'Templates',exact:true}).boundingBox();
+ assert.ok(Math.abs(addBox.y-tplBox.y)<2&&tplBox.x>addBox.x,'Add files and Templates side by side');
+ report.push('Templates sits next to Add files in one sidebar row.');
+
+ // Filled list templates are held: they are blocked from Masters with the reason shown.
+ await page.getByRole('button',{name:'Organization 0',exact:true}).click();
+ await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Add files',exact:true}).click();
+ await page.getByRole('menuitem',{name:/Bulk upload/}).click();
+ await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'Employee List.xlsx',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
+ await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();
+ await page.getByRole('alert').filter({hasText:'not imported into Masters'}).waitFor();
+ assert.equal(await page.locator('.bulk-footer button.primary').isDisabled(),true);
+ await page.screenshot({path:screenshotDir+'/masters-template-blocked.png',fullPage:true});
+ await page.getByRole('button',{name:'Close bulk upload'}).click();
+ report.push('Filled list templates are blocked from Masters with the destination-not-connected reason.');
+
+ // Clean capture of placement A: the four Organization column headers with template downloads.
+ await page.setViewportSize({width:3000,height:1000});
+ await page.mouse.move(700,500);
+ await page.waitForTimeout(300);
+ await page.locator('.ag-header').screenshot({path:screenshotDir+'/masters-template-headers.png'});
+ await page.setViewportSize({width:1440,height:1000});
+
  assert.deepEqual(errors,[]);
  report.push('No browser page errors.');
  console.log(report.join('\n'));
