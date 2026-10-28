@@ -45,13 +45,12 @@
 /* Comma-separated items stack one per line inside the same cell and parent row. */
 .stacked{display:block}
 .stacked-item{display:block}
-.stacked-item+.stacked-item{border-top:1px dashed #e1e7ef;margin-top:2px;padding-top:2px}
+.stacked-item+.stacked-item{margin-top:4px}
 :root[data-theme=dark] .nav-templates{background:#202d3e;color:#e2e9f2;border-color:#485a70}
 :root[data-theme=dark] .files-menu a:hover{background:#293c51}
 :root[data-theme=dark] .files-menu a small{color:#a6b8cc}
 :root[data-theme=dark] .template-download{border-color:#485a70;color:#a6c8e2}
 :root[data-theme=dark] .template-download:hover{color:#86d4ff;border-color:#86d4ff}
-:root[data-theme=dark] .stacked-item+.stacked-item{border-top-color:#36465a}
 /* Add files and Templates sit next to each other in one row. */
 .nav-upload-row{display:flex;gap:8px;margin:0 12px 8px}
 .nav-upload-row .nav-upload-wrap{margin-bottom:0;flex:1;min-width:0}
