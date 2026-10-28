@@ -46,7 +46,7 @@ export default function App(){
  const message=(text:string,bad=false)=>{setNotice(text);setError(bad)};
  // Link indicator: tabs whose data actually fills a link/path/url column get a badge that
  // scrolls the grid to that column and flashes it. Derived from live rows, never assumed.
- const linkCols=useMemo(()=>{if(!sheet)return[];return sheet.headers.map((_,i)=>i).filter(i=>/link|url|path/i.test(sheet.headers[i])&&rows.some(r=>(r.values[i]||'').trim()))},[active,rows]);
+ const linkCols=useMemo(()=>{if(!sheet)return[];const urlish=/(https?:\/\/|www\.)[^\s]*/i;return sheet.headers.map((h,i)=>({h,i})).filter(({h,i})=>/link|url|path/i.test(h)?rows.some(r=>(r.values[i]||'').trim()):rows.some(r=>urlish.test((r.values[i]||'').trim()))).map(({i})=>i)},[active,rows]);
  const showLinkColumn=()=>{const api=grid.current?.api;if(!api||!linkCols.length)return;const cols=linkCols.map(String);api.ensureColumnVisible(cols[0],'middle');api.flashCells({columns:cols,flashDuration:900});setTimeout(()=>api.flashCells({columns:cols,flashDuration:900}),1000)};
  const counts=Object.fromEntries(workbook.sheets.map(s=>[s.name,loadRows(s.name).length]));
  const addN=Math.min(100,Math.max(1,Math.floor(addCount)||1));
