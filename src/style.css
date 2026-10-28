@@ -57,3 +57,40 @@
 .nav-upload-row .nav-upload{width:100%;margin:0;justify-content:center}
 .nav-upload-row .files-menu{left:0}
 @media(max-width:900px){.nav-upload-row{flex-direction:column}}
+/* cmdk search panel anchored to the toolbar search field; grid stays visible behind it. */
+.search-cmd{position:relative;margin-left:auto;width:290px}
+.search-cmd .search-input-row{position:relative}
+.search-cmd input[type=text],.search-cmd input{width:100%;border:1px solid #e2e7ee;background:white;border-radius:5px;padding:10px;color:#384455}
+.search-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;padding:2px 7px;font-size:15px;color:#8894a4}
+.search-clear:hover{background:none;color:#0084c2}
+.search-panel{position:absolute;right:0;top:calc(100% + 6px);width:340px;max-width:calc(100vw - 48px);max-height:min(430px,calc(100vh - 220px));overflow:auto;background:#fff;border:1px solid #dfe5ed;border-radius:8px;box-shadow:0 12px 40px #10203026;z-index:40;padding:6px}
+.search-panel [cmdk-group-heading]{display:block;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#8894a4;padding:10px 10px 6px}
+.search-panel [cmdk-item]{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;font-size:12.5px;color:#354050;cursor:pointer}
+.search-panel [cmdk-item][data-selected=true]{background:#e8f4fc;color:#006da6}
+.search-panel [cmdk-item] small{margin-left:auto;color:#8b97a6;font-size:10px}
+.search-item-main{display:flex;flex-direction:column;min-width:0}
+.search-item-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.search-item-main small{margin:1px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.search-avatar{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:#e4f3fc;color:#0084c2;font-size:11px;font-weight:600}
+.search-item-hint{margin-left:auto;color:#8b97a6}
+.search-chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 10px 8px}
+.search-chip{border:1px solid #bdddeb;background:#e8f4fc;color:#00689d;border-radius:15px;font-size:11px;padding:6px 11px}
+.search-chip:hover{background:#d9eefb}
+.search-empty{padding:16px 10px;font-size:12px;color:#8b97a6}
+.search-note{padding:6px 10px 2px;font-size:10.5px;color:#8b97a6}
+.search-footer{margin-top:6px;padding:9px 10px 7px;border-top:1px solid #edf0f3;font-size:10.5px;color:#8b97a6}
+:root[data-theme=dark] .search-cmd input{background:#202d3e;color:#e2e9f2;border-color:#485a70}
+:root[data-theme=dark] .search-panel{background:#17212f;border-color:#36465a;box-shadow:0 12px 40px #00000060}
+:root[data-theme=dark] .search-panel [cmdk-item]{color:#e2e9f2}
+:root[data-theme=dark] .search-panel [cmdk-item][data-selected=true]{background:#123f5b;color:#86d4ff}
+:root[data-theme=dark] .search-panel [cmdk-group-heading],:root[data-theme=dark] .search-panel [cmdk-item] small,:root[data-theme=dark] .search-empty,:root[data-theme=dark] .search-note,:root[data-theme=dark] .search-footer,:root[data-theme=dark] .search-item-hint{color:#a6b8cc}
+:root[data-theme=dark] .search-chip{background:#123f5b;border-color:#2c5f80;color:#86d4ff}
+:root[data-theme=dark] .search-chip:hover{background:#1a4f73}
+:root[data-theme=dark] .search-avatar{background:#123f5b;color:#86d4ff}
+:root[data-theme=dark] .search-footer{border-color:#36465a}
+@media(max-width:600px){.search-cmd{width:100%}.search-panel{position:fixed;left:16px;right:16px;top:auto;width:auto}}
+/* Contains-links badge: only when a link/path/url column actually has values; jumps to it. */
+.links-badge{display:inline-flex;align-items:center;gap:5px;border-radius:20px;border:1px solid #bdddeb;background:#e8f4fc;color:#00689d;font-size:11px;font-weight:600;padding:4px 11px}
+.links-badge:hover{background:#d9eefb}
+:root[data-theme=dark] .links-badge{background:#123f5b;border-color:#2c5f80;color:#86d4ff}
+:root[data-theme=dark] .links-badge:hover{background:#1a4f73}
