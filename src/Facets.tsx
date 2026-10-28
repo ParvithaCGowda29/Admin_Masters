@@ -1,0 +1,8 @@
+import type {RecordRow} from './provider';
+import {facetFields,facetOptions,type FacetSelection} from './masterUi';
+type Props={name:string;headers:string[];rows:RecordRow[];selection:FacetSelection;onChange:(next:FacetSelection)=>void};
+export function Facets({name,headers,rows,selection,onChange}:Props){
+ const fields=facetFields(name,headers);const count=Object.values(selection).reduce((n,v)=>n+v.length,0);
+ function toggle(key:string,value:string){const current=selection[key]||[];onChange({...selection,[key]:current.includes(value)?current.filter(v=>v!==value):[...current,value]});}
+ return <section className="facets" aria-label={`Filter ${name}`}><div className="facet-controls"><span className="facet-label">Filter by</span>{fields.map(f=><details className="facet" key={f.index}><summary>{f.label}{selection[f.index]?.length?` (${selection[f.index].length})`:''}</summary><div className="facet-options">{facetOptions(rows,f.index,selection).map(([value,n])=><label key={value}><input type="checkbox" checked={(selection[f.index]||[]).includes(value)} onChange={()=>toggle(String(f.index),value)}/><span title={value}>{value}</span><small>{n}</small></label>)}{!rows.length&&<p>No values yet. Add rows to filter this field.</p>}</div></details>)}{count>0&&<button className="clear-filters" onClick={()=>onChange({})}>Clear filters</button>}</div>{count>0&&<div className="filter-tags" aria-label="Selected filters">{fields.flatMap(f=>(selection[f.index]||[]).map(value=><button key={`${f.index}:${value}`} title={`${f.label}: ${value}`} onClick={()=>toggle(String(f.index),value)}>{f.label}: {value} <span aria-hidden="true">×</span><span className="sr-only">Remove filter</span></button>))}</div>}</section>;
+}

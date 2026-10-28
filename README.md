@@ -61,3 +61,13 @@ This is a working frontend with a local Refine DataProvider. There is no backend
 Changes are stored in this browser's localStorage under `bullm-masters-v1`; search history is under `bullm-search-history-v1`. Another browser/device will not see them. Clearing browser storage removes local edits/history. Export CSV for a portable copy. Search history can contain sensitive terms, so clear it on shared devices.
 
 The source workbook remains the initial schema and seed-data reference in `src/workbook.json`. Internal record IDs are not new workbook columns. The original workbook is included in `reference/` in the source archive.
+
+## Masters UI review - 28 October 2026
+
+- Masters is the collapsible parent of all six master tabs. The separate README tab is removed. Hover, focus or tap each `i` to read the existing workbook guide and the tab's field descriptions; shared source notes remain under the parent `i`.
+- Add files is the single file entry point. Its existing current-tab, workbook, folder and zip review flows are retained. No new document extraction, cloud connector or ID standardization is included.
+- Facet menus use values already present in workbook fields, with counts and removable filter chips. Multiple values in one facet are OR; different facets and text search are AND. Empty tabs show no invented categories or tags.
+- Light/dark mode is saved on this browser. The grid keeps one source record per row with wrapped, content-sized cells across tabs. Existing combined source records are not split or rewritten automatically.
+- Existing workbook columns, browser storage key, duplicate protection and read-only Filetype are unchanged. No backend or external list storage is added. Template placement implementation remains paused pending the user's wireframe review.
+
+Checks: `npm test`, `npm run test:bulk`, `node scripts/check-master-ui.mjs`, and `node scripts/check-ui-review.mjs` (Playwright browser required; optionally set `CHROME_PATH` and `UI_SCREENSHOT_DIR`). `npm run build` checks TypeScript and produces the production bundle.
