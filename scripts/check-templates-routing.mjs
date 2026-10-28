@@ -28,16 +28,16 @@ try{
  await page.keyboard.press('Escape');
 
  // Placement B: Templates button next to Add files downloads the four blank templates.
- await page.getByRole('button',{name:'Templates',exact:true}).click();
+ await page.getByRole('button',{name:'Add templates',exact:true}).click();
  const templateLinks=page.locator('.templates-menu a[role=menuitem]');
  assert.equal(await templateLinks.count(),4);
  await page.screenshot({path:screenshotDir+'/masters-templates-menu.png',fullPage:true});
- const [download]=await Promise.all([page.waitForEvent('download'),page.getByRole('menuitem',{name:/Employee list/}).click()]);
+ const [download]=await Promise.all([page.waitForEvent('download'),page.locator('.template-item',{hasText:'Employee list'}).getByRole('menuitem',{name:'Blank',exact:true}).click()]);
  assert.equal(download.suggestedFilename(),'Employee List.xlsx');
  const dl=await readXlsx(await download.path());
  assert.deepEqual(dl.rows,[['Employee','Job title','Department','Unit applicability','Verification status']]);
  assert.equal(dl.rows.length,1);
- report.push('Templates menu next to Add files downloads all four blank header templates.');
+ report.push('Add templates menu next to Add files downloads all four blank header templates.');
 
  // Placement A: the four backed Organization column headers carry the same downloads.
  const headerLinks=page.locator('.ag-header-cell .template-download');
@@ -150,9 +150,9 @@ try{
 
  // Placement B is next to Add files: both controls share one row in the sidebar.
  const addBox=await page.getByRole('button',{name:'Add files',exact:true}).boundingBox();
- const tplBox=await page.getByRole('button',{name:'Templates',exact:true}).boundingBox();
+ const tplBox=await page.getByRole('button',{name:'Add templates',exact:true}).boundingBox();
  assert.ok(Math.abs(addBox.y-tplBox.y)<2&&tplBox.x>addBox.x,'Add files and Templates side by side');
- report.push('Templates sits next to Add files in one sidebar row.');
+ report.push('Add templates sits next to Add files in one sidebar row.');
 
  // Filled list templates are held: they are blocked from Masters with the reason shown.
  await page.getByRole('button',{name:'Organization 0',exact:true}).click();
@@ -161,11 +161,48 @@ try{
  await page.getByRole('menuitem',{name:/Bulk upload/}).click();
  await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'Employee List.xlsx',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
  await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();
+ await page.getByRole('alert').filter({hasText:'Add templates'}).waitFor();
  await page.getByRole('alert').filter({hasText:'not imported into Masters'}).waitFor();
  assert.equal(await page.locator('.bulk-footer button.primary').isDisabled(),true);
  await page.screenshot({path:screenshotDir+'/masters-template-blocked.png',fullPage:true});
  await page.getByRole('button',{name:'Close bulk upload'}).click();
- report.push('Filled list templates are blocked from Masters with the destination-not-connected reason.');
+ report.push('Filled list templates are blocked from Masters and pointed at Add templates.');
+
+ // Add rows moved out of the toolbar into the grid's right-click menu.
+ await page.getByRole('button',{name:'Tools 4',exact:true}).click();
+ await page.getByText('4 of 4 rows',{exact:true}).waitFor();
+ assert.equal(await page.locator('.toolbar .add-rows').count(),0);
+ await page.locator('.ag-row[row-id=t1]').first().click({button:'right'});
+ await page.getByRole('menuitem',{name:'Add row',exact:true}).waitFor();
+ await page.getByRole('menuitem',{name:'Delete row',exact:true}).waitFor();
+ await page.screenshot({path:screenshotDir+'/masters-context-menu.png'});
+ await page.getByRole('menuitem',{name:'Add row',exact:true}).click();
+ await page.getByText('5 of 5 rows',{exact:true}).waitFor();
+ await page.keyboard.press('Escape');
+ report.push('Add rows lives in the right-click menu (with delete); the toolbar holds only search.');
+
+ // Add templates: a user's own filled template maps into the template's fields and lands
+ // in that template's list, never in a master tab.
+ await page.getByRole('button',{name:'Add templates',exact:true}).click();
+ await page.locator('.template-item',{hasText:'Employee list'}).getByRole('menuitem',{name:/Upload your own/}).click();
+ await page.getByRole('heading',{name:'Upload your own Employee list template',exact:true}).waitFor();
+ await page.locator('.bulk-dialog input[type=file]').setInputFiles({name:'my-employees.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified\nBala,Designer,Product,Unit 1,Pending')});
+ await page.getByRole('button',{name:'Add 2 new rows',exact:true}).waitFor();
+ await page.screenshot({path:screenshotDir+'/masters-template-upload.png'});
+ await page.getByRole('button',{name:'Add 2 new rows',exact:true}).click();
+ await page.getByRole('status').filter({hasText:'added to your Employee list template'}).waitFor();
+ await page.getByRole('button',{name:'Add templates',exact:true}).click();
+ await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
+ assert.ok((await page.locator('.templates-menu').allTextContents()).join(' ').includes('2 rows'));
+ await page.getByRole('menuitem',{name:'View / edit',exact:true}).click();
+ await page.getByRole('heading',{name:'Employee list',exact:true}).waitFor();
+ await page.screenshot({path:screenshotDir+'/masters-template-list.png'});
+ await page.getByRole('textbox',{name:'Employee (row 1)',exact:true}).fill('Asha R');
+ await page.getByRole('button',{name:'Done',exact:true}).click();
+ const savedLists=await page.evaluate(()=>localStorage.getItem('bullm-template-lists-v1'));
+ assert.ok(savedLists?.includes('Asha R'),'edited template list row persisted');
+ await page.getByRole('button',{name:'Organization 0',exact:true}).waitFor();
+ report.push('Custom template upload maps columns into the template fields; rows stay in the Add templates list, editable, masters untouched.');
 
  // Clean capture of placement A: the four Organization column headers with template downloads.
  await page.setViewportSize({width:3000,height:1000});

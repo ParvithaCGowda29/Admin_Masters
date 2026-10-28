@@ -16,7 +16,7 @@ export function templateInRows(rows:string[][]):string|null{
  for(const row of rows.slice(0,5)){const label=matchingTemplate(row);if(label)return label;}
  return null;
 }
-const templateReason=(label:string)=>`${label} template - where these lists should live is not connected yet, so this list is not imported into Masters`;
+const templateReason=(label:string)=>`${label} template - filled template lists are uploaded under Add templates in the sidebar, not imported into Masters`;
 // Source workbook labels can differ from the current master schema. Keep aliases
 // explicit so metadata/description rows do not win header detection by accident.
 const HEADER_ALIASES:Record<string,string>={
