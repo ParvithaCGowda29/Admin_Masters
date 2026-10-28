@@ -4,9 +4,9 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {set_fs,read,utils,write} from 'xlsx';
 set_fs(fs);
-const screenshotDir='/downloads';
+const screenshotDir=process.env.UI_SCREENSHOT_DIR||'/downloads';fs.mkdirSync(screenshotDir,{recursive:true});
 const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{stdio:'ignore'});
-const browser=await chromium.launch({args:['--no-sandbox']});
+const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--no-sandbox']});
 const report=[];
 async function readXlsx(path){const wb=read(fs.readFileSync(path));const ws=wb.Sheets[wb.SheetNames[0]];return {sheet:wb.SheetNames[0],rows:utils.sheet_to_json(ws,{header:1})};}
 try{
@@ -55,16 +55,18 @@ try{
  await page.evaluate(async()=>{const {saveRows}=await import('/src/provider.ts');saveRows('Tools',[
   {id:'t1',values:['TOOL-MKTG-08','GA4, Search Console, Google Tag Manager, Mixpanel','Analytical tools','TBD','','Active','','','']},
   {id:'t2',values:['TOOL-MKTG-09','Policies (IT, HR, RBAC)','Guidelines','TBD','','Active','','','']},
+  {id:'t4',values:['TOOL-MKTG-11','Intake: RFQ pointer; BOM fields, https://x.test:8080/a','Guidelines','TBD','','Active','','','']},
   {id:'t3',values:['TOOL-MKTG-10','Single tool','API','TBD','','Paused','','','']},
  ]);});
  await page.reload();await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
- await page.getByRole('button',{name:'Tools 3',exact:true}).click();
- await page.getByText('3 of 3 rows',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'Tools 4',exact:true}).click();
+ await page.getByText('4 of 4 rows',{exact:true}).waitFor();
  assert.deepEqual(await page.locator('[row-id=t1] .stacked-item').allTextContents(),['GA4','Search Console','Google Tag Manager','Mixpanel']);
+ assert.deepEqual(await page.locator('[row-id=t4] .stacked-item').allTextContents(),['Intake:','RFQ pointer','BOM fields','https://x.test:8080/a']);
  assert.equal(await page.locator('[row-id=t2] .stacked').count(),0);
  assert.equal(await page.locator('[row-id=t3] .stacked').count(),0);
  const kept=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Tools');});
- assert.equal(kept.length,3);assert.equal(kept[0].values[1],'GA4, Search Console, Google Tag Manager, Mixpanel');
+ assert.equal(kept.length,4);assert.equal(kept[0].values[1],'GA4, Search Console, Google Tag Manager, Mixpanel');
  await page.screenshot({path:screenshotDir+'/masters-stacked-light.png',fullPage:true});
  await page.getByRole('button',{name:'Switch to dark mode'}).click();
  await page.screenshot({path:screenshotDir+'/masters-stacked-dark.png',fullPage:true});

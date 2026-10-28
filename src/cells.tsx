@@ -2,7 +2,8 @@ import type {ReactNode} from 'react';
 import type {ICellRendererParams} from 'ag-grid-community';
 import type {RecordRow} from './provider';
 export type Hits=Map<string,Map<string,readonly (readonly [number,number])[]>>;
-// Split a cell on top-level commas only. Commas inside (), [] or {} stay put, so grouped
+// Split a cell on top-level commas, semicolons and colons followed by a space (so URLs,
+// times and IDs like ORG:01 stay whole; a label keeps its colon). Delimiters inside (), [] or {} stay put, so grouped
 // names like "Policies (IT, HR, RBAC)" remain one item. Offsets refer to the original
 // text so search highlighting still lines up.
 export function splitTopLevel(text:string):{value:string;start:number}[]{
@@ -10,12 +11,14 @@ export function splitTopLevel(text:string):{value:string;start:number}[]{
  for(let i=0;i<text.length;i++){const c=text[i];
   if(c==='('||c==='['||c==='{')depth++;
   else if(c===')'||c===']'||c==='}')depth=Math.max(0,depth-1);
-  else if(c===','&&!depth){parts.push({value:text.slice(start,i),start});start=i+1;}
+  else if(!depth&&c===','&&!(/\d/.test(text[i-1]??'')&&/\d/.test(text[i+1]??''))){parts.push({value:text.slice(start,i),start});start=i+1;}
+  else if(!depth&&c===';'){parts.push({value:text.slice(start,i),start});start=i+1;}
+  else if(!depth&&c===':'&&(i+1>=text.length||/\s/.test(text[i+1]))){parts.push({value:text.slice(start,i+1),start});start=i+1;}
  }
  parts.push({value:text.slice(start),start});
  return parts;
 }
-// Display-only: comma-separated items stack one per line inside the same cell and parent
+// Display-only: comma, semicolon and colon separated items stack one per line inside the same cell and parent
 // row. The stored value, ID and record count never change. Search matches still highlight.
 export function StackedHighlight(p:ICellRendererParams<RecordRow,string>&{hlKey:string}){
  const text=p.value??'';const ranges=(p.context.current as Hits).get(p.data?.id??'')?.get(p.hlKey);

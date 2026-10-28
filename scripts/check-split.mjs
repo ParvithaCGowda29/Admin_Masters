@@ -1,0 +1,11 @@
+import ts from 'typescript';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import {pathToFileURL} from 'node:url';
+const out=ts.transpileModule(fs.readFileSync('src/cells.tsx','utf8'),{compilerOptions:{module:'ESNext',target:'ES2020',jsx:'react-jsx'}}).outputText;
+const f=path.resolve('node_modules/.cells-check.mjs');fs.writeFileSync(f,out);
+const {splitTopLevel}=await import(pathToFileURL(f).href);
+const items=t=>splitTopLevel(t).map(p=>p.value.trim()).filter(Boolean);
+assert.deepEqual(items('API, MCP; Scripts'),['API','MCP','Scripts']);
+assert.deepEqual(items('Policies (IT, HR, RBAC), Rules'),['Policies (IT, HR, RBAC)','Rules']);
+assert.deepEqual(items('Allowed input: RFQ workbook, FG BOM fields. Required output: Keys'),['Allowed input:','RFQ workbook','FG BOM fields. Required output:','Keys']);
+assert.deepEqual(items('https://example.test/api:8080/x at 10:30 ORG:01'),['https://example.test/api:8080/x at 10:30 ORG:01']);
+assert.deepEqual(items('1,000 units'),['1,000 units']);
+console.log('split checks passed');
