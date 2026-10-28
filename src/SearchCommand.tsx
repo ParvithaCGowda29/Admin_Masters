@@ -46,7 +46,7 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
    {open&&<Command.List className="search-panel">
     {words.length===0?<>
      {history.length>0&&<Command.Group heading="Recent searches">{history.slice(0,4).map(h=><Command.Item key={`h-${h}`} value={`h:${h}`} onSelect={()=>pick(h)}><span className="search-item-title">{h}</span></Command.Item>)}</Command.Group>}
-     {suggestions.length>0&&<Command.Group heading="Suggested searches"><div className="search-chips">{suggestions.map(s=><button type="button" key={s} className="search-chip" onMouseDown={e=>e.preventDefault()} onClick={()=>pick(s)}>{s}</button>)}</div></Command.Group>}
+     {suggestions.length>0&&<Command.Group heading="Suggested searches"><div className="search-chips">{suggestions.map(s=><button type="button" key={s} className="search-chip" title={s} onMouseDown={e=>e.preventDefault()} onClick={()=>pick(s)}>{s}</button>)}</div></Command.Group>}
      {categorical.length>0&&<Command.Group heading="Browse by field">{field===null
       ?categorical.map(c=><Command.Item key={c.label} value={`f:${c.label}`} onSelect={()=>setField(c.i)}><span className="search-item-title">{c.label}</span><span className="search-item-hint" aria-hidden>→</span></Command.Item>)
       :categorical.filter(c=>c.i===field).map(c=><div key={c.label}>{c.values.slice(0,8).map(v=><Command.Item key={v} value={`fv:${v}`} onSelect={()=>pick(v)}><span className="search-item-title">{v}</span><small>{c.label}</small></Command.Item>)}</div>)}</Command.Group>}
