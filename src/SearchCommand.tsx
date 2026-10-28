@@ -31,8 +31,11 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const suggestions=useMemo(()=>{
   const vals:string[]=[];
   for(const c of categorical)for(const v of c.values){if(!vals.includes(v))vals.push(v);if(vals.length>=4)return vals}
+  // Tabs without a few-valued column (Skills, Filetype): fall back to real cell values, name column first, short values first.
+  const order=[displayIdx,...headers.map((_,i)=>i).filter(i=>i!==displayIdx)];
+  for(const maxLen of [60,Infinity])for(const i of order)for(const r of rows){const v=(r.values[i]||'').trim();if(v&&v.length<=maxLen&&!vals.includes(v)){vals.push(v);if(vals.length>=4)return vals}}
   return vals;
- },[categorical]);
+ },[categorical,rows,headers,displayIdx]);
  const history=useMemo(()=>{if(!open)return[];try{return (JSON.parse(localStorage.getItem('bullm-search-history-v1')||'{}')[active]||[]) as string[]}catch{return[]}},[active,open]);
  const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean);
  const matches=useMemo(()=>words.length?rows.filter(r=>matchesRow(r,words)).slice(0,8):[],[rows,query,words.length]);
