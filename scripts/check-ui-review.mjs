@@ -35,13 +35,8 @@ try{
  });
  await page.getByRole('button',{name:'Tools 0',exact:true}).click();
  await page.getByText('3 of 3 rows',{exact:true}).waitFor();
- await page.locator('summary').filter({hasText:/^Category/}).click();await page.getByLabel('API',{exact:false}).check();
- await page.getByText('2 of 3 rows',{exact:true}).waitFor();
- await page.locator('summary').filter({hasText:/^Category/}).click();
- await page.locator('summary').filter({hasText:/^Status/}).click();await page.getByLabel('Active',{exact:false}).check();
- await page.getByText('1 of 3 rows',{exact:true}).waitFor();
- await page.locator('summary').filter({hasText:/^Status/}).click();
- await page.screenshot({path:screenshotDir+'/masters-facets.png',fullPage:true});
+ assert.equal(await page.locator('summary').filter({hasText:/^Category/}).count(),0);
+ await page.screenshot({path:screenshotDir+'/masters-no-filter-bar.png',fullPage:true});
  await page.getByRole('button',{name:'Switch to dark mode'}).click();
  await page.screenshot({path:screenshotDir+'/masters-dark.png',fullPage:true});
  await page.reload();await page.getByRole('button',{name:'Switch to light mode'}).waitFor();
@@ -63,5 +58,5 @@ try{
  await page.locator('.ag-center-cols-container [row-id="org-persist"] [col-id="1"]').dblclick();const editor=page.locator('.ag-large-text-input textarea');await editor.fill('Edited business');await page.keyboard.press('Control+Enter');await page.getByRole('status').filter({hasText:'Changes saved on this device.'}).waitFor();
  await page.reload();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
  const saved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization')});assert.equal(saved[0].values[11],'Keep me');assert.equal(saved[0].values[1],'Edited business');assert.equal(saved.length,2);
- assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, additive facets, removed Upload/README, theme persistence, picker, protected Filetype, mobile.');
+ assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, no filter bar, removed Upload/README, theme persistence, picker, protected Filetype, mobile.');
 }finally{await browser.close();server.kill();}
