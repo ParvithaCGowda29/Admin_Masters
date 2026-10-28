@@ -127,29 +127,46 @@ export function dedupeRows(existing:string[][],incoming:string[][],idIndex=0):De
 }
 
 export type SourceFile={name:string;sheets:ImportSheet[]};
-// Folder/zip import: each workbook's sheets fill tabs by sheet name (planWorkbook rules);
-// each CSV fills the current tab unless its filename matches a tab name. Rows for the same
-// tab stay in separate plans; the caller combines them before appending.
-export function planFiles(files:SourceFile[],masters:MasterTarget[],current:string):WorkbookPlan{
+export type ImportScope={type:'all'}|{type:'tab';tab:string};
+// Folder/zip import routing. Masters parent scope ('all'): each workbook's sheets fill tabs
+// by sheet name and each CSV fills the tab its filename matches. Single-tab scope ('tab'):
+// every file maps into the open tab only - a workbook contributes the sheet named like the
+// tab when present, otherwise its first sheet; other sheets are reported as skipped.
+export function planFiles(files:SourceFile[],masters:MasterTarget[],scope:ImportScope):WorkbookPlan{
  const plans:SheetPlan[]=[];const unmatchedSheets:WorkbookPlan['unmatchedSheets']=[];
+ const addSheet=(master:MasterTarget,name:string,rows:string[][],file?:string)=>{
+  const headerRow=detectHeader(rows,master.headers);
+  const width=rows.length?Math.max(...rows.map(r=>r.length)):0;
+  const mapping=autoMap(Array.from({length:width},(_,i)=>rows[headerRow]?.[i]||''),master.headers);
+  const mapped=mapping.filter(i=>i>=0).length;
+  if(!mapped){unmatchedSheets.push({name,reason:`No column headings match ${master.name}`});return;}
+  plans.push({master:master.name,sheet:name,headerRow,mapped,total:master.headers.length,rows:mappedRows(rows,headerRow,mapping,master.headers.length),note:`${mapped} of ${master.headers.length} columns matched`,file});
+ };
  for(const file of files){
-  if(/\.csv$/i.test(file.name)){
+  if(scope.type==='tab'){
+   const master=masters.find(m=>sheetKey(m.name)===sheetKey(scope.tab));
+   if(!master){unmatchedSheets.push({name:file.name,reason:`${scope.tab} is read-only, so it cannot receive imports`});continue;}
+   if(/\.csv$/i.test(file.name)){addSheet(master,file.name,file.sheets[0]?.rows||[],file.name);continue;}
+   const chosen=(()=>{const index=matchingSheetIndex(file.sheets,master.name);return index>=0?index:0;})();
+   file.sheets.forEach((sheet,index)=>{
+    if(index===chosen)addSheet(master,sheet.name,sheet.rows,file.name);
+    else unmatchedSheets.push({name:`${file.name} \u00b7 ${sheet.name}`,reason:`Only the ${master.name} sheet imports while the ${scope.tab} tab is open`});
+   });
+  }else if(/\.csv$/i.test(file.name)){
    const key=sheetKey(file.name.replace(/\.csv$/i,''));
    if(key==='filetype'){unmatchedSheets.push({name:file.name,reason:'Read-only, never imported'});continue;}
-   const master=masters.find(m=>sheetKey(m.name)===key)||masters.find(m=>sheetKey(m.name)===sheetKey(current));
-   if(!master){unmatchedSheets.push({name:file.name,reason:'No master tab with this name'});continue;}
-   const rows=file.sheets[0]?.rows||[];
-   const headerRow=detectHeader(rows,master.headers);
-   const width=rows.length?Math.max(...rows.map(r=>r.length)):0;
-   const mapping=autoMap(Array.from({length:width},(_,i)=>rows[headerRow]?.[i]||''),master.headers);
-   const mapped=mapping.filter(i=>i>=0).length;
-   if(!mapped){unmatchedSheets.push({name:file.name,reason:`No column headings match ${master.name}`});continue;}
-   plans.push({master:master.name,sheet:file.name,headerRow,mapped,total:master.headers.length,rows:mappedRows(rows,headerRow,mapping,master.headers.length),note:`${mapped} of ${master.headers.length} columns matched`,file:file.name});
+   const master=masters.find(m=>sheetKey(m.name)===key);
+   if(!master){unmatchedSheets.push({name:file.name,reason:'No master tab with this name. Name the file after a tab, or open that tab to import it'});continue;}
+   addSheet(master,file.name,file.sheets[0]?.rows||[],file.name);
   }else{
    const plan=planWorkbook(file.sheets,masters);
    plans.push(...plan.plans.map(p=>({...p,file:file.name})));
    unmatchedSheets.push(...plan.unmatchedSheets.map(s=>({...s,name:`${file.name} \u00b7 ${s.name}`})));
   }
  }
- return {plans,unmatchedSheets,missingTabs:masters.filter(m=>!plans.some(p=>p.master===m.name)).map(m=>m.name)};
+ // Single-tab scope targets only the open tab, so other tabs are never "missing".
+ const missingTabs=scope.type==='tab'
+  ?(plans.length?[]:[scope.tab])
+  :masters.filter(m=>!plans.some(p=>p.master===m.name)).map(m=>m.name);
+ return {plans,unmatchedSheets,missingTabs};
 }

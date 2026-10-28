@@ -9,7 +9,7 @@ const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','1
 const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--no-sandbox']});
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.addInitScript(()=>sessionStorage.setItem('bullm_masters_session','ui-test@example.test'));
+ await page.addInitScript(()=>{try{sessionStorage.setItem('bullm_masters_session','ui-test@example.test')}catch{}});
  for(let i=0;i<30;i++){try{await page.goto('http://127.0.0.1:5173');break}catch{await new Promise(r=>setTimeout(r,100));}}
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  await page.evaluate(async()=>{const {saveRows}=await import('/src/provider.ts');saveRows('Organization',[{id:'org-persist',values:['ORG-EXISTING','Existing business','','Bengaluru','','','','','','','','Keep me']}]);});await page.reload();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
@@ -21,7 +21,9 @@ try{
  await page.getByRole('region',{name:'Organization information',exact:true}).hover();await page.waitForTimeout(250);assert.equal(await page.getByRole('region',{name:'Organization information',exact:true}).count(),1);
  await page.screenshot({path:screenshotDir+'/masters-info.png',fullPage:true});
  await page.getByRole('heading',{name:'Organization Master',exact:true}).hover();
- await page.getByRole('button',{name:'Masters',exact:true}).click();assert.equal(await page.getByRole('button',{name:'Tools 0'}).count(),0);await page.getByRole('button',{name:'Masters',exact:true}).click();
+ await page.getByRole('button',{name:'Collapse masters',exact:true}).click();assert.equal(await page.getByRole('button',{name:'Tools 0'}).count(),0);await page.getByRole('button',{name:'Expand masters',exact:true}).click();
+ await page.getByRole('button',{name:'Masters',exact:true}).click();await page.getByRole('heading',{name:'Masters overview',exact:true}).waitFor();await page.screenshot({path:screenshotDir+'/masters-parent.png',fullPage:true});
+ await page.getByRole('button',{name:/Organization 1/,exact:true}).click();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
  // Test representative records in a disposable browser context, never in the shipped workbook.
  await page.evaluate(async()=>{
  const {saveRows}=await import('/src/provider.ts');
@@ -44,7 +46,7 @@ try{
  await page.screenshot({path:screenshotDir+'/masters-dark.png',fullPage:true});
  await page.reload();await page.getByRole('button',{name:'Switch to light mode'}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();await page.screenshot({path:screenshotDir+'/masters-addfiles-dark.png',fullPage:true});
- await page.getByRole('menuitem',{name:/Add to current tab/}).click();
+ await page.getByRole('menuitem',{name:/Bulk upload/}).click();
  await page.getByRole('dialog').waitFor();await page.screenshot({path:screenshotDir+'/masters-picker-dark.png',fullPage:true});await page.getByRole('button',{name:'Close file picker'}).click();
  await page.getByRole('button',{name:'Filetype 43',exact:true}).click();await page.getByText('43 of 43 rows',{exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'＋ Add Row',exact:true}).count(),0);
@@ -52,7 +54,7 @@ try{
  await page.setViewportSize({width:1440,height:1000});await page.getByRole('button',{name:/Organization 1/,exact:true}).click();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
  // Exercise the retained Add files > Uppy > review path and duplicate guard.
  async function selectCSV(){
- await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('menuitem',{name:/Add to current tab/}).click();
+ await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('menuitem',{name:/Bulk upload/}).click();
  await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'Organization.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type,Location\nORG-IMPORT,Imported business,Mysuru')});
  await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();await page.getByRole('heading',{name:'Bulk Upload to Organization',exact:true}).waitFor();
  }

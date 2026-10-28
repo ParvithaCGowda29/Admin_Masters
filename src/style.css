@@ -24,3 +24,31 @@
 /* Theme covers navigation, filters, editors, menus and existing import dialogs. */
 :root[data-theme=dark]{color-scheme:dark}:root[data-theme=dark] body{background:#101925;color:#e2e9f2}:root[data-theme=dark] aside,:root[data-theme=dark] header,:root[data-theme=dark] .grid,:root[data-theme=dark] .pop-menu,:root[data-theme=dark] .bulk-dialog,:root[data-theme=dark] .master-info-panel,:root[data-theme=dark] .facet-options{background:#17212f;color:#e2e9f2;border-color:#36465a}:root[data-theme=dark] button,:root[data-theme=dark] input,:root[data-theme=dark] select,:root[data-theme=dark] .facet summary{background:#202d3e;color:#e2e9f2;border-color:#485a70}:root[data-theme=dark] button:hover,:root[data-theme=dark] .files-menu button:hover,:root[data-theme=dark] .nav-branch:hover{background:#293c51}:root[data-theme=dark] .nav-root{background:#233449;color:#e2e9f2}:root[data-theme=dark] .nav-branch.selected,:root[data-theme=dark] .nav-branch.selected button,:root[data-theme=dark] .filter-tags button,:root[data-theme=dark] .facet[open] summary{background:#123f5b;color:#86d4ff}:root[data-theme=dark] .nav-item small{background:#30465b;color:#dceaf6}:root[data-theme=dark] .primary{background:#007caf;color:#fff;border-color:#239ccc}:root[data-theme=dark] .nav-upload{background:#17364b;color:#86d4ff}:root[data-theme=dark] .bulk-file,:root[data-theme=dark] .mapping-table th{background:#202d3e}:root[data-theme=dark] .bulk-heading,:root[data-theme=dark] .bulk-footer,:root[data-theme=dark] .mapping-table td,:root[data-theme=dark] .mapping-table th,:root[data-theme=dark] .sidebar-foot{border-color:#36465a}:root[data-theme=dark] .page-title p,:root[data-theme=dark] .header-right,:root[data-theme=dark] .tools,:root[data-theme=dark] .table-note,:root[data-theme=dark] .footer,:root[data-theme=dark] .tagline,:root[data-theme=dark] .facet-label,:root[data-theme=dark] .bulk-hint,:root[data-theme=dark] .bulk-summary,:root[data-theme=dark] .bulk-heading p,:root[data-theme=dark] .bulk-footer span,:root[data-theme=dark] .files-menu button small{color:#a6b8cc}:root[data-theme=dark] .master-info-panel>strong{color:#86d4ff}:root[data-theme=dark] .master-info .info{background:transparent;color:#a6c8e2}:root[data-theme=dark] .grid .ag-row.search-hit:not(.ag-row-selected){background:#4b4221}:root[data-theme=dark] .ag-cell mark.hit{background:#d9b43e;color:#17212f}:root[data-theme=dark] .notice{background:#183d30;color:#c2f1d3;border-color:#3d8c69}:root[data-theme=dark] .notice.error,:root[data-theme=dark] .bulk-error{background:#4b2726;color:#ffd0c9;border-color:#975049}:root[data-theme=dark] .danger{color:#ffb4ab}:root[data-theme=dark] .uppy-Dashboard-inner{background:#202d3e;border-color:#485a70}:root[data-theme=dark] .uppy-Dashboard-AddFiles-title,:root[data-theme=dark] .uppy-Dashboard-note{color:#d6e2ef}:root[data-theme=dark] .uppy-Dashboard-AddFiles{border-color:#485a70}:root[data-theme=dark] .uppy-Dashboard-Item{background:#202d3e;color:#e2e9f2}
 @media(max-width:900px){.master-info-panel{left:165px;width:min(420px,calc(100vw - 190px))}.grid{height:60vh}}@media(max-width:600px){.master-info-panel{left:30px;top:100px;width:calc(100vw - 60px);max-height:calc(100vh - 130px)}.facet-options{position:fixed;left:16px;right:16px;top:240px;max-width:none;min-width:0}.theme-toggle{font-size:11px;white-space:nowrap}.header-right{gap:0}.header-right .avatar{margin-left:8px}.grid{height:57vh}.nav-branch .nav-item{min-height:44px}}
+/* Masters parent is selectable (overview), chevron alone collapses. */
+.nav-root .nav-chevron{flex:0 0 auto;width:auto;padding-right:2px}
+.nav-root .nav-parent{padding-left:2px}
+.nav-parent.parent-selected{color:#0084c2;font-weight:600}
+:root[data-theme=dark] .nav-parent.parent-selected{color:#86d4ff}
+/* Templates menu next to Add files (placement B). */
+.nav-templates{color:#425166;border-color:#dfe5ed;background:#fff}
+.nav-templates:hover{background:#eff7fc}
+.files-menu a{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;text-decoration:none;color:inherit;border-radius:5px;font-size:12px}
+.files-menu a svg{flex-shrink:0;color:#0084c2;margin-top:1px}
+.files-menu a span{display:flex;flex-direction:column;gap:2px}
+.files-menu a small{color:#8b97a6;font-size:10px;white-space:normal}
+.files-menu a:hover{background:#f2f9fd}
+/* Template download inside the Organization column headers (placement A). */
+.template-header{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.template-header-name{overflow:hidden;text-overflow:ellipsis}
+.template-download{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;border:1px solid #c3ccd7;border-radius:50%;color:#8894a4}
+.template-download:hover{color:#0084c2;border-color:#0084c2}
+/* Comma-separated items stack one per line inside the same cell and parent row. */
+.stacked{display:block}
+.stacked-item{display:block}
+.stacked-item+.stacked-item{border-top:1px dashed #e1e7ef;margin-top:2px;padding-top:2px}
+:root[data-theme=dark] .nav-templates{background:#202d3e;color:#e2e9f2;border-color:#485a70}
+:root[data-theme=dark] .files-menu a:hover{background:#293c51}
+:root[data-theme=dark] .files-menu a small{color:#a6b8cc}
+:root[data-theme=dark] .template-download{border-color:#485a70;color:#a6c8e2}
+:root[data-theme=dark] .template-download:hover{color:#86d4ff;border-color:#86d4ff}
+:root[data-theme=dark] .stacked-item+.stacked-item{border-top-color:#36465a}

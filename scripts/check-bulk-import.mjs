@@ -71,21 +71,34 @@ try{
  assert.equal(orgValues[0][0],'ORG-001');
  assert.equal(orgValues[0][1],'Example Organization');
  assert.equal(orgValues[0][2],'https://example.test');
- // planFiles: folder/zip imports. A workbook keeps planWorkbook matching and is tagged with its file;
- // a CSV fills the current tab unless its filename matches a tab; filetype.csv stays read-only.
+ // planFiles: folder/zip imports. Masters parent scope ('all'): a workbook keeps planWorkbook
+ // matching and is tagged with its file; a CSV fills the tab its filename matches; other CSVs
+ // are reported, and filetype.csv stays read-only.
  const multi=planFiles([
   {name:'extra-masters.xlsx',sheets:[{name:'tools',rows:[['tool id','NAME'],['T-9','Jira']]}]},
   {name:'rules.csv',sheets:[{name:'CSV',rows:[['Rule ID','Name'],['R-9','Gate check']]}]},
   {name:'anything.csv',sheets:[{name:'CSV',rows:[['Org ID','Company / Type'],['ORG-X-1','Beta']]}]},
   {name:'filetype.csv',sheets:[{name:'CSV',rows:[['Ext'],['pdf']]}]},
   {name:'mystery.csv',sheets:[{name:'CSV',rows:[['nope'],['1']]}]},
- ],masters,'Organization');
- assert.deepEqual(multi.plans.map(p=>[p.file,p.master,p.rows.length]),[['extra-masters.xlsx','Tools',1],['rules.csv','Rules',1],['anything.csv','Organization',1]]);
+ ],masters,{type:'all'});
+ assert.deepEqual(multi.plans.map(p=>[p.file,p.master,p.rows.length]),[['extra-masters.xlsx','Tools',1],['rules.csv','Rules',1]]);
  assert.deepEqual(multi.plans[0].rows,[['T-9','Jira']]);
  assert.deepEqual(multi.plans[1].rows,[['R-9','Gate check']]);
- assert.deepEqual(multi.unmatchedSheets.map(u=>u.name),['filetype.csv','mystery.csv']);
- assert.deepEqual(multi.missingTabs,[]);
- const noneMatched=planFiles([{name:'rules.csv',sheets:[{name:'CSV',rows:[['Rule ID','Name'],['R-1','x']]}]}],masters,'Organization');
+ assert.deepEqual(multi.unmatchedSheets.map(u=>u.name),['anything.csv','filetype.csv','mystery.csv']);
+ assert.deepEqual(multi.missingTabs,['Organization']);
+ // Single-tab scope: every file maps into the open tab only. A workbook contributes the sheet
+ // named like the tab when present, otherwise its first sheet; other sheets are reported.
+ const scoped=planFiles([
+  {name:'anything.csv',sheets:[{name:'CSV',rows:[['Org ID','Company / Type'],['ORG-X-1','Beta']]}]},
+  {name:'book.xlsx',sheets:[{name:'Random',rows:[['Org ID','Company / Type'],['ORG-W-1','Gamma']]},{name:'tools',rows:[['Org ID','Company / Type'],['ORG-W-2','Delta']]}]},
+ ],masters,{type:'tab',tab:'Organization'});
+ assert.deepEqual(scoped.plans.map(p=>[p.file,p.master,p.rows.length]),[['anything.csv','Organization',1],['book.xlsx','Organization',1]]);
+ assert.deepEqual(scoped.plans[1].rows,[['ORG-W-1','Gamma','']]);
+ assert.equal(scoped.unmatchedSheets.length,1);
+ assert.ok(scoped.unmatchedSheets[0].name.endsWith('tools'));
+ const named=planFiles([{name:'book.xlsx',sheets:[{name:'zzz',rows:[['Org ID','Company / Type'],['ORG-0','Zero']]},{name:'organization',rows:[['Org ID','Company / Type'],['ORG-N-1','Eta']]}]}],masters,{type:'tab',tab:'Organization'});
+ assert.deepEqual(named.plans.map(p=>[p.sheet,p.rows.length]),[['organization',1]]);
+ const noneMatched=planFiles([{name:'rules.csv',sheets:[{name:'CSV',rows:[['Rule ID','Name'],['R-1','x']]}]}],masters,{type:'all'});
  assert.deepEqual(noneMatched.plans.map(p=>p.master),['Rules']);
  assert.deepEqual(noneMatched.missingTabs.sort(),['Organization','Tools']);
  // dedupeRows: re-imports skip exact repeats, never overwrite changed IDs, and keep batch order.

@@ -9,3 +9,5 @@ export function IconFolder({size}:IconProps){return <svg {...base(size)}><path s
 export function IconArchive({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/><path d="M10 12l4 0"/></svg>}
 
 export function IconPlus({size}:IconProps){return <svg {...base(size)}><path d="M12 5v14M5 12h14"/></svg>}
+export function IconDownload({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/></svg>}
+export function IconTemplate({size}:IconProps){return <svg {...base(size)}><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>}

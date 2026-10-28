@@ -53,6 +53,6 @@ export function BulkUploadAll({masters,file,onClose,onImport}:Props){
    {error&&<p role="alert" className="bulk-error">{error}</p>}
    {busy&&<p role="status">{plan?'Importing rows...':'Reading file...'}</p>}
   </div>
-  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!plan||!total} onClick={()=>void confirmImport()}>Import {total||''} new rows into {plan?.plans.length||''} tabs</button></div>
+  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!plan||!total} onClick={()=>void confirmImport()}>Import {total||''} new row{total===1?'':'s'} into {plan?.plans.length||''} tab{(plan?.plans.length||0)===1?'':'s'}</button></div>
  </dialog>;
 }

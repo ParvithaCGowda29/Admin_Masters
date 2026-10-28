@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/csv.ts","./src/main.tsx","./src/provider.ts","./src/auth/loginpage.tsx","./src/auth/session.ts"],"version":"5.7.3"}
+{"root":["./src/AddFiles.tsx","./src/App.tsx","./src/BulkUpload.tsx","./src/BulkUploadAll.tsx","./src/Facets.tsx","./src/MasterInfo.tsx","./src/MultiImport.tsx","./src/TemplateHeader.tsx","./src/bulkImport.ts","./src/cells.tsx","./src/csv.ts","./src/icons.tsx","./src/main.tsx","./src/masterUi.ts","./src/provider.ts","./src/templates.ts","./src/auth/LoginPage.tsx","./src/auth/session.ts"],"version":"5.7.3"}
