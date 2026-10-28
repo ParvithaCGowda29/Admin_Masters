@@ -20,6 +20,14 @@ export function splitTopLevel(text:string):{value:string;start:number}[]{
 }
 // Display-only: comma, semicolon and colon separated items stack one per line inside the same cell and parent
 // row. The stored value, ID and record count never change. Search matches still highlight.
+// Display-only: each stacked item starts with a capital letter. Only an ASCII lowercase
+// first letter changes, so acronyms (ICP) keep their case, lengths and highlight offsets
+// stay stable, and the stored value is untouched. Links stay as typed (case-sensitive).
+export function capitalizeItem(text:string):string{
+ if(/^(?:[a-z][a-z0-9+.-]*:\/\/|www\.)/i.test(text))return text;
+ const c=text.charCodeAt(0);
+ return c>=97&&c<=122?String.fromCharCode(c-32)+text.slice(1):text;
+}
 export function StackedHighlight(p:ICellRendererParams<RecordRow,string>&{hlKey:string}){
  const text=p.value??'';const ranges=(p.context.current as Hits).get(p.data?.id??'')?.get(p.hlKey);
  const mark=(seg:string,offset:number,key:number):ReactNode=>{
@@ -36,5 +44,5 @@ export function StackedHighlight(p:ICellRendererParams<RecordRow,string>&{hlKey:
  };
  const parts=splitTopLevel(text).map(part=>({...part,trimmed:part.value.trim()})).filter(part=>part.trimmed);
  if(parts.length<2){const only=parts[0];return only?mark(only.trimmed,only.start+(only.value.length-only.value.trimStart().length),0):'';}
- return <span className="stacked">{parts.map((part,i)=>{const lead=part.value.length-part.value.trimStart().length;return <span className="stacked-item" key={i}>{mark(part.trimmed,part.start+lead,i)}</span>;})}</span>;
+ return <span className="stacked">{parts.map((part,i)=>{const lead=part.value.length-part.value.trimStart().length;return <span className="stacked-item" key={i}>{mark(capitalizeItem(part.trimmed),part.start+lead,i)}</span>;})}</span>;
 }

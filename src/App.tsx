@@ -20,6 +20,8 @@ import {getSession,logout,switchToPipeline} from './auth/session';
 ModuleRegistry.registerModules([AllCommunityModule]);
 const lightTheme=themeQuartz.withParams({accentColor:'#0084C2',backgroundColor:'#ffffff',headerBackgroundColor:'#f5f7fa',borderColor:'#e5e9ef',fontFamily:'Inter, Arial, sans-serif',fontSize:12,headerFontSize:11,rowVerticalPaddingScale:1.2});
 const darkTheme=themeQuartz.withParams({accentColor:'#56b8ef',backgroundColor:'#17212f',foregroundColor:'#e2e9f2',headerBackgroundColor:'#202d3e',borderColor:'#36465a',fontFamily:'Inter, Arial, sans-serif',fontSize:12,headerFontSize:11,rowVerticalPaddingScale:1.2});
+// ISATVON letters stay the workbook column keys; the Skills grid shows each letter with its expansion.
+const ISATVON:Record<string,string>={I:'Instruction',S:'Source',A:'Automation',T:'Tech stack',V:'Variables',O:'Outcome',N:'Notify on next'};
 const TIPS:Record<string,string>={Masters:'All master tables from the BuLLM source workbook.',Organization:'Business units, locations, customers, systems and certifications.',Rules:'Domain, DFM, sourcing and costing rules for manufacturing.',Agents:'AI agents with their models, repos, prompts, evals and logs.',Skills:'Agent skills: documents, RFQs, suppliers, pricing and templates.',Tools:'Tool registry: categories, links, owners, access and status.',Filetype:'Supported file formats and how each is ingested for RAG. Read-only.'};
 export default function App(){
  const[dark,setDark]=useState(()=>{try{return localStorage.getItem('bullm-masters-theme')==='dark'}catch{return false}});
@@ -44,7 +46,7 @@ export default function App(){
  const counts=Object.fromEntries(workbook.sheets.map(s=>[s.name,loadRows(s.name).length]));
  const addN=Math.min(100,Math.max(1,Math.floor(addCount)||1));
  const columns=useMemo<ColDef<RecordRow>[]>(()=>{if(!sheet)return [];const col=(colId:string,headerName:string,i:number,get:(v:string)=>string,set:(v:string,next:string)=>string,minWidth:number,width:number,pinned?:'left'):ColDef<RecordRow>=>({colId,headerName,headerTooltip:sheet.descriptions[i],valueGetter:p=>get(p.data?.values[i]||''),valueSetter:p=>{if(!p.data)return false;p.data.values[i]=set(p.data.values[i]||'',String(p.newValue??''));return true},editable:!sheet.readOnly,cellEditor:'agLargeTextCellEditor',cellEditorPopup:true,cellEditorParams:{maxLength:50000,rows:8,cols:45},minWidth,width,pinned,wrapText:true,autoHeight:true,tooltipValueGetter:p=>get(p.data?.values[i]||''),sortable:true,filter:true,resizable:true,cellRenderer:StackedHighlight,cellRendererParams:{hlKey:colId}});const same=(v:string)=>v,replace=(_:string,next:string)=>next;
-  const defs=sheet.headers.flatMap((h,i)=>i===0?[col('0',h,0,same,replace,200,220,'left')]:[col(String(i),h,i,same,replace,190,i===1?260:230)]);
+  const defs=sheet.headers.flatMap((h,i)=>{const label=sheet.name==='Skills'&&ISATVON[h]?`${h} · ${ISATVON[h]}`:h;return i===0?[col('0',label,0,same,replace,200,220,'left')]:[col(String(i),label,i,same,replace,190,i===1?260:230)];});
   // Placement A: Organization columns backed by a blank list template carry the download in their header.
   if(sheet.name==='Organization')for(const def of defs){const template=templateForColumn(def.headerName||'');if(template)def.headerComponentParams={innerHeaderComponent:TemplateHeader,innerHeaderComponentParams:{templateHref:`templates/${template.file}`,templateLabel:template.label}};}
   return defs},[active]);
