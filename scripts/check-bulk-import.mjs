@@ -12,7 +12,7 @@ try{
   const source=(await readFile(`src/${name}.ts`,'utf8')).replace("'./csv'","'./csv.mjs'");
   await writeFile(join(temp,`${name}.mjs`),ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
  }
- const {autoMap,detectHeader,mappedRows,readImportFile,planWorkbook,planFiles,sheetKey,matchingSheetIndex,importDataRows}=await import(pathToFileURL(join(temp,'bulkImport.mjs')));
+ const {autoMap,dedupeRows,detectHeader,mappedRows,readImportFile,planWorkbook,planFiles,sheetKey,matchingSheetIndex,importDataRows}=await import(pathToFileURL(join(temp,'bulkImport.mjs')));
  const headers=['Org ID','Company / Type','Location'];
  const orgHeaders=['Org ID','Company / Type','Brand Properties','Location','Certifications','Company Segment / Niche / Offerings','Customers / Audience','Employees / Job Role','Data Sources','Systems / tools (Software)','Assets (Hardware)','FDE Notes'];
  const rows=[['Import title'],[],['Location','ORG id','Client name','Skip'],['Bengaluru','ORG-IMPORT-01','Alpha','ignored'],['','','','ignored']];
@@ -88,5 +88,11 @@ try{
  const noneMatched=planFiles([{name:'rules.csv',sheets:[{name:'CSV',rows:[['Rule ID','Name'],['R-1','x']]}]}],masters,'Organization');
  assert.deepEqual(noneMatched.plans.map(p=>p.master),['Rules']);
  assert.deepEqual(noneMatched.missingTabs.sort(),['Organization','Tools']);
- console.log('Bulk import checks passed: XLSX, CSV, header detection, mapping, skip, ID fidelity and validation.');
+ // dedupeRows: re-imports skip exact repeats, never overwrite changed IDs, and keep batch order.
+ assert.deepEqual(dedupeRows([['ORG-1','Alpha',' Austin ']],[['org-1','Alpha','Austin']]),{fresh:[],exact:1,changed:0});
+ assert.deepEqual(dedupeRows([['ORG-1','Alpha','Austin']],[['ORG-1','Beta','Austin']]),{fresh:[],exact:0,changed:1});
+ assert.deepEqual(dedupeRows([['ORG-1','Alpha','Austin']],[['ORG-2','Beta','Austin'],[' ORG-2 ','Beta','Austin'],['ORG-1','Alpha','Austin']]),{fresh:[['ORG-2','Beta','Austin']],exact:2,changed:0});
+ assert.deepEqual(dedupeRows([['','Alpha']],[['','Beta']]),{fresh:[['','Beta']],exact:0,changed:0});
+ assert.deepEqual(dedupeRows([['ORG-1','Alpha']],[['ORG-1','Beta'],['ORG-1','Gamma']]),{fresh:[],exact:0,changed:2});
+ console.log('Bulk import checks passed: XLSX, CSV, header detection, mapping, skip, ID fidelity, dedupe and validation.');
 }finally{await rm(temp,{recursive:true,force:true});}

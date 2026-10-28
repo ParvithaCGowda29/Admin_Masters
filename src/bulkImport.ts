@@ -103,6 +103,29 @@ export function planWorkbook(sheets:ImportSheet[],masters:MasterTarget[]):Workbo
  return {plans,unmatchedSheets,missingTabs:masters.filter(m=>!used.has(m.name)).map(m=>m.name)};
 }
 
+export type DedupeResult={fresh:string[][];exact:number;changed:number};
+// Import duplicate protection: re-importing the same file must not add its rows again.
+// A row is a duplicate when every cell matches an existing (or already queued) row after
+// trimming and whitespace/case folding. A row whose ID matches but whose other cells
+// differ is a changed version: it is skipped too, never used to overwrite the existing
+// row, and reported separately so the conflict stays visible.
+const cellKey=(value:string)=>value.trim().replace(/\s+/g,' ').toLowerCase();
+const rowKey=(values:string[])=>values.map(cellKey).join('\u0001');
+export function dedupeRows(existing:string[][],incoming:string[][],idIndex=0):DedupeResult{
+ const seen=new Set(existing.map(rowKey));
+ const ids=new Set(existing.map(row=>cellKey(row[idIndex]||'')).filter(Boolean));
+ const fresh:string[][]=[];let exact=0,changed=0;
+ for(const row of incoming){
+  const key=rowKey(row);
+  if(seen.has(key)){exact++;continue;}
+  const id=cellKey(row[idIndex]||'');
+  if(id&&ids.has(id)){changed++;continue;}
+  seen.add(key);if(id)ids.add(id);
+  fresh.push(row);
+ }
+ return {fresh,exact,changed};
+}
+
 export type SourceFile={name:string;sheets:ImportSheet[]};
 // Folder/zip import: each workbook's sheets fill tabs by sheet name (planWorkbook rules);
 // each CSV fills the current tab unless its filename matches a tab name. Rows for the same

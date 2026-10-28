@@ -1,5 +1,6 @@
-import {useEffect,useRef,useState} from 'react';
-import {planFiles,readImportFile,type MasterTarget,type SourceFile,type WorkbookPlan} from './bulkImport';
+import {useEffect,useMemo,useRef,useState} from 'react';
+import {dedupeRows,planFiles,readImportFile,type MasterTarget,type SourceFile,type WorkbookPlan} from './bulkImport';
+import {loadRows} from './provider';
 
 type Props={files:File[];current:string;masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
 export function MultiImport({files,current,masters,onClose,onImport}:Props){
@@ -22,8 +23,18 @@ export function MultiImport({files,current,masters,onClose,onImport}:Props){
   setPlan(planFiles(sources,masters,current));
   setBusy(false);
  })();},[files,masters,current]);
- const total=plan?plan.plans.reduce((n,p)=>n+p.rows.length,0):0;
  const tabs=plan?new Set(plan.plans.map(p=>p.master)).size:0;
+ // Prospective duplicate counts per master tab, computed on the same merged rows the
+ // import sends, so repeats across files in one import are counted too.
+ const preview=useMemo(()=>{
+  if(!plan)return null;
+  const byMaster=new Map<string,string[][]>();
+  for(const p of plan.plans)byMaster.set(p.master,[...(byMaster.get(p.master)||[]),...p.rows]);
+  let added=0,skipped=0,changed=0;
+  for(const [master,rows] of byMaster){const result=dedupeRows(loadRows(master).map(r=>r.values),rows);added+=result.fresh.length;skipped+=result.exact+result.changed;changed+=result.changed;}
+  return {added,skipped,changed};
+ },[plan]);
+ const total=preview?preview.added:0;
  async function confirmImport(){
   if(!plan)return;
   setBusy(true);setError('');
@@ -45,12 +56,12 @@ export function MultiImport({files,current,masters,onClose,onImport}:Props){
     </tbody></table>
     {plan.unmatchedSheets.length>0&&<p className="bulk-hint review-skipped"><b>Sheets skipped:</b> {plan.unmatchedSheets.map(s=>`${s.name} (${s.reason})`).join('; ')}.</p>}
     {skipped.length>0&&<p className="bulk-hint review-skipped"><b>Files skipped:</b> {skipped.join('; ')}.</p>}
-    <p className="bulk-summary">{total} row{total===1?'':'s'} across {tabs} tab{tabs===1?'':'s'} ready to append. Existing rows will be kept.</p>
+    <p className="bulk-summary">{total} new row{total===1?'':'s'} across {tabs} tab{tabs===1?'':'s'} ready to append.{preview!.skipped>0&&` ${preview!.skipped} already-present row${preview!.skipped===1?'':'s'} will be skipped${preview!.changed?`, including ${preview!.changed} that use an existing ID with different values and won't be overwritten`:''}.`} Existing rows will be kept.</p>
    </>}
    {error&&<p role="alert" className="bulk-error">{error}</p>}
    {busy&&!plan&&<p role="status">Reading files...</p>}
    {busy&&plan&&<p role="status">Importing rows...</p>}
   </div>
-  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!plan||!total} onClick={()=>void confirmImport()}>Import {total||''} rows into {tabs||''} tabs</button></div>
+  <div className="bulk-footer"><span>Saved on this device only</span><button disabled={busy} onClick={onClose}>Cancel</button><button className="primary" disabled={busy||!plan||!total} onClick={()=>void confirmImport()}>Import {total||''} new rows into {tabs||''} tabs</button></div>
  </dialog>;
 }
