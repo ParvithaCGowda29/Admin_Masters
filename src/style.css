@@ -94,7 +94,7 @@
 :root[data-theme=dark] .links-badge:hover{background:#1a4f73}
 
 /* Add templates menu: per-template download, upload and list view. */
-.templates-menu{min-width:min(330px,calc(100vw - 48px))}
+.templates-menu{min-width:min(330px,calc(100vw - 48px));max-height:max(120px,calc(100vh - 210px));overflow-y:auto;overscroll-behavior:contain}
 .templates-hint{padding:6px 10px 10px;font-size:10.5px;color:#8b97a6;white-space:normal;line-height:1.5;border-bottom:1px solid #edf0f3;margin-bottom:4px}
 .template-item{padding:6px 0;border-bottom:1px solid #edf0f3}
 .template-item:last-child{border-bottom:0}
