@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Command} from 'cmdk';
 import type {RecordRow} from './provider';
+import {IconSearch} from './icons';
 
 type SheetMeta={name:string;headers:string[]};
 
@@ -43,6 +44,7 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  return <div className="search-cmd" ref={wrap}>
   <Command shouldFilter={false} label={`Search ${active}`}>
    <div className="search-input-row">
+    <span className="search-icon" aria-hidden="true"><IconSearch size={15}/></span>
     <Command.Input value={query} onValueChange={v=>{onQuery(v);setOpen(true)}} onFocus={()=>setOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){setOpen(false);setField(null)}}} placeholder={`Search ${active}...`} aria-label={`Search ${active}`}/>
     {query&&<button type="button" className="search-clear" aria-label="Clear search" onMouseDown={e=>e.preventDefault()} onClick={()=>onQuery('')}>×</button>}
    </div>
