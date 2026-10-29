@@ -112,3 +112,95 @@
 .list-table input{width:100%;border:1px solid #dfe5ed;border-radius:4px;padding:6px 8px;font:inherit;color:inherit;background:#fff}
 .list-table td:last-child{white-space:nowrap;width:1%}
 :root[data-theme=dark] .list-table input{background:#202d3e;color:#e2e9f2;border-color:#485a70}
+/* Add files extraction flow: source, permission, find files, review mapping. */
+.ex-steps{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-top:14px}
+.ex-step-wrap{display:flex;align-items:center}
+.ex-step{display:flex;align-items:center;gap:7px;color:#8a95a5;font-size:12px;white-space:nowrap}
+.ex-dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:1.5px solid #c9d2dd;background:#fff;flex:none}
+.ex-step.current{color:#354050;font-weight:600}
+.ex-step.current .ex-dot{background:#ff9800;border-color:#ff9800;color:#fff}
+.ex-step.done{color:#3aaf8b}
+.ex-step.done .ex-dot{background:#3aaf8b;border-color:#3aaf8b;color:#fff}
+.ex-link{width:26px;height:1.5px;background:#d7dee7;margin:0 8px}
+.ex-label{font-size:10px;letter-spacing:1.2px;color:#8894a4;margin:18px 0 10px;font-weight:600}
+.ex-drop{border:1.5px dashed #bdd6e5;background:#f5f9fc;border-radius:8px;padding:28px 20px;text-align:center;color:#7e8998;cursor:pointer;font-size:13px}
+.ex-drop:hover{border-color:#0084c2;background:#eaf5fc}
+.ex-drop strong{color:#354050;font-size:14px}
+.ex-drop small{display:block;margin-top:7px;font-size:11px}
+.ex-sources{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ex-source{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:16px;border:1px solid #dfe5ed;border-radius:8px;background:#fff;white-space:normal}
+.ex-source:hover:not(:disabled){border-color:#0084c2;background:#f2f9fd}
+.ex-source:disabled{opacity:.6;cursor:not-allowed}
+.ex-source strong{font-size:14px;color:#354050}
+.ex-source small{color:#7e8998;font-size:11px;line-height:1.5;white-space:normal}
+.ex-icon{width:30px;height:30px;border:1.5px dashed #b9c4d2;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#7e8998;margin-bottom:2px}
+.ex-badge{font-size:10px;border:1px solid #3aaf8b;color:#2d8a6c;border-radius:10px;padding:2px 8px;background:#eafaf3}
+.ex-badge.off{border-color:#c9d2dd;color:#8894a4;background:#f3f5f8}
+.ex-note{border-left:3px solid #0084c2;background:#eef6fc;color:#425166;padding:10px 12px;border-radius:0 6px 6px 0;font-size:12px;line-height:1.6;margin-top:16px}
+.ex-note.amber{border-color:#e8a13a;background:#fdf6e9;color:#7a5a1d}
+.ex-perm{display:grid;grid-template-columns:1.1fr 1fr;gap:22px}
+.ex-panel{border:1px solid #e5e9ef;border-radius:8px;padding:8px 14px;background:#fff}
+.ex-check{display:flex;gap:10px;align-items:flex-start;padding:8px 2px;border-bottom:1px solid #eef1f5;font-size:12px;color:#354050;cursor:pointer}
+.ex-check:last-child{border-bottom:0}
+.ex-check.off{opacity:.55;cursor:not-allowed}
+.ex-check input{margin-top:2px;accent-color:#0084c2}
+.ex-check small{display:block;color:#9aa3b1;font-size:10px;margin-top:2px}
+.ex-allow p{display:flex;gap:9px;align-items:baseline;padding:8px 2px;border-bottom:1px solid #eef1f5;font-size:12px;color:#354050;line-height:1.5}
+.ex-allow p:last-child{border-bottom:0}
+.ex-allow p small{display:block;color:#9aa3b1;font-size:10px;margin-top:2px}
+.ex-allow b{flex:none;font-style:normal}
+.ex-allow .ex-yes b{color:#2d8a6c}
+.ex-allow p:not(.ex-yes) b{color:#c0533f}
+.ex-find-status{font-size:13px;color:#354050;margin:6px 0 14px}
+.ex-progress{height:8px;border-radius:5px;background:#e8edf3;overflow:hidden;margin-bottom:14px}
+.ex-progress span{display:block;height:100%;background:#0084c2;border-radius:5px;transition:width .2s}
+.ex-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.ex-tile{background:#f5f7fa;border-radius:8px;padding:12px 14px}
+.ex-tile b{font-size:20px;display:block;color:#354050}
+.ex-tile span{font-size:11px;color:#7e8998}
+.ex-table th:first-child{width:34px}
+.ex-table th:nth-child(3){width:23%}
+.ex-table th:nth-child(4){width:70px}
+.ex-table th:nth-child(5){width:26%}
+.ex-table th:last-child{width:96px}
+.ex-table input[type=checkbox]{accent-color:#0084c2}
+.ex-table select{max-width:150px}
+.ex-match.good{color:#2d8a6c;font-weight:700}
+.ex-match.warn{color:#c07c1f;font-weight:700}
+.ex-waiting td{background:#fdf9ef}
+.ex-waiting select{border-color:#e8a13a;background:#fdf6e9}
+.ex-map-toggle{padding:5px 9px;font-size:11px}
+.ex-map-row td{background:#f7fafc;padding:8px 16px}
+.ex-map-row .mapping-table{margin-top:6px}
+@media(max-width:700px){.ex-perm{grid-template-columns:1fr}.ex-sources{grid-template-columns:1fr}.ex-tiles{grid-template-columns:repeat(2,1fr)}.ex-link{width:12px;margin:0 5px}}
+:root[data-theme=dark] .ex-step{color:#a6b8cc}
+:root[data-theme=dark] .ex-step.current{color:#e2e9f2}
+:root[data-theme=dark] .ex-step.current .ex-dot{background:#e07f16;border-color:#e07f16;color:#101925}
+:root[data-theme=dark] .ex-step.done{color:#4cc79b}
+:root[data-theme=dark] .ex-step.done .ex-dot{background:#2d8a6c;border-color:#2d8a6c;color:#eafff5}
+:root[data-theme=dark] .ex-dot{background:#202d3e;border-color:#485a70;color:#a6b8cc}
+:root[data-theme=dark] .ex-link{background:#36465a}
+:root[data-theme=dark] .ex-drop{background:#1c2938;border-color:#3d5a74;color:#a6b8cc}
+:root[data-theme=dark] .ex-drop:hover{border-color:#56b8ef;background:#123f5b}
+:root[data-theme=dark] .ex-drop strong,:root[data-theme=dark] .ex-source strong,:root[data-theme=dark] .ex-find-status,:root[data-theme=dark] .ex-tile b{color:#e2e9f2}
+:root[data-theme=dark] .ex-source{background:#202d3e;border-color:#485a70}
+:root[data-theme=dark] .ex-source:hover:not(:disabled){border-color:#56b8ef;background:#123f5b}
+:root[data-theme=dark] .ex-source small,:root[data-theme=dark] .ex-check small,:root[data-theme=dark] .ex-allow p small{color:#a6b8cc}
+:root[data-theme=dark] .ex-icon{border-color:#485a70;color:#a6b8cc}
+:root[data-theme=dark] .ex-badge{background:#12362c;border-color:#3d8c69;color:#6fe0b4}
+:root[data-theme=dark] .ex-badge.off{background:#202d3e;border-color:#485a70;color:#a6b8cc}
+:root[data-theme=dark] .ex-note{background:#12304a;border-color:#239ccc;color:#c7dcee}
+:root[data-theme=dark] .ex-note.amber{background:#3f331a;border-color:#c07c1f;color:#ecd9ab}
+:root[data-theme=dark] .ex-panel{background:#202d3e;border-color:#36465a}
+:root[data-theme=dark] .ex-check,:root[data-theme=dark] .ex-allow p{color:#e2e9f2;border-color:#36465a}
+:root[data-theme=dark] .ex-allow .ex-yes b{color:#6fe0b4}
+:root[data-theme=dark] .ex-allow p:not(.ex-yes) b{color:#ff9d8a}
+:root[data-theme=dark] .ex-progress{background:#202d3e}
+:root[data-theme=dark] .ex-progress span{background:#239ccc}
+:root[data-theme=dark] .ex-tile{background:#202d3e}
+:root[data-theme=dark] .ex-tile span{color:#a6b8cc}
+:root[data-theme=dark] .ex-match.good{color:#6fe0b4}
+:root[data-theme=dark] .ex-match.warn{color:#f0b45c}
+:root[data-theme=dark] .ex-waiting td{background:#2e2a1c}
+:root[data-theme=dark] .ex-waiting select{border-color:#c07c1f;background:#3f331a}
+:root[data-theme=dark] .ex-map-row td{background:#1c2938}

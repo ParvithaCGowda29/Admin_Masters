@@ -16,28 +16,25 @@ try{
  for(let i=0;i<30;i++){try{await page.goto('http://127.0.0.1:5173');break}catch{await new Promise(r=>setTimeout(r,100));}}
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
 
- // Add files menu uses the BAM format: Choose folder, Bulk upload, Upload zip.
+ // Add files opens one extraction flow: Source, Permission, Find files, Review mapping.
  await page.getByRole('button',{name:'Add files',exact:true}).click();
- const menuItems=await page.locator('.files-menu [role=menuitem]').allTextContents();
- assert.equal(menuItems.length,3);
- assert.ok(menuItems[0].startsWith('Choose folder'),menuItems[0]);
- assert.ok(menuItems[1].startsWith('Bulk upload'),menuItems[1]);
- assert.ok(menuItems[2].startsWith('Upload zip'),menuItems[2]);
+ await page.getByRole('dialog').waitFor();
+ await page.getByRole('heading',{name:'Add files',exact:true}).waitFor();
+ for(const label of ['Source','Permission','Find files','Review mapping'])await page.locator('.ex-steps').getByText(label,{exact:true}).waitFor();
+ assert.equal(await page.getByRole('button',{name:/SharePoint/}).isDisabled(),true);
+ assert.equal(await page.getByRole('button',{name:/Google Drive/}).isDisabled(),true);
+ assert.ok((await page.getByRole('dialog').allTextContents()).join(' ').includes('Not connected'));
  await page.screenshot({path:screenshotDir+'/masters-bam-menu.png',fullPage:true});
- report.push('Add files menu is the BAM format: Choose folder / Bulk upload / Upload zip.');
- await page.keyboard.press('Escape');
+ report.push('Add files opens the extraction flow (Source / Permission / Find files / Review mapping); SharePoint and Google Drive show Not connected and stay disabled.');
+ await page.getByRole('button',{name:'Close add files',exact:true}).click();
 
- // Placement B: Templates button next to Add files downloads the four blank templates.
+ // Placement B: the Add templates popup is upload-only; blanks download from the column headers.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
- const templateLinks=page.locator('.templates-menu a[role=menuitem]');
- assert.equal(await templateLinks.count(),4);
+ assert.equal(await page.locator('.templates-menu a[download]').count(),0);
+ assert.equal(await page.locator('.templates-menu').getByRole('menuitem',{name:/Upload your own/}).count(),4);
  await page.screenshot({path:screenshotDir+'/masters-templates-menu.png',fullPage:true});
- const [download]=await Promise.all([page.waitForEvent('download'),page.locator('.template-item',{hasText:'Employee list'}).getByRole('menuitem',{name:'Blank',exact:true}).click()]);
- assert.equal(download.suggestedFilename(),'Employee List.xlsx');
- const dl=await readXlsx(await download.path());
- assert.deepEqual(dl.rows,[['Employee','Job title','Department','Unit applicability','Verification status']]);
- assert.equal(dl.rows.length,1);
- report.push('Add templates menu next to Add files downloads all four blank header templates.');
+ report.push('Add templates popup is upload-only: four Upload your own actions, no downloads.');
+ await page.keyboard.press('Escape');
 
  // Placement A: the four backed Organization column headers carry the same downloads.
  const headerLinks=page.locator('.ag-header-cell .template-download');
@@ -83,49 +80,48 @@ try{
  await page.screenshot({path:screenshotDir+'/masters-parent-overview.png',fullPage:true});
  report.push('Masters parent selects an overview; the chevron alone collapses the tree.');
 
- // Parent routing: Bulk upload fills every matching tab.
+ // Parent routing: the extraction flow reviews a workbook across every matching tab.
  const book=utils.book_new();
  utils.book_append_sheet(book,utils.aoa_to_sheet([['Org ID','Company / Type'],['ORG-P-1','Parent co']]),'Organization');
  utils.book_append_sheet(book,utils.aoa_to_sheet([['Tooling ID','Tool Name'],['TOOL-P-1','Parent tool']]),'Tools');
  const bytes=Buffer.from(write(book,{type:'array',bookType:'xlsx'}));
  await page.getByRole('button',{name:'Add files',exact:true}).click();
- await page.getByRole('menuitem',{name:/Bulk upload/}).click();
- await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
- await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();
- await page.getByRole('heading',{name:'Bulk Upload all tabs',exact:true}).waitFor();
- const reviewText=await page.locator('.bulk-dialog').allTextContents();
+ await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ const reviewText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(reviewText[0].includes('Organization')&&reviewText[0].includes('Tools'));
  await page.screenshot({path:screenshotDir+'/masters-parent-bulkall.png',fullPage:true});
- await page.getByRole('button',{name:'Cancel',exact:true}).click();
- report.push('On the Masters parent, Bulk upload reviews a workbook across every matching tab.');
+ await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
+ report.push('On the Masters parent, the flow reviews a workbook across every matching tab.');
 
  // Tab routing: Choose folder maps every file into the open tab only.
  await page.getByRole('button',{name:'Organization 0',exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();
- await page.getByRole('menuitem',{name:/Choose folder/}).click();
- await page.locator('.uppy-Dashboard-input').first().setInputFiles([
+ await page.getByLabel('Choose files from this device').setInputFiles([
   {name:'tools.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-F-1,Folder co')},
   {name:'org.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-F-2,Second co')},
  ]);
- await page.getByRole('button',{name:'Continue with 2 files',exact:true}).click();
- await page.getByRole('heading',{name:'Review import',exact:true}).waitFor();
- const multiText=await page.locator('.bulk-dialog').allTextContents();
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ const multiText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(multiText[0].includes('Everything maps into the Organization tab only.'));
  assert.equal((multiText[0].match(/Organization/g)||[]).length>=2,true);
- assert.ok(!/>Tools</.test(await page.locator('.review-table').innerHTML()),'no Tools target on a tab');
+ assert.equal(await page.locator('.ex-table > tbody > tr > td select').count(),0,'no destination dropdown on a tab');
  await page.screenshot({path:screenshotDir+'/masters-tab-routing.png',fullPage:true});
- await page.getByRole('button',{name:'Cancel',exact:true}).click();
- report.push('On a specific tab, Choose folder maps every file into that tab only.');
+ await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
+ report.push('On a specific tab, the flow maps every file into that tab only.');
 
  // Filetype is read-only: all import choices are disabled there.
  await page.getByRole('button',{name:'Filetype 43',exact:true}).click();
  await page.getByText('43 of 43 rows',{exact:true}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();
- const disabled=await page.locator('.files-menu [role=menuitem][disabled]').count();
- assert.equal(disabled,3);
- await page.keyboard.press('Escape');
- report.push('Filetype stays read-only: all three Add files choices are disabled on that tab.');
+ await page.getByRole('alert').filter({hasText:'read-only'}).waitFor();
+ assert.equal(await page.getByRole('dialog').count(),0);
+ report.push('Filetype stays read-only: Add files shows a read-only notice there and no import flow opens.');
 
  // Each tab's info panel is specific to that tab; shared README rows stay under the parent.
  await page.getByRole('button',{name:'Agents 0',exact:true}).click();
@@ -148,24 +144,25 @@ try{
  await page.waitForTimeout(300);
  report.push('Tab info panels are tab-specific; shared README rows stay under the Masters parent.');
 
- // Placement B is next to Add files: both controls share one row in the sidebar.
+ // Placement B stays with Add files: the two boxed buttons stack in the sidebar.
  const addBox=await page.getByRole('button',{name:'Add files',exact:true}).boundingBox();
  const tplBox=await page.getByRole('button',{name:'Add templates',exact:true}).boundingBox();
- assert.ok(Math.abs(addBox.y-tplBox.y)<2&&tplBox.x>addBox.x,'Add files and Templates side by side');
- report.push('Add templates sits next to Add files in one sidebar row.');
+ assert.ok(tplBox.y>addBox.y&&Math.abs(tplBox.x-addBox.x)<2,'Add files and Add templates stack in the sidebar');
+ report.push('Add templates stays stacked under Add files in the sidebar.');
 
  // Filled list templates are held: they are blocked from Masters with the reason shown.
  await page.getByRole('button',{name:'Organization 0',exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();
- await page.getByRole('menuitem',{name:/Bulk upload/}).click();
- await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'Employee List.xlsx',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
- await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();
- await page.getByRole('alert').filter({hasText:'Add templates'}).waitFor();
- await page.getByRole('alert').filter({hasText:'not imported into Masters'}).waitFor();
- assert.equal(await page.locator('.bulk-footer button.primary').isDisabled(),true);
+ await page.getByLabel('Choose files from this device').setInputFiles({name:'Employee List.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.locator('.ex-dialog').getByText(/Add templates/).first().waitFor();
+ await page.locator('.ex-dialog').getByText(/not imported into Masters/).first().waitFor();
+ assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);
  await page.screenshot({path:screenshotDir+'/masters-template-blocked.png',fullPage:true});
- await page.getByRole('button',{name:'Close bulk upload'}).click();
+ await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Filled list templates are blocked from Masters and pointed at Add templates.');
 
  // Add rows moved out of the toolbar into the grid's right-click menu.

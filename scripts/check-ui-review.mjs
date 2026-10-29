@@ -40,23 +40,26 @@ try{
  await page.getByRole('button',{name:'Switch to dark mode'}).click();
  await page.screenshot({path:screenshotDir+'/masters-dark.png',fullPage:true});
  await page.reload();await page.getByRole('button',{name:'Switch to light mode'}).waitFor();
- await page.getByRole('button',{name:'Add files',exact:true}).click();await page.screenshot({path:screenshotDir+'/masters-addfiles-dark.png',fullPage:true});
- await page.getByRole('menuitem',{name:/Bulk upload/}).click();
- await page.getByRole('dialog').waitFor();await page.screenshot({path:screenshotDir+'/masters-picker-dark.png',fullPage:true});await page.getByRole('button',{name:'Close file picker'}).click();
+ await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('dialog').waitFor();await page.screenshot({path:screenshotDir+'/masters-addfiles-dark.png',fullPage:true});
+ await page.getByRole('button',{name:'Close add files',exact:true}).click();
  await page.getByRole('button',{name:'Filetype 43',exact:true}).click();await page.getByText('43 of 43 rows',{exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'＋ Add Row',exact:true}).count(),0);
  await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Toggle navigation'}).click();await page.screenshot({path:screenshotDir+'/masters-mobile.png',fullPage:true});
  await page.setViewportSize({width:1440,height:1000});await page.getByRole('button',{name:/Organization 1/,exact:true}).click();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
- // Exercise the retained Add files > Uppy > review path and duplicate guard.
+ // Exercise the Add files extraction flow and its duplicate guard.
  async function selectCSV(){
- await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('menuitem',{name:/Bulk upload/}).click();
- await page.locator('.uppy-Dashboard-input').first().setInputFiles({name:'Organization.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type,Location\nORG-IMPORT,Imported business,Mysuru')});
- await page.getByRole('button',{name:'Continue with 1 file',exact:true}).click();await page.getByRole('heading',{name:'Bulk Upload to Organization',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('dialog').waitFor();
+ await page.getByLabel('Choose files from this device').setInputFiles({name:'Organization.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type,Location\nORG-IMPORT,Imported business,Mysuru')});
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ // 3 of 12 columns match: the table waits unticked until the user includes it.
+ await page.getByRole('checkbox',{name:'Include CSV from Organization.csv'}).check();
  }
- await selectCSV();await page.getByRole('button',{name:'Import 1 new row',exact:true}).click();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
- await selectCSV();await page.getByText(/1 already present will be skipped/).waitFor();assert(await page.getByRole('button',{name:'Import new rows',exact:true}).isDisabled());await page.getByRole('button',{name:'Close bulk upload'}).click();
+ await selectCSV();await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
+ await selectCSV();await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();await page.getByRole('status').filter({hasText:'already-present'}).waitFor();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
  await page.locator('.ag-center-cols-container [row-id="org-persist"] [col-id="1"]').dblclick();const editor=page.locator('.ag-large-text-input textarea');await editor.fill('Edited business');await page.keyboard.press('Control+Enter');await page.getByRole('status').filter({hasText:'Changes saved on this device.'}).waitFor();
  await page.reload();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
  const saved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization')});assert.equal(saved[0].values[11],'Keep me');assert.equal(saved[0].values[1],'Edited business');assert.equal(saved.length,2);
- assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, no filter bar, removed Upload/README, theme persistence, picker, protected Filetype, mobile.');
+ assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, no filter bar, removed Upload/README, theme persistence, extraction flow, protected Filetype, mobile.');
 }finally{await browser.close();server.kill();}
