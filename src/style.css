@@ -49,9 +49,10 @@
 :root[data-theme=dark] .template-download{border-color:#485a70;color:#a6c8e2}
 :root[data-theme=dark] .template-download:hover{color:#86d4ff;border-color:#86d4ff}
 /* Add files and Templates sit next to each other in one row. */
-.nav-upload-row{display:flex;gap:8px;margin:0 12px 8px}
+.nav-upload-row{display:flex;flex-direction:column;gap:8px;margin:0 12px 8px}
 .nav-upload-row .nav-upload-wrap{margin-bottom:0;flex:1;min-width:0}
-.nav-upload-row .nav-upload{width:100%;margin:0;justify-content:center}
+.nav-upload-row .nav-upload{width:100%;margin:0;justify-content:flex-start;white-space:nowrap}
+.nav-upload svg{flex-shrink:0}
 .nav-upload-row .files-menu{left:0}
 @media(max-width:900px){.nav-upload-row{flex-direction:column}}
 /* cmdk search panel anchored to the toolbar search field; grid stays visible behind it. */
