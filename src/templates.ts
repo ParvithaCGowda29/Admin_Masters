@@ -1,10 +1,10 @@
 // Header-row templates matching the four list sheets in the BuLLM common masters
-// workbook. Downloads are generated on click from the list saved on this device
-// (templateDownload.ts): the fixed header row plus the rows uploaded under Add templates,
-// so a download after an upload never serves the old blank file. The blank copies in
-// public/templates (scripts/make-templates.mjs) stay as reference only. A user's own
-// filled version uploads under Add templates and lands in that template's own list,
-// never in a master tab.
+// workbook. These are the stock column names each list starts with. An upload under
+// Add templates replaces a list's template completely - the file's column names and rows
+// take over (2026-10-29 decision) - and downloads are generated on click from the saved
+// template (templateDownload.ts), so a download after an upload serves the new structure.
+// The blank copies in public/templates (scripts/make-templates.mjs) stay as reference
+// only. A template list never lands in a master tab.
 export type TemplateKey='employees'|'customers'|'assets'|'systems';
 export type MastersTemplate={key:TemplateKey;file:string;label:string;column:string;headers:string[]};
 export const TEMPLATES:MastersTemplate[]=[

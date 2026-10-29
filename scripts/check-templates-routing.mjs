@@ -179,16 +179,16 @@ try{
  await page.keyboard.press('Escape');
  report.push('Add rows lives in the right-click menu (with delete); the toolbar holds only search.');
 
- // Add templates: a user's own filled template maps into the template's fields and lands
- // in that template's list, never in a master tab.
+ // Add templates: uploading a new template replaces that template completely - the
+ // file's column names and rows take over, never touching a master tab.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
  await page.locator('.template-item',{hasText:'Employee list'}).getByRole('menuitem',{name:/Upload your own/}).click();
- await page.getByRole('heading',{name:'Upload your own Employee list template',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Upload a new Employee list template',exact:true}).waitFor();
  await page.locator('.bulk-dialog input[type=file]').setInputFiles({name:'my-employees.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified\nBala,Designer,Product,Unit 1,Pending')});
- await page.getByRole('button',{name:'Add 2 new rows',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Replace template',exact:true}).waitFor();
  await page.screenshot({path:screenshotDir+'/masters-template-upload.png'});
- await page.getByRole('button',{name:'Add 2 new rows',exact:true}).click();
- await page.getByRole('status').filter({hasText:'added to your Employee list template'}).waitFor();
+ await page.getByRole('button',{name:'Replace template',exact:true}).click();
+ await page.getByRole('status').filter({hasText:'Employee list template now uses the uploaded file'}).waitFor();
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
  await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
  assert.ok((await page.locator('.templates-menu').allTextContents()).join(' ').includes('2 rows'));
@@ -200,7 +200,7 @@ try{
  const savedLists=await page.evaluate(()=>localStorage.getItem('bullm-template-lists-v1'));
  assert.ok(savedLists?.includes('Asha R'),'edited template list row persisted');
  await page.getByRole('button',{name:'Organization 0',exact:true}).waitFor();
- report.push('Custom template upload maps columns into the template fields; rows stay in the Add templates list, editable, masters untouched.');
+ report.push('A new template upload replaces that template (columns and rows); rows stay in the Add templates list, editable, masters untouched.');
 
  // Regression: after uploading rows, the header download must serve the current list,
  // not the old blank template. The download icons live on the Organization tab.
@@ -215,6 +215,33 @@ try{
  assert.equal(dl3.rows[1][0],'Asha R');
  assert.equal(dl3.rows[2][0],'Bala');
  report.push('After an upload, the header download contains the current list rows (Asha R, Bala), not the old blank template.');
+
+ // Regression: a file with completely new column names replaces the Customers template;
+ // the header download then serves the new structure, and the other lists stay untouched.
+ await page.getByRole('button',{name:'Add templates',exact:true}).click();
+ await page.locator('.template-item',{hasText:'Customers / Audience'}).getByRole('menuitem',{name:/Upload your own/}).click();
+ await page.getByRole('heading',{name:'Upload a new Customers / Audience template',exact:true}).waitFor();
+ await page.locator('.bulk-dialog input[type=file]').setInputFiles({name:'customers-new.csv',mimeType:'text/csv',buffer:Buffer.from('Client code,Client name,Market segment\nCL-SMPL-01,Asha Textiles,D2C\nCL-SMPL-02,Bala Foods,Retail')});
+ await page.getByRole('button',{name:'Replace template',exact:true}).click();
+ await page.getByRole('status').filter({hasText:'Customers / Audience template now uses the uploaded file'}).waitFor();
+ await page.getByRole('button',{name:'Add templates',exact:true}).click();
+ assert.ok((await page.locator('.templates-menu').allTextContents()).join(' ').includes('Client code'),'menu shows the replaced columns');
+ await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
+ await page.keyboard.press('Escape');
+ await page.getByRole('button',{name:'Organization 0',exact:true}).click();
+ await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
+ const [download4]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Customers / Audience"]').click()]);
+ assert.equal(download4.suggestedFilename(),'Sample - Customers.xlsx');
+ const dl4=await readXlsx(await download4.path());
+ assert.deepEqual(dl4.rows[0],['Client code','Client name','Market segment']);
+ assert.equal(dl4.rows.length,3);
+ assert.equal(dl4.rows[1][0],'CL-SMPL-01');
+ assert.equal(dl4.rows[2][1],'Bala Foods');
+ const [download5]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Employees / Job Role"]').click()]);
+ const dl5=await readXlsx(await download5.path());
+ assert.deepEqual(dl5.rows[0],['Employee','Job title','Department','Unit applicability','Verification status']);
+ assert.equal(dl5.rows.length,3);
+ report.push('A renamed-columns upload replaces the Customers template and its download (Client code / Client name / Market segment); the Employees list keeps its own columns and rows.');
 
  // Clean capture of placement A: the four Organization column headers with template downloads.
  await page.setViewportSize({width:3000,height:1000});
