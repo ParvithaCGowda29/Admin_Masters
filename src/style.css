@@ -43,7 +43,9 @@
 /* Comma-separated items stack one per line inside the same cell and parent row. */
 .stacked{display:block}
 .stacked-item{display:block}
-.stacked-item+.stacked-item{margin-top:4px}
+.stacked-item+.stacked-item{margin-top:4px;padding-top:4px;border-top:1px solid transparent}
+.ag-cell:hover .stacked-item+.stacked-item{border-top-color:#dbe3ec}
+:root[data-theme=dark] .ag-cell:hover .stacked-item+.stacked-item{border-top-color:#3a4a5e}
 :root[data-theme=dark] .files-menu a:hover{background:#293c51}
 :root[data-theme=dark] .files-menu a small{color:#a6b8cc}
 :root[data-theme=dark] .template-download{border-color:#485a70;color:#a6c8e2}
@@ -88,10 +90,11 @@
 :root[data-theme=dark] .search-footer{border-color:#36465a}
 @media(max-width:600px){.search-cmd{width:100%}.search-panel{position:fixed;left:16px;right:16px;top:auto;width:auto}}
 /* Contains-links badge: only when a link/path/url column actually has values; jumps to it. */
-.links-badge{display:inline-flex;align-items:center;gap:5px;border-radius:20px;border:1px solid #bdddeb;background:#e8f4fc;color:#00689d;font-size:11px;font-weight:600;padding:4px 11px}
-.links-badge:hover{background:#d9eefb}
-:root[data-theme=dark] .links-badge{background:#123f5b;border-color:#2c5f80;color:#86d4ff}
-:root[data-theme=dark] .links-badge:hover{background:#1a4f73}
+.cell-link{color:#00689d;text-decoration:underline;text-decoration-color:#9dcdea;text-underline-offset:2px;word-break:break-all}
+.cell-link:hover{color:#0084c2;text-decoration-color:#0084c2}
+.cell-link .cell-link-icon{margin-left:3px;position:relative;top:1px}
+:root[data-theme=dark] .cell-link{color:#86d4ff;text-decoration-color:#2c5f80}
+:root[data-theme=dark] .cell-link:hover{color:#b5e3ff;text-decoration-color:#86d4ff}
 
 /* Add templates menu: per-template download, upload and list view. */
 .templates-menu{min-width:min(330px,calc(100vw - 48px));max-height:max(120px,calc(100vh - 210px));overflow-y:auto;overscroll-behavior:contain}
