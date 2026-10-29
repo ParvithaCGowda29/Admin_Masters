@@ -28,7 +28,7 @@ try{
  report.push('Add files opens the extraction flow (Source / Permission / Find files / Review mapping); SharePoint and Google Drive show Not connected and stay disabled.');
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
 
- // Placement B: the Add templates popup is upload-only; blanks download from the column headers.
+ // Placement B: the Add templates popup is upload-only; downloads come from the column headers.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
  assert.equal(await page.locator('.templates-menu a[download]').count(),0);
  assert.equal(await page.locator('.templates-menu').getByRole('menuitem',{name:/Upload your own/}).count(),4);
@@ -36,7 +36,8 @@ try{
  report.push('Add templates popup is upload-only: four Upload your own actions, no downloads.');
  await page.keyboard.press('Escape');
 
- // Placement A: the four backed Organization column headers carry the same downloads.
+ // Placement A: the four backed Organization column headers generate the download on
+ // click; with no rows uploaded yet the file is the blank template.
  const headerLinks=page.locator('.ag-header-cell .template-download');
  assert.equal(await headerLinks.count(),4);
  const labels=await headerLinks.evaluateAll(nodes=>nodes.map(n=>n.getAttribute('aria-label')));
@@ -46,7 +47,7 @@ try{
  const dl2=await readXlsx(await download2.path());
  assert.equal(dl2.rows[0].length,9);assert.equal(dl2.rows.length,1);
  await page.screenshot({path:screenshotDir+'/masters-template-headers.png',fullPage:true});
- report.push('Organization column headers (Employees, Customers, Assets, Systems) download the same blank templates.');
+ report.push('Organization column headers (Employees, Customers, Assets, Systems) download a generated template; empty lists give the blank header row.');
 
  // Stacked display: top-level commas stack one item per line in the same cell and row.
  await page.evaluate(async()=>{const {saveRows}=await import('/src/provider.ts');saveRows('Tools',[
@@ -200,6 +201,20 @@ try{
  assert.ok(savedLists?.includes('Asha R'),'edited template list row persisted');
  await page.getByRole('button',{name:'Organization 0',exact:true}).waitFor();
  report.push('Custom template upload maps columns into the template fields; rows stay in the Add templates list, editable, masters untouched.');
+
+ // Regression: after uploading rows, the header download must serve the current list,
+ // not the old blank template. The download icons live on the Organization tab.
+ await page.getByRole('button',{name:'Organization 0',exact:true}).click();
+ await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
+ const [download3]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Employees / Job Role"]').click()]);
+ assert.equal(download3.suggestedFilename(),'Employee List.xlsx');
+ const dl3=await readXlsx(await download3.path());
+ assert.equal(dl3.sheet,'Employee List');
+ assert.deepEqual(dl3.rows[0],['Employee','Job title','Department','Unit applicability','Verification status']);
+ assert.equal(dl3.rows.length,3);
+ assert.equal(dl3.rows[1][0],'Asha R');
+ assert.equal(dl3.rows[2][0],'Bala');
+ report.push('After an upload, the header download contains the current list rows (Asha R, Bala), not the old blank template.');
 
  // Clean capture of placement A: the four Organization column headers with template downloads.
  await page.setViewportSize({width:3000,height:1000});

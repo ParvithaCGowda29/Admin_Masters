@@ -38,7 +38,7 @@
 /* Template download inside the Organization column headers (placement A). */
 .template-header{display:inline-flex;align-items:center;gap:6px;min-width:0}
 .template-header-name{overflow:hidden;text-overflow:ellipsis}
-.template-download{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;border:1px solid #c3ccd7;border-radius:50%;color:#8894a4}
+.template-download{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;border:1px solid #c3ccd7;border-radius:50%;color:#8894a4;background:none;padding:0;cursor:pointer}
 .template-download:hover{color:#0084c2;border-color:#0084c2}
 /* Comma-separated items stack one per line inside the same cell and parent row. */
 .stacked{display:block}

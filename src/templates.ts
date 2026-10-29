@@ -1,7 +1,10 @@
-// Blank header-row templates matching the four list sheets in the BuLLM common masters
-// workbook. Both template placements (Organization column headers and the sidebar
-// Add templates menu) download these same files. A user's own filled version uploads
-// under Add templates and lands in that template's own list, never in a master tab.
+// Header-row templates matching the four list sheets in the BuLLM common masters
+// workbook. Downloads are generated on click from the list saved on this device
+// (templateDownload.ts): the fixed header row plus the rows uploaded under Add templates,
+// so a download after an upload never serves the old blank file. The blank copies in
+// public/templates (scripts/make-templates.mjs) stay as reference only. A user's own
+// filled version uploads under Add templates and lands in that template's own list,
+// never in a master tab.
 export type TemplateKey='employees'|'customers'|'assets'|'systems';
 export type MastersTemplate={key:TemplateKey;file:string;label:string;column:string;headers:string[]};
 export const TEMPLATES:MastersTemplate[]=[
