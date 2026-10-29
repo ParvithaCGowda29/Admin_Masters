@@ -8,7 +8,7 @@ export function MasterInfo({name,summary}:{name:string;summary:string}){
  {open&&<span className="master-info-panel" role="region" aria-label={`${name} information`} tabIndex={0}>
  <strong>{name}</strong><span>{summary}</span>
  {readmeForMaster(name,workbook.readme).map((r,i)=><span key={i}><b>{r[0]}: {r[1]}</b><span>{r[2]}</span></span>)}
- {sheet&&<span><b>Field guide</b>{sheet.headers.map((h,i)=><span key={h}><b>{h}</b> - {sheet.descriptions[i]||'Source workbook field.'}</span>)}</span>}
+ {sheet&&<span className="field-guide"><b>Field guide</b>{sheet.headers.map((h,i)=><span key={h} className="field-row"><b>{h}</b><span>{sheet.descriptions[i]||'Source workbook field.'}</span></span>)}</span>}
  </span>}
  </span>;
 }

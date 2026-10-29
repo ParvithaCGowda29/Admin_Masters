@@ -206,3 +206,7 @@
 :root[data-theme=dark] .ex-waiting td{background:#2e2a1c}
 :root[data-theme=dark] .ex-waiting select{border-color:#c07c1f;background:#3f331a}
 :root[data-theme=dark] .ex-map-row td{background:#1c2938}
+.master-info-panel .field-guide{display:flex;flex-direction:column;gap:2px}
+.master-info-panel .field-guide .field-row{display:flex;gap:10px;align-items:baseline}
+.master-info-panel .field-guide .field-row>b{flex:0 0 14em;min-width:0;font-weight:600}
+.master-info-panel .field-guide .field-row>span{flex:1;min-width:0}
