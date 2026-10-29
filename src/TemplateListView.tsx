@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {loadHeaders,loadList,saveList,type ListRow} from './templateLists';
 import type {MastersTemplate} from './templates';
+import {newId} from './id';
 
 type Props={template:MastersTemplate;onClose:()=>void;onChanged:()=>void};
 // View and edit the rows of one template list, under its current column names (an
@@ -13,7 +14,7 @@ export function TemplateListView({template,onClose,onChanged}:Props){
  function persist(next:ListRow[]){setRows(next);saveList(template.key,next,headers);onChanged();}
  const setCell=(id:string,index:number,value:string)=>persist(rows.map(r=>r.id===id?{...r,values:r.values.map((v,j)=>j===index?value:v)}:r));
  const removeRow=(id:string)=>persist(rows.filter(r=>r.id!==id));
- const addRow=()=>persist([...rows,{id:crypto.randomUUID(),values:headers.map(()=>'')}]);
+ const addRow=()=>persist([...rows,{id:newId(),values:headers.map(()=>'')}]);
  return <dialog ref={dialog} className="bulk-dialog" aria-labelledby="template-list-title" onCancel={e=>{e.preventDefault();onClose();}}>
   <div className="bulk-heading"><div><h2 id="template-list-title">{template.label}</h2><p>{rows.length} row{rows.length===1?'':'s'} in your uploaded {template.label} template. Edit any cell; changes save straight away on this device. The masters stay unchanged.</p></div><button aria-label="Close list" onClick={onClose}>×</button></div>
   <div className="bulk-body">

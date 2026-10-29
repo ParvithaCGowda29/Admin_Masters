@@ -9,7 +9,8 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "node scripts/check-schema.mjs",
     "test:bulk": "node scripts/check-bulk-import.mjs",
-    "test:extraction": "node scripts/check-extraction.mjs"
+    "test:extraction": "node scripts/check-extraction.mjs",
+    "test:nosecure": "node scripts/check-nosecure.mjs"
   },
   "dependencies": {
     "@refinedev/core": "^4.57.10",

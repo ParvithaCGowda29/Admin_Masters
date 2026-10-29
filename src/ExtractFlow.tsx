@@ -1,6 +1,7 @@
 import {useRef,useState} from 'react';
 import {unzipSync} from 'fflate';
 import {autoMap,detectHeader,importDataRows,mappedRows,readImportFile,sheetKey,templateInRows,type ImportSheet,type MasterTarget} from './bulkImport';
+import {newId} from './id';
 
 export type ExtractScope={type:'all'}|{type:'tab';tab:string};
 type Props={scope:ExtractScope;masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
@@ -77,7 +78,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   const template=templateInRows(sheet.rows);
   const blocked=template?`${template} template - filled template lists are uploaded under Add templates in the sidebar, not imported into Masters`:null;
   const master=suggestMaster(sheet,file);
-  const plan:TablePlan={id:crypto.randomUUID(),file,sheet:sheet.name,rows:sheet.rows,master,ignored:[],included:false,blocked,...analyze(file,sheet,master)};
+  const plan:TablePlan={id:newId(),file,sheet:sheet.name,rows:sheet.rows,master,ignored:[],included:false,blocked,...analyze(file,sheet,master)};
   plan.included=resolvable(plan)&&matchPct(plan)>=MATCH_OK;
   return plan;
  }
