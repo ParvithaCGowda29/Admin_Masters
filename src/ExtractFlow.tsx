@@ -7,12 +7,14 @@ type Props={scope:ExtractScope;masters:MasterTarget[];onClose:()=>void;onImport:
 
 type Step='source'|'permission'|'find'|'review';
 const STEPS:{key:Step;label:string}[]=[{key:'source',label:'Source'},{key:'permission',label:'Permission'},{key:'find',label:'Find files'},{key:'review',label:'Review mapping'}];
-// At or above this header-match percent a table starts ticked; below it the table waits,
-// unticked, until the user fixes the destination or the column mapping and ticks it.
+// At or above this header-match percent a fully resolved table starts ticked. A high
+// percentage alone never ticks a table: every source column with content must be
+// mapped or explicitly ignored, and the master's ID column must be mapped.
 const MATCH_OK=60;
+const IGNORE=-2; // mapping select value for "Ignore this column" (stored in plan.ignored)
 
 type Picked={file:File;allowed:boolean};
-type TablePlan={id:string;file:string;sheet:string;rows:string[][];headerRow:number;master:string;mapping:number[];included:boolean;blocked:string|null};
+type TablePlan={id:string;file:string;sheet:string;rows:string[][];headerRow:number;master:string;mapping:number[];ignored:number[];content:boolean[];included:boolean;blocked:string|null};
 type FindProgress={done:number;total:number;current:string;found:number};
 
 const isCsv=(name:string)=>/\.csv$/i.test(name);
@@ -37,11 +39,26 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
  const headersOf=(name:string)=>masters.find(m=>m.name===name)?.headers||[];
  const mappedCount=(p:TablePlan)=>p.mapping.filter(i=>i>=0).length;
  const matchPct=(p:TablePlan)=>{const total=headersOf(p.master).length;return total?Math.round(mappedCount(p)/total*100):0;};
- const importable=(p:TablePlan)=>!p.blocked&&mappedCount(p)>0;
- const unresolved=(p:TablePlan)=>importable(p)&&matchPct(p)<MATCH_OK;
- const ready=plans.filter(p=>p.included&&importable(p));
+ // Columns with any content (heading or a cell) must each be resolved before import.
+ const needsReview=(p:TablePlan,i:number)=>p.content[i]&&p.mapping[i]<0&&!p.ignored.includes(i);
+ const reviewCount=(p:TablePlan)=>p.content.reduce((n,has,i)=>n+(has&&p.mapping[i]<0&&!p.ignored.includes(i)?1:0),0);
+ const idMapped=(p:TablePlan)=>p.mapping.includes(0);
+ // Safe to include only when nothing is silently dropped: ID mapped and every
+ // content-bearing source column either mapped or explicitly ignored.
+ const resolvable=(p:TablePlan)=>!p.blocked&&mappedCount(p)>0&&idMapped(p)&&reviewCount(p)===0;
+ const ignoredCount=(p:TablePlan)=>p.ignored.length;
+ const ready=plans.filter(p=>p.included&&resolvable(p));
  const readyCount=ready.length;
 
+ function analyze(file:string,sheet:ImportSheet,master:string):Pick<TablePlan,'headerRow'|'mapping'|'content'>{
+  const headers=headersOf(master);
+  const headerRow=headers.length?detectHeader(sheet.rows,headers):0;
+  const width=sheet.rows.length?Math.max(...sheet.rows.map(r=>r.length)):0;
+  const data=importDataRows(sheet.rows,headerRow);
+  const content=Array.from({length:width},(_,i)=>!!(sheet.rows[headerRow]?.[i]||'').trim()||data.some(r=>(r[i]||'').trim()));
+  const mapping=headers.length?autoMap(Array.from({length:width},(_,i)=>sheet.rows[headerRow]?.[i]||''),headers):[];
+  return {headerRow,mapping,content};
+ }
  function suggestMaster(sheet:ImportSheet,file:string):string{
   if(scope.type==='tab')return scope.tab;
   // A CSV carries one table, so the tab suggestion comes from the file name.
@@ -50,9 +67,8 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   // No sheet-name match: offer the master whose fixed columns match this sheet best.
   let best=masters[0]?.name||'',bestMapped=0;
   for(const master of masters){
-   const headerRow=detectHeader(sheet.rows,master.headers);
-   const width=sheet.rows.length?Math.max(...sheet.rows.map(r=>r.length)):0;
-   const mapped=autoMap(Array.from({length:width},(_,i)=>sheet.rows[headerRow]?.[i]||''),master.headers).filter(i=>i>=0).length;
+   const {mapping}=analyze(file,sheet,master.name);
+   const mapped=mapping.filter(i=>i>=0).length;
    if(mapped>bestMapped){bestMapped=mapped;best=master.name;}
   }
   return best;
@@ -61,32 +77,33 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   const template=templateInRows(sheet.rows);
   const blocked=template?`${template} template - filled template lists are uploaded under Add templates in the sidebar, not imported into Masters`:null;
   const master=suggestMaster(sheet,file);
-  const headers=headersOf(master);
-  const headerRow=headers.length?detectHeader(sheet.rows,headers):0;
-  const width=sheet.rows.length?Math.max(...sheet.rows.map(r=>r.length)):0;
-  const mapping=headers.length?autoMap(Array.from({length:width},(_,i)=>sheet.rows[headerRow]?.[i]||''),headers):[];
-  const plan:TablePlan={id:crypto.randomUUID(),file,sheet:sheet.name,rows:sheet.rows,headerRow,master,mapping,included:false,blocked};
-  plan.included=importable(plan)&&!unresolved(plan);
+  const plan:TablePlan={id:crypto.randomUUID(),file,sheet:sheet.name,rows:sheet.rows,master,ignored:[],included:false,blocked,...analyze(file,sheet,master)};
+  plan.included=resolvable(plan)&&matchPct(plan)>=MATCH_OK;
   return plan;
  }
  function retarget(id:string,master:string){
   setPlans(current=>current.map(p=>{
    if(p.id!==id)return p;
-   const headers=headersOf(master);
-   const headerRow=detectHeader(p.rows,headers);
-   const width=p.rows.length?Math.max(...p.rows.map(r=>r.length)):0;
-   const mapping=autoMap(Array.from({length:width},(_,i)=>p.rows[headerRow]?.[i]||''),headers);
-   return {...p,master,headerRow,mapping,included:false};
+   const next={...p,master,ignored:[],included:false,...analyze(p.file,{name:p.sheet,rows:p.rows},master)};
+   return next;
   }));
  }
- function remap(id:string,mapping:number[]){
+ // One master column can receive one source column. Mapping onto a used target frees the
+ // previous source column back to "needs review" instead of silently overwriting it.
+ function remap(id:string,column:number,value:number){
   setPlans(current=>current.map(p=>{
    if(p.id!==id)return p;
-   const next={...p,mapping};
-   // Fixing the columns can make a waiting table ready, but the tick stays the user's.
-   return {...next,included:p.included&&importable(next)&&!unresolved(next)};
+   const mapping=p.mapping.map((v,j)=>{
+    if(j===column)return value>=0?value:-1;
+    if(value>=0&&v===value)return -1;
+    return v;
+   });
+   const ignored=value===IGNORE?[...p.ignored,column]:p.ignored.filter(j=>j!==column&&mapping[j]<0);
+   const next={...p,mapping,ignored:[...new Set(ignored)]};
+   return {...next,included:p.included&&resolvable(next)};
   }));
  }
+ const selected=files.filter(p=>p.allowed&&extOk(p.file.name,types));
  async function addFiles(list:FileList|File[]){
   setPickError('');
   const out:File[]=[];const skipped:string[]=[];
@@ -108,7 +125,6 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    return [...current,...out.filter(f=>!seen.has(f.name)).map(file=>({file,allowed:true}))];
   });
  }
- const selected=files.filter(p=>p.allowed&&extOk(p.file.name,types));
  async function runFind(){
   stopRef.current=false;
   setStep('find');
@@ -246,24 +262,31 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
      <tbody>
       {plans.map(p=>{
        const headers=headersOf(p.master);const total=headers.length;const mapped=mappedCount(p);const pct=matchPct(p);
-       const waiting=unresolved(p)||!importable(p);
-       return <><tr key={p.id} className={waiting?'ex-waiting':''}>
-        <td>{importable(p)&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
+       const waiting=!resolvable(p);
+       const reviewN=reviewCount(p);
+       const columnNote=p.blocked?'Template file, never imported'
+        :reviewN>0?`Unresolved: ${reviewN} column${reviewN===1?'':'s'} need${reviewN===1?'s':''} review`
+        :!idMapped(p)?'Unresolved: map the ID column'
+        :`${mapped} of ${total} columns mapped${ignoredCount(p)?`, ${ignoredCount(p)} ignored`:''}`;
+       const toggle=<button type="button" className="ex-map-toggle" aria-expanded={expanded.has(p.id)} onClick={()=>setExpanded(current=>{const next=new Set(current);if(next.has(p.id))next.delete(p.id);else next.add(p.id);return next;})}>{expanded.has(p.id)?'Hide columns':'Map columns'}</button>;
+       return <><tr key={p.id} className={waiting&&!p.blocked?'ex-waiting':''}>
+        <td>{!p.blocked&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} disabled={!resolvable(p)} title={resolvable(p)?undefined:'Map or ignore every column with content, and map the ID column, first'} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
         <td>{p.file}{p.file!==p.sheet&&<small>{p.sheet}</small>}</td>
         <td>{p.blocked?'Add templates':scope.type==='tab'?p.master:<select aria-label={`Destination tab for ${p.sheet}`} value={p.master} onChange={e=>retarget(p.id,e.target.value)}>{masters.map(m=><option key={m.name} value={m.name}>{m.name}</option>)}</select>}</td>
-        <td>{p.blocked?'-':<span className={'ex-match '+(unresolved(p)||!importable(p)?'warn':'good')}>{pct}%</span>}</td>
-        <td>{p.blocked?'Template file, never imported':mapped===0?'Unresolved: no columns match':mapped<total?`${unresolved(p)?'Unresolved: ':''}${total-mapped} of ${total} columns unmapped`:`${mapped} of ${total} columns`}</td>
-        <td>{importable(p)&&<button type="button" className="ex-map-toggle" aria-expanded={expanded.has(p.id)} onClick={()=>setExpanded(current=>{const next=new Set(current);if(next.has(p.id))next.delete(p.id);else next.add(p.id);return next;})}>{expanded.has(p.id)?'Hide columns':'Map columns'}</button>}</td>
+        <td>{p.blocked?'-':<span className={'ex-match '+(waiting?'warn':'good')}>{pct}%</span>}</td>
+        <td>{columnNote}</td>
+        <td>{!p.blocked&&toggle}</td>
        </tr>
-       {expanded.has(p.id)&&importable(p)&&<tr key={`${p.id}-map`} className="ex-map-row"><td colSpan={6}>
+       {expanded.has(p.id)&&!p.blocked&&<tr key={`${p.id}-map`} className="ex-map-row"><td colSpan={6}>
         <table className="mapping-table"><thead><tr><th>File column</th><th>Sample value</th><th>{p.master} field</th></tr></thead><tbody>
          {p.mapping.map((target,i)=>{
-          const width=Math.max(...p.rows.map(r=>r.length));
           const name=p.rows[p.headerRow]?.[i]?.trim()||`Column ${i+1}`;
           const sample=importDataRows(p.rows,p.headerRow).find(r=>r[i]?.trim())?.[i]||'-';
-          return <tr key={i}><td>{name}<small>Column {i+1} of {width}</small></td><td className="bulk-sample">{sample}</td><td><select aria-label={`Map column ${i+1}: ${name}`} value={target} onChange={e=>remap(p.id,p.mapping.map((v,j)=>j===i?Number(e.target.value):v))}><option value={-1}>Skip this column</option>{headers.map((h,j)=><option key={j} value={j}>{h}{j===0?' (ID)':''}</option>)}</select></td></tr>;
+          const value=p.ignored.includes(i)?IGNORE:target;
+          return <tr key={i} className={needsReview(p,i)?'ex-waiting':''}><td>{name}<small>Column {i+1}</small></td><td className="bulk-sample">{sample}</td><td><select aria-label={`Map column ${i+1}: ${name}`} value={value} onChange={e=>remap(p.id,i,Number(e.target.value))}><option value={-1}>Needs review</option><option value={IGNORE}>Ignore this column</option>{headers.map((h,j)=><option key={j} value={j}>{h}{j===0?' (ID)':''}</option>)}</select></td></tr>;
          })}
         </tbody></table>
+        <p className="bulk-hint">Every column with content must be mapped to a {p.master} field or explicitly ignored before this table can be included. Ignored columns are left out of the import.</p>
        </td></tr>}
        </>;
       })}
@@ -271,7 +294,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
     </table>
     {failed.length>0&&<p className="bulk-hint review-skipped"><b>Files that could not be read:</b> {failed.join('; ')}.</p>}
     {plans.some(p=>p.blocked)&&<p className="bulk-hint review-skipped"><b>Held back:</b> {plans.filter(p=>p.blocked).map(p=>`${p.file}${p.file!==p.sheet?` · ${p.sheet}`:''} (${p.blocked})`).join('; ')}.</p>}
-    {plans.filter(p=>unresolved(p)&&!p.included).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet. Its match to {p.master} is low ({matchPct(p)}%) and {headersOf(p.master).length-mappedCount(p)} columns are unmapped. Map the columns with the dropdowns{scope.type==='all'?' or pick another tab':''}, then tick it to include it.</p>)}
+    {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet. {reviewCount(p)>0?`${reviewCount(p)} column${reviewCount(p)===1?'':'s'} with content ${reviewCount(p)===1?'is':'are'} not mapped`:'The ID column is not mapped'}. Open Map columns and map or ignore each one, then tick the table to include it. Nothing is dropped without your choice.</p>)}
     <p className="ex-note">Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
     {error&&<p role="alert" className="bulk-error">{error}</p>}
     {busy&&<p role="status">Importing rows...</p>}

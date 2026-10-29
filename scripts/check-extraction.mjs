@@ -54,12 +54,12 @@ try{
  const dialogText=()=>page.getByRole('dialog').allTextContents().then(t=>t.join(' ').replace(/\s+/g,' '));
  assert.ok(/2\s*tables found/.test(await dialogText()));
  assert.ok(/ready to import/.test(await dialogText()));
- // The unrelated sheet stays visible but unticked and is never imported.
+ // The unrelated sheet stays visible but unticked and is never imported - but it keeps a manual mapping path.
  const leaveRow=page.locator('.ex-table tr',{hasText:'Leave approvals'});
- assert.ok((await leaveRow.allTextContents()).join(' ').match(/no columns match|unmapped/));
- assert.equal(await leaveRow.locator('input[type=checkbox]').count(),0);
- assert.equal(await page.getByRole('button',{name:'Import 1 ready table',exact:true}).count(),1);
- report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, with no include checkbox.');
+ assert.ok((await leaveRow.allTextContents()).join(' ').match(/Unresolved/));
+ assert.equal(await leaveRow.locator('input[type=checkbox]').isDisabled(),true);
+ assert.equal(await leaveRow.getByRole('button',{name:'Map columns',exact:true}).count(),1);
+ report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, with a Map columns path.');
 
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'2 new rows added'}).waitFor();
@@ -122,6 +122,65 @@ try{
  assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Filled list templates stay blocked from Masters and point at Add templates.');
+
+ // Renamed headers: 9 of 12 columns auto-map, but the 3 unmapped columns with content keep the
+ // table unticked and its checkbox disabled until each is mapped or explicitly ignored.
+ const renamed=toXlsx([['Organization',[
+  ['Code','Company Name','Registered address','Certifications','Offerings','Client accounts','Knowledge bases','Hardware','Notes','Website & socials','Team size & roles','Software in use'],
+  ['ORG-R-1','Renamed co','Mysuru','ISO','Widgets','Clients','KB','Laptop','note','https://example.test','5 engineers','Excel'],
+ ]]]);
+ await page.getByRole('button',{name:'Masters',exact:true}).click();
+ await openFlow();
+ await toReview({name:'org-renamed.xlsx',mimeType:xlsxType,buffer:renamed});
+ const renamedRow=page.locator('.ex-table tr',{hasText:'org-renamed.xlsx'});
+ assert.ok(/9\s*of\s*12|75%/.test((await renamedRow.allTextContents()).join(' ').replace(/\s+/g,' ')));
+ assert.ok(/3 columns need review/.test((await renamedRow.allTextContents()).join(' ').replace(/\s+/g,' ')));
+ assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),true);
+ assert.equal(await page.getByRole('button',{name:'Import ready tables',exact:true}).isDisabled(),true);
+ // Resolve: map Website & socials onto Brand Properties, ignore the other two explicitly.
+ await renamedRow.getByRole('button',{name:'Map columns',exact:true}).click();
+ await page.getByRole('combobox',{name:'Map column 10: Website & socials'}).selectOption({label:'Brand Properties'});
+ await page.getByRole('combobox',{name:'Map column 11: Team size & roles'}).selectOption({label:'Ignore this column'});
+ await page.getByRole('combobox',{name:'Map column 12: Software in use'}).selectOption({label:'Ignore this column'});
+ await page.screenshot({path:screenshotDir+'/ex-7-renamed-resolved.png'});
+ assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),false);
+ await renamedRow.locator('input[type=checkbox]').check();
+ await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
+ await page.getByRole('status').filter({hasText:'1 new row'}).waitFor();
+ const renamedSaved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization');});
+ const renamedRowSaved=renamedSaved.find(r=>r.values[0]==='ORG-R-1');
+ assert.equal(renamedRowSaved.values[2],'https://example.test');
+ assert.equal(renamedRowSaved.values.some(v=>v==='5 engineers'||v==='Excel'),false);
+ report.push('Renamed headers (9/12): table waits unticked with checkbox disabled until the 3 content columns are mapped or ignored; ignored column data never lands.');
+
+ // Zero-match table: Map columns still gives a manual path, and one master field can take
+ // only one source column - mapping onto a used field frees the earlier column instead of
+ // silently overwriting it.
+ const zero=toXlsx([['Sheet1',[
+  ['Foo','Bar','Baz'],
+  ['ORG-Z-1','Zero co','Extra fact'],
+ ]]]);
+ await openFlow();
+ await toReview({name:'zero.xlsx',mimeType:xlsxType,buffer:zero});
+ const zeroRow=page.locator('.ex-table tr',{hasText:'zero.xlsx'});
+ assert.equal(await zeroRow.locator('input[type=checkbox]').isDisabled(),true);
+ await zeroRow.getByRole('button',{name:'Map columns',exact:true}).click();
+ await page.getByRole('combobox',{name:'Map column 1: Foo'}).selectOption({label:'Org ID (ID)'});
+ await page.getByRole('combobox',{name:'Map column 2: Bar'}).selectOption({label:'Company / Type'});
+ await page.getByRole('combobox',{name:'Map column 3: Baz'}).selectOption({label:'Org ID (ID)'});
+ assert.equal(await page.getByRole('combobox',{name:'Map column 1: Foo'}).inputValue(),'-1');
+ assert.equal(await page.getByRole('combobox',{name:'Map column 3: Baz'}).inputValue(),'0');
+ await page.getByRole('combobox',{name:'Map column 3: Baz'}).selectOption({label:'Ignore this column'});
+ await page.getByRole('combobox',{name:'Map column 1: Foo'}).selectOption({label:'Org ID (ID)'});
+ assert.equal(await zeroRow.locator('input[type=checkbox]').isDisabled(),false);
+ await zeroRow.locator('input[type=checkbox]').check();
+ await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
+ await page.getByRole('status').filter({hasText:'1 new row'}).waitFor();
+ const zeroSaved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization');});
+ const zeroRowSaved=zeroSaved.find(r=>r.values[0]==='ORG-Z-1');
+ assert.equal(zeroRowSaved.values[1],'Zero co');
+ assert.equal(zeroRowSaved.values.some(v=>v==='Extra fact'),false);
+ report.push('Zero-match table maps manually through Map columns; a reused master field frees the earlier column visibly instead of overwriting it; ignored content is not imported.');
 
  // Dark theme over the same flow.
  await page.getByRole('button',{name:'Switch to dark mode'}).click();
