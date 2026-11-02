@@ -21,8 +21,8 @@ import {TemplateHeader} from './TemplateHeader';
 import {TEMPLATES,templateForColumn,type MastersTemplate} from './templates';
 import {getSession,logout,switchToPipeline} from './auth/session';
 ModuleRegistry.registerModules([AllCommunityModule]);
-const lightTheme=themeQuartz.withParams({accentColor:'#0084C2',backgroundColor:'#ffffff',headerBackgroundColor:'#f5f7fa',borderColor:'#e5e9ef',fontFamily:'Inter, Arial, sans-serif',fontSize:12,headerFontSize:11,rowVerticalPaddingScale:1.2});
-const darkTheme=themeQuartz.withParams({accentColor:'#56b8ef',backgroundColor:'#17212f',foregroundColor:'#e2e9f2',headerBackgroundColor:'#202d3e',borderColor:'#36465a',fontFamily:'Inter, Arial, sans-serif',fontSize:12,headerFontSize:11,rowVerticalPaddingScale:1.2});
+const lightTheme=themeQuartz.withParams({accentColor:'#0084C2',backgroundColor:'#ffffff',headerBackgroundColor:'#f5f7fa',borderColor:'#e5e9ef',fontFamily:'Inter, Arial, sans-serif',fontSize:14,headerFontSize:12,rowVerticalPaddingScale:1.2});
+const darkTheme=themeQuartz.withParams({accentColor:'#56b8ef',backgroundColor:'#17212f',foregroundColor:'#e2e9f2',headerBackgroundColor:'#202d3e',borderColor:'#36465a',fontFamily:'Inter, Arial, sans-serif',fontSize:14,headerFontSize:12,rowVerticalPaddingScale:1.2});
 // ISATVON letters stay the workbook column keys; the Skills grid shows each letter with its expansion.
 const ISATVON:Record<string,string>={I:'Instruction',S:'Source',A:'Automation',T:'Tech stack',V:'Variables',O:'Outcome',N:'Notify on next'};
 const TIPS:Record<string,string>={Masters:'All master tables from the BuLLM source workbook.',Organization:'Business units, locations, customers, systems and certifications.',Rules:'Domain, DFM, sourcing and costing rules for manufacturing.',Agents:'AI agents with their models, repos, prompts, evals and logs.',Skills:'Agent skills: documents, RFQs, suppliers, pricing and templates.',Tools:'Tool Factory: the tool registry - agents, assistants, MCPs, OSS, skills, APIs, frameworks and enterprise systems from the Tech Stack & Tool Factory workbook.',Filetype:'Supported file formats and how each is ingested for RAG. Read-only.'};
