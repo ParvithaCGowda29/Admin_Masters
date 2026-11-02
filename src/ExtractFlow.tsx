@@ -1,14 +1,19 @@
-import {useRef,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
+import Uppy from '@uppy/core';
+import Dashboard from '@uppy/react/dashboard';
+import '@uppy/core/css/style.min.css';
+import '@uppy/dashboard/css/style.min.css';
+import {IconFolder,IconUpload,IconArchive} from './icons';
 import {unzipSync} from 'fflate';
 import {autoMap,detectHeader,importDataRows,mappedRows,readImportFile,sheetKey,templateInRows,type ImportSheet,type MasterTarget} from './bulkImport';
 import {newId} from './id';
 import bullMark from './assets/login/bull-logo.png';
 
 export type ExtractScope={type:'all'}|{type:'tab';tab:string};
-type Props={scope:ExtractScope;masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
+type Props={dark:boolean;scope:ExtractScope;masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
 
 type Step='source'|'permission'|'find'|'review';
-const STEPS:{key:Step;label:string}[]=[{key:'source',label:'Source'},{key:'permission',label:'Permission'},{key:'find',label:'Find files'},{key:'review',label:'Review mapping'}];
+const STEPS:{key:Step;label:string}[]=[{key:'source',label:'Source'},{key:'permission',label:'Permission'},{key:'find',label:'Fetch files'},{key:'review',label:'Mapping'}];
 // At or above this header-match percent a fully resolved table starts ticked. A high
 // percentage alone never ticks a table: every source column with content must be
 // mapped or explicitly ignored, and the master's ID column must be mapped.
@@ -35,9 +40,10 @@ type FindProgress={done:number;total:number;current:string;found:number};
 const isCsv=(name:string)=>/\.csv$/i.test(name);
 const extOk=(name:string,types:{xlsx:boolean;csv:boolean})=>isCsv(name)?types.csv:/\.xlsx$/i.test(name)?types.xlsx:false;
 
-export function ExtractFlow({scope,masters,onClose,onImport}:Props){
+export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
  const fileInput=useRef<HTMLInputElement>(null);
  const folderInput=useRef<HTMLInputElement>(null);
+ const zipInput=useRef<HTMLInputElement>(null);
  const stopRef=useRef(false);
  const[step,setStep]=useState<Step>('source');
  const[files,setFiles]=useState<Picked[]>([]);
@@ -48,6 +54,18 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
  const[failed,setFailed]=useState<string[]>([]);
  const[progress,setProgress]=useState<FindProgress>({done:0,total:0,current:'',found:0});
  const[expanded,setExpanded]=useState<Set<string>>(new Set());
+ const[uppyCount,setUppyCount]=useState(0);
+ // The Uppy dashboard is the intake preview for all three options (folder, bulk, zip). It
+ // never uploads anywhere: Continue reads its file list and hands the File objects to the
+ // same processing the typed inputs used before (zip expansion, type classification).
+ const[uppy]=useState(()=>new Uppy({autoProceed:false,restrictions:{maxNumberOfFiles:null,allowedFileTypes:['.xlsx','.csv','.zip','.pdf','.dxf','.dwg','.step','.stp','.docx','.md','.txt','.eml','.msg']}}));
+ useEffect(()=>{
+  const update=()=>setUppyCount(uppy.getFiles().length);
+  uppy.on('file-added',update);uppy.on('file-removed',update);
+  // No uppy.destroy() here: StrictMode's setup/cleanup/setup cycle would kill the instance the
+  // second setup still uses. The dialog is short-lived; Dashboard uninstalls its plugin on unmount.
+  return()=>{uppy.off('file-added',update);uppy.off('file-removed',update);};
+ },[uppy]);
  const[busy,setBusy]=useState(false);
  const[error,setError]=useState('');
 
@@ -146,10 +164,22 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    skipped.push(`${f.name} (not a project document type)`);
   }
   if(skipped.length)setPickError(`Skipped: ${skipped.join('; ')}.`);
-  setFiles(current=>{
-   const seen=new Set(current.map(p=>p.file.name));
-   return [...current,...out.filter(p=>!seen.has(p.file.name))];
-  });
+  // The dashboard is the whole intake, so the processed set replaces whatever an earlier
+  // Continue staged (duplicates inside one batch are kept once).
+  const seen=new Set<string>();
+  const next=out.filter(p=>!seen.has(p.file.name)&&(seen.add(p.file.name),true));
+  setFiles(next);
+  return next.length;
+ }
+ // Folder, bulk and zip inputs all feed the dashboard preview; duplicates are Uppy's call.
+ function addToDashboard(list:FileList|null){
+  if(!list)return;
+  for(const file of [...list]){try{uppy.addFile({name:file.name,type:file.type,data:file});}catch{}}
+ }
+ async function continueFromSource(){
+  const picked=uppy.getFiles().map(f=>new File([f.data as Blob],f.name,{type:f.type||undefined}));
+  const added=await addFiles(picked);
+  if(added>0)setStep('permission');
  }
  async function runFind(){
   stopRef.current=false;
@@ -184,7 +214,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    onClose();
   }catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
- const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Finding tables',review:'Review where each file maps'};
+ const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Fetching tables',review:'Review where each file maps'};
  return <dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
   <div className="bulk-heading">
    <div>
@@ -203,29 +233,38 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   <div className="bulk-body">
    {step==='source'&&<>
     <p className="ex-label">UPLOAD PROJECT DOCUMENTS</p>
-    <div className="ex-drop" role="button" tabIndex={0}
-     onClick={()=>fileInput.current?.click()}
-     onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.current?.click();}}}
-     onDragOver={e=>e.preventDefault()}
-     onDrop={e=>{e.preventDefault();void addFiles(e.dataTransfer.files);}}>
-     <strong>Drop project documents here</strong> or browse your device
-     <span className="ex-chips" aria-label="Accepted document types">
-      <span className="ex-chip">Master data <b>.xlsx .csv</b></span>
-      <span className="ex-chip">Drawings <b>.pdf .dxf .dwg .step</b></span>
-      <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
-      <span className="ex-chip">Client emails <b>.eml .msg</b></span>
-     </span>
-     <small>Only relevant content maps into the master tabs. Rows are added, never replaced.</small>
+    <div className="ex-options" role="group" aria-label="Upload options">
+     <button type="button" className="ex-option" onClick={()=>folderInput.current?.click()}>
+      <span className="ex-option-num" aria-hidden="true">1</span>
+      <IconFolder size={17}/>
+      <strong>Choose folder</strong>
+      <small>Every project document in the folder you pick</small>
+     </button>
+     <button type="button" className="ex-option" onClick={()=>fileInput.current?.click()}>
+      <span className="ex-option-num" aria-hidden="true">2</span>
+      <IconUpload size={17}/>
+      <strong>Bulk upload</strong>
+      <small>Pick several files at once</small>
+     </button>
+     <button type="button" className="ex-option" onClick={()=>zipInput.current?.click()}>
+      <span className="ex-option-num" aria-hidden="true">3</span>
+      <IconArchive size={17}/>
+      <strong>Zip upload</strong>
+      <small>One .zip of project documents</small>
+     </button>
     </div>
-    <input ref={fileInput} type="file" hidden multiple accept=".xlsx,.csv,.zip,.pdf,.dxf,.dwg,.step,.stp,.docx,.md,.txt,.eml,.msg" aria-label="Choose files from this device" onChange={e=>{if(e.target.files?.length)void addFiles(e.target.files);e.target.value='';}}/>
+    <Dashboard uppy={uppy} width="100%" height={280} proudlyDisplayPoweredByUppy={false} hideUploadButton theme={dark?'dark':'light'} note="Only relevant content maps into the master tabs. Rows are added, never replaced."/>
+    <span className="ex-chips" aria-label="Accepted document types">
+     <span className="ex-chip">Master data <b>.xlsx .csv</b></span>
+     <span className="ex-chip">Drawings <b>.pdf .dxf .dwg .step</b></span>
+     <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
+     <span className="ex-chip">Client emails <b>.eml .msg</b></span>
+    </span>
+    <input ref={fileInput} type="file" hidden multiple accept=".xlsx,.csv,.pdf,.dxf,.dwg,.step,.stp,.docx,.md,.txt,.eml,.msg" aria-label="Choose files from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
+    <input ref={zipInput} type="file" hidden accept=".zip" aria-label="Choose a zip file from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
+    <input ref={folderInput} type="file" hidden multiple {...({webkitdirectory:'',directory:''} as object)} aria-label="Choose a folder from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
     <p className="ex-label">OR EXTRACT FROM A SOURCE</p>
     <div className="ex-sources">
-     <button type="button" className="ex-source" onClick={()=>folderInput.current?.click()}>
-      <span className="ex-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/></svg></span>
-      <strong>This device</strong>
-      <small>Pick a folder on your computer. Only the folder you choose is read.</small>
-      <span className="ex-badge">Read-only</span>
-     </button>
      <button type="button" className="ex-source" disabled title="SharePoint needs company sign-in and a backend service, which this app doesn't have yet">
       <span className="ex-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7 1.6A4 4 0 0 0 6 19z"/></svg></span>
       <strong>SharePoint</strong>
@@ -239,11 +278,11 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
       <span className="ex-badge off">Not connected</span>
      </button>
     </div>
-    <input ref={folderInput} type="file" hidden multiple {...({webkitdirectory:'',directory:''} as object)} aria-label="Choose a folder from this device" onChange={e=>{if(e.target.files?.length)void addFiles(e.target.files!);e.target.value='';}}/>
     {pickError&&<p role="alert" className="bulk-error">{pickError}</p>}
     <p className="ex-note">Extraction never reads more than the files you choose. You pick exactly which files on the next step, everything is processed in this browser only, and nothing is imported until you confirm.</p>
    </>}
    {step==='permission'&&<>
+    {pickError&&<p role="alert" className="bulk-error">{pickError}</p>}
     <p className="ex-label">ACCESS LEVEL</p>
     <div className="ex-access" role="radiogroup" aria-label="Access level">
      <button type="button" role="radio" aria-checked={access==='read'} className={'ex-access-card'+(access==='read'?' on':'')} onClick={()=>setAccess('read')}>
@@ -356,14 +395,14 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   </div>
   <div className="bulk-footer">
    {step==='source'&&<>
-    <span>{files.length?`${files.length} file${files.length===1?'':'s'} ready`:'Pick files or a folder to continue'}</span>
+    <span>{uppyCount?`${uppyCount} file${uppyCount===1?'':'s'} ready`:'Pick files, a folder or a zip to continue'}</span>
     <button onClick={onClose}>Cancel</button>
-    <button className="primary" disabled={!files.length} onClick={()=>setStep('permission')}>Continue</button>
+    <button className="primary" disabled={!uppyCount} onClick={()=>void continueFromSource()}>Continue</button>
    </>}
    {step==='permission'&&<>
     <span>{selected.length} of {files.filter(p=>p.kind==='table').length} tabular file{files.filter(p=>p.kind==='table').length===1?'':'s'} selected</span>
     <button onClick={()=>setStep('source')}>Back</button>
-    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>{access==='read'?'Allow read-only':'Allow read-write'} & find files</button>
+    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>{access==='read'?'Allow read-only':'Allow read-write'} & fetch files</button>
    </>}
    {step==='find'&&<>
     <span>{access==='read'?'Read-only':'Read-write'}. This extraction job only.</span>

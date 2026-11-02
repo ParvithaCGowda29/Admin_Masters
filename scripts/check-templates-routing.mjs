@@ -16,25 +16,32 @@ try{
  for(let i=0;i<30;i++){try{await page.goto('http://127.0.0.1:5173');break}catch{await new Promise(r=>setTimeout(r,100));}}
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
 
- // Add files opens one extraction flow: Source, Permission, Find files, Review mapping.
+ // Add files opens one extraction flow: Source, Permission, Fetch files, Mapping. The intake
+ // is three options (Choose folder / Bulk upload / Zip upload) feeding an Uppy dashboard.
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByRole('dialog').waitFor();
  await page.getByRole('heading',{name:'Add files',exact:true}).waitFor();
- for(const label of ['Source','Permission','Find files','Review mapping'])await page.locator('.ex-steps').getByText(label,{exact:true}).waitFor();
+ for(const label of ['Source','Permission','Fetch files','Mapping'])await page.locator('.ex-steps').getByText(label,{exact:true}).waitFor();
+ assert.deepEqual(await page.locator('.ex-option strong').allTextContents(),['Choose folder','Bulk upload','Zip upload']);
+ await page.locator('.uppy-Dashboard-inner').waitFor();
  assert.equal(await page.getByRole('button',{name:/SharePoint/}).isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:/Google Drive/}).isDisabled(),true);
  assert.ok((await page.getByRole('dialog').allTextContents()).join(' ').includes('Not connected'));
  await page.screenshot({path:screenshotDir+'/masters-bam-menu.png',fullPage:true});
- report.push('Add files opens the extraction flow (Source / Permission / Find files / Review mapping); SharePoint and Google Drive show Not connected and stay disabled.');
+ report.push('Add files opens the extraction flow (Source / Permission / Fetch files / Mapping) with the three upload options feeding the Uppy dashboard; SharePoint and Google Drive show Not connected and stay disabled.');
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
 
- // Placement B: the Add templates popup is upload-only; downloads come from the column headers.
+ // Placement B: Add templates opens the finalised wireframe modal with the three source cards.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
- assert.equal(await page.locator('.templates-menu a[download]').count(),0);
- assert.equal(await page.locator('.templates-menu').getByRole('menuitem',{name:/Upload your own/}).count(),4);
+ const tplDialog=page.locator('.templates-dialog');
+ await tplDialog.getByRole('heading',{name:'Add templates',exact:true}).waitFor();
+ await tplDialog.getByText('Pick where the template for a master list comes from.',{exact:true}).waitFor();
+ await tplDialog.locator('.tpl-card.recommended').getByText('Recommended templates',{exact:true}).waitFor();
+ for(const name of ['Use recommended','Upload your own',"Upload client's"])await tplDialog.getByRole('button',{name,exact:true}).waitFor();
+ assert.ok((await tplDialog.allTextContents()).join(' ').includes('Organization column headers'));
  await page.screenshot({path:screenshotDir+'/masters-templates-menu.png',fullPage:true});
- report.push('Add templates popup is upload-only: four Upload your own actions, no downloads.');
- await page.keyboard.press('Escape');
+ report.push('Add templates opens the wireframe modal: recommended / your own / client cards with one action each, and the download note pointing at the Organization column headers.');
+ await tplDialog.getByRole('button',{name:'Close',exact:true}).click();
 
  // Placement A: the four backed Organization column headers generate the download on
  // click; with no rows uploaded yet the file is the blank template.
@@ -88,8 +95,9 @@ try{
  const bytes=Buffer.from(write(book,{type:'array',bookType:'xlsx'}));
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
+ await page.locator('.uppy-Dashboard-Item').first().waitFor();
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const reviewText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(reviewText[0].includes('Organization')&&reviewText[0].includes('Tools'));
@@ -106,7 +114,7 @@ try{
   {name:'org.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-F-2,Second co')},
  ]);
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const multiText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(multiText[0].includes('Everything maps into the Organization tab only.'));
@@ -157,7 +165,7 @@ try{
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'Employee List.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.locator('.ex-dialog').getByText(/Add templates/).first().waitFor();
  await page.locator('.ex-dialog').getByText(/not imported into Masters/).first().waitFor();
@@ -182,7 +190,7 @@ try{
  // Add templates: uploading a new template replaces that template completely - the
  // file's column names and rows take over, never touching a master tab.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
- await page.locator('.template-item',{hasText:'Employee list'}).getByRole('menuitem',{name:/Upload your own/}).click();
+ await page.locator('.templates-dialog').getByRole('button',{name:'Upload your own',exact:true}).click();
  await page.getByRole('heading',{name:'Upload a new Employee list template',exact:true}).waitFor();
  await page.locator('.bulk-dialog input[type=file]').setInputFiles({name:'my-employees.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified\nBala,Designer,Product,Unit 1,Pending')});
  await page.getByRole('button',{name:'Replace template',exact:true}).waitFor();
@@ -191,8 +199,7 @@ try{
  await page.getByRole('status').filter({hasText:'Employee list template now uses the uploaded file'}).waitFor();
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
  await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
- assert.ok((await page.locator('.templates-menu').allTextContents()).join(' ').includes('2 rows'));
- await page.getByRole('menuitem',{name:'View / edit',exact:true}).click();
+ await page.locator('.templates-dialog').getByRole('button',{name:/Employee list/}).click();
  await page.getByRole('heading',{name:'Employee list',exact:true}).waitFor();
  await page.screenshot({path:screenshotDir+'/masters-template-list.png'});
  await page.getByRole('textbox',{name:'Employee (row 1)',exact:true}).fill('Asha R');
@@ -219,15 +226,17 @@ try{
  // Regression: a file with completely new column names replaces the Customers template;
  // the header download then serves the new structure, and the other lists stay untouched.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
- await page.locator('.template-item',{hasText:'Customers / Audience'}).getByRole('menuitem',{name:/Upload your own/}).click();
+ await page.locator('.templates-dialog').getByRole('button',{name:'Upload your own',exact:true}).click();
+ await page.getByRole('heading',{name:'Upload a new Employee list template',exact:true}).waitFor();
+ await page.getByLabel('List',{exact:true}).selectOption('customers');
  await page.getByRole('heading',{name:'Upload a new Customers / Audience template',exact:true}).waitFor();
  await page.locator('.bulk-dialog input[type=file]').setInputFiles({name:'customers-new.csv',mimeType:'text/csv',buffer:Buffer.from('Client code,Client name,Market segment\nCL-SMPL-01,Asha Textiles,D2C\nCL-SMPL-02,Bala Foods,Retail')});
  await page.getByRole('button',{name:'Replace template',exact:true}).click();
  await page.getByRole('status').filter({hasText:'Customers / Audience template now uses the uploaded file'}).waitFor();
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
- assert.ok((await page.locator('.templates-menu').allTextContents()).join(' ').includes('Client code'),'menu shows the replaced columns');
+ assert.ok((await page.locator('.templates-dialog').allTextContents()).join(' ').includes('3 columns'),'card shows the replaced column count');
  await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
- await page.keyboard.press('Escape');
+ await page.locator('.templates-dialog').getByRole('button',{name:'Close',exact:true}).click();
  await page.getByRole('button',{name:'Organization 0',exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  const [download4]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Customers / Audience"]').click()]);

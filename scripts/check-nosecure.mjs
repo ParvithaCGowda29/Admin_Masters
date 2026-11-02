@@ -29,7 +29,7 @@ try{
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:mixed});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('radio',{name:/Read-write/}).click();
- await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.screenshot({path:dir+'/review-nosecure.png'});
  const text=(await page.getByRole('dialog').allTextContents()).join(' ');

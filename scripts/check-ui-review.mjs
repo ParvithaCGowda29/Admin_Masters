@@ -52,7 +52,7 @@ try{
  await page.getByLabel('Choose files from this device').setInputFiles({name:'Organization.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type,Location\nORG-IMPORT,Imported business,Mysuru')});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('radio',{name:/Read-write/}).click();
- await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  // 3 of 12 columns match: the table waits unticked until the user includes it.
  await page.getByRole('checkbox',{name:'Include CSV from Organization.csv'}).check();

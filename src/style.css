@@ -257,3 +257,46 @@
 .templates-group{padding:10px 10px 4px;font-size:12px;letter-spacing:1.1px;font-weight:700;color:#8894a4}
 .templates-group-note{padding:0 10px 6px;font-size:12px;color:#8b97a6;white-space:normal;line-height:1.5}
 :root[data-theme=dark] .templates-group,:root[data-theme=dark] .templates-group-note{color:#a6b8cc}
+
+/* Add templates modal (finalised wireframe, 2026-11-02): three source cards. */
+.templates-dialog{width:min(880px,calc(100vw - 28px))}
+.tpl-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tpl-card{display:flex;flex-direction:column;gap:8px;border:1px solid #e3e7ee;border-radius:10px;padding:16px;background:#fff;text-align:left}
+.tpl-card h3{display:flex;align-items:center;gap:8px;margin:0;font-size:16px;color:#253246;font-weight:600}
+.tpl-card h3 svg{color:#0084c2;flex:none}
+.tpl-card p{margin:0;font-size:12px;color:#6b7789;line-height:1.55}
+.tpl-card.recommended{border-color:#e8912d}
+.tpl-card.recommended h3 svg{color:#e8912d}
+.tpl-lists{list-style:none;margin:4px 0 0;padding:0}
+.tpl-lists li+li{border-top:1px solid #edf0f3}
+.tpl-lists button{display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;border:0;background:none;padding:7px 2px;font-size:14px;color:#354050;text-align:left;white-space:normal}
+.tpl-lists button:hover{background:#f2f9fd}
+.tpl-lists button small{color:#8b97a6;font-size:12px;white-space:nowrap}
+.tpl-caption{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tpl-caption span{font-size:14px;color:#354050}
+.tpl-caption small{color:#8b97a6;font-size:12px;white-space:nowrap}
+.tpl-action{margin-top:auto;width:100%}
+.tpl-note{margin:14px 0 0;padding:10px 12px;background:#eef6fc;border-left:3px solid #0084c2;border-radius:0 6px 6px 0;font-size:14px;color:#425166;line-height:1.6}
+:root[data-theme=dark] .tpl-card{background:#202d3e;border-color:#485a70}
+:root[data-theme=dark] .tpl-card h3{color:#e2e9f2}
+:root[data-theme=dark] .tpl-card p{color:#a6b8cc}
+:root[data-theme=dark] .tpl-card.recommended{border-color:#e8912d}
+:root[data-theme=dark] .tpl-lists li+li{border-color:#36465a}
+:root[data-theme=dark] .tpl-lists button{color:#e2e9f2}
+:root[data-theme=dark] .tpl-lists button:hover{background:#293c51}
+:root[data-theme=dark] .tpl-lists button small,:root[data-theme=dark] .tpl-caption small{color:#a6b8cc}
+:root[data-theme=dark] .tpl-caption span{color:#e2e9f2}
+:root[data-theme=dark] .tpl-note{background:#12303f;border-left-color:#239ccc;color:#c9d8e6}
+
+/* Add files intake: the three upload options feeding the Uppy dashboard. */
+.ex-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.ex-option{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:14px;text-align:left;border:1px solid #dfe5ed;border-radius:8px;background:#fff;white-space:normal}
+.ex-option:hover{border-color:#0084c2;background:#f2f9fd}
+.ex-option svg{color:#0084c2}
+.ex-option strong{font-size:14px;color:#354050}
+.ex-option small{color:#7e8998;font-size:12px;line-height:1.4}
+.ex-option-num{position:absolute;top:8px;right:10px;width:18px;height:18px;border-radius:50%;background:#ff9800;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+:root[data-theme=dark] .ex-option{background:#202d3e;border-color:#485a70}
+:root[data-theme=dark] .ex-option:hover{border-color:#239ccc;background:#293c51}
+:root[data-theme=dark] .ex-option strong{color:#e2e9f2}
+:root[data-theme=dark] .ex-option small{color:#a6b8cc}
