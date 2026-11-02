@@ -63,11 +63,11 @@
         "Company / business unit name and type (HQ, branch, department or resource)",
         "Website / GBP / Social Media",
         "Registered address",
-        "Company/business unit certifications",
+        "Company/business unit certifications. Certificate on the first line; Validity (dd-mm-yyyy) on the second line.",
         "Company segment/niche, context and goal priorities; approved services / offers",
-        "ICP / customer segments",
+        "ICP / customer segments as four stacked lines: Customers, Suppliers, Audience, Other. One label per line, content after it.",
         "Named roles and approval owners",
-        "Governed document / source versions",
+        "Governed document / source versions. One linked document per line, each opening its own file or sheet.",
         "Software only. Feeder: BuLLM Tech Stack & Tool Factory > Repo Library. Store canonical repo / Tooling ID, version and tenant account refs; no credentials. See README feeder note. Reference mapping, not live sync.",
         "Physical hardware only: asset ID, device/equipment type, assigned unit/owner and inventory/evidence ref. Legacy unclassified values retained pending review; not hardware verification.",
         "Changes, exceptions and open gaps"
@@ -163,7 +163,83 @@
         "Start / expiry / review date; TBD is not active.",
         "Skill reference"
       ],
-      "rows": [],
+      "rows": [
+        {
+          "id": "Rules-2",
+          "values": [
+            "RULE-COST-01",
+            "Material Pricing · Calculation; Looks up the material price for a quote line, from a governed price source.",
+            "Lovable demo (proposed) · approval TBD",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Proposed",
+            "TBD",
+            "TBD"
+          ],
+          "sourceRow": 2
+        },
+        {
+          "id": "Rules-3",
+          "values": [
+            "RULE-COST-02",
+            "Surface Finish · Calculation; Adds surface finish cost from finish type and area.",
+            "Lovable demo (proposed) · approval TBD",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Proposed",
+            "TBD",
+            "TBD"
+          ],
+          "sourceRow": 3
+        },
+        {
+          "id": "Rules-4",
+          "values": [
+            "RULE-COST-03",
+            "Currency Converter · Calculation; Converts quote currencies into one base currency with dated rates.",
+            "Lovable demo (proposed) · approval TBD",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Proposed",
+            "TBD",
+            "TBD"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Rules-5",
+          "values": [
+            "RULE-COST-04",
+            "Machine Hour Rate · Calculation; Works out the hourly machine rate from machine cost, utilisation and overheads.",
+            "Lovable demo (proposed) · approval TBD",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Proposed",
+            "TBD",
+            "TBD"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Rules-6",
+          "values": [
+            "RULE-COST-05",
+            "Costing Rules · Estimation; Rolls material, finish and machine time up into one estimate.",
+            "Lovable demo (proposed) · approval TBD",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Proposed",
+            "TBD",
+            "TBD"
+          ],
+          "sourceRow": 6
+        }
+      ],
       "removedRows": [],
       "notes": [],
       "readOnly": false
@@ -179,7 +255,10 @@
         "Status",
         "Source version / checked_at",
         "Refresh Frequency",
-        "Rule refs"
+        "Rule refs",
+        "Record type",
+        "Source tab",
+        "BuLLM badge"
       ],
       "descriptions": [
         "Stable tool/category ID",
@@ -190,9 +269,913 @@
         "Record and deployment status",
         "Registry version/date; tool version or freshness TBD",
         "Source refresh cadence to confirm",
-        "Governance Rules IDs"
+        "Governance Rules IDs",
+        "Agent, Assistant, MCP server, OSS repo, Skill, API, Framework or Enterprise system",
+        "Leaderboard, Repo Library, Skill Library or Tech Stack",
+        "BuLLM Recommended, BuLLM Tested, Gap or High fit"
       ],
-      "rows": [],
+      "rows": [
+        {
+          "id": "Tools-2",
+          "values": [
+            "TF-01",
+            "Claude Code",
+            "Agents",
+            "anthropics/claude-code",
+            "TBD",
+            "Reference",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Leaderboard #7",
+            "-"
+          ],
+          "sourceRow": 2
+        },
+        {
+          "id": "Tools-3",
+          "values": [
+            "TF-02",
+            "opencode",
+            "Agents",
+            "TBD",
+            "TBD",
+            "Candidate to pilot",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Leaderboard #13",
+            "-"
+          ],
+          "sourceRow": 3
+        },
+        {
+          "id": "Tools-4",
+          "values": [
+            "TF-03",
+            "OpenAI Codex",
+            "Agents",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Leaderboard #15",
+            "-"
+          ],
+          "sourceRow": 4
+        },
+        {
+          "id": "Tools-5",
+          "values": [
+            "TF-04",
+            "browser-use",
+            "Agents",
+            "TBD",
+            "TBD",
+            "Candidate to pilot",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Leaderboard #16",
+            "-"
+          ],
+          "sourceRow": 5
+        },
+        {
+          "id": "Tools-6",
+          "values": [
+            "TF-05",
+            "Goose",
+            "Agents",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 6
+        },
+        {
+          "id": "Tools-7",
+          "values": [
+            "TF-06",
+            "Cline",
+            "Agents",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Agent",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 7
+        },
+        {
+          "id": "Tools-8",
+          "values": [
+            "TF-07",
+            "CopilotKit",
+            "Assistants",
+            "CopilotKit/CopilotKit",
+            "TBD",
+            "Candidate to pilot",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Assistant",
+            "Leaderboard #9",
+            "-"
+          ],
+          "sourceRow": 8
+        },
+        {
+          "id": "Tools-9",
+          "values": [
+            "TF-08",
+            "assistant-ui",
+            "Assistants",
+            "TBD",
+            "TBD",
+            "In use",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Assistant",
+            "Tech Stack",
+            "-"
+          ],
+          "sourceRow": 9
+        },
+        {
+          "id": "Tools-10",
+          "values": [
+            "TF-09",
+            "Dify",
+            "Assistants",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Assistant",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 10
+        },
+        {
+          "id": "Tools-11",
+          "values": [
+            "TF-10",
+            "Flowise",
+            "Assistants",
+            "TBD",
+            "TBD",
+            "Reference",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Assistant",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 11
+        },
+        {
+          "id": "Tools-12",
+          "values": [
+            "TF-11",
+            "MCP reference servers",
+            "MCPs",
+            "modelcontextprotocol/servers",
+            "TBD",
+            "Reference",
+            "Snapshot 31-10-2026",
+            "Weekly scan",
+            "TBD",
+            "MCP server",
+            "Leaderboard #3",
+            "-"
+          ],
+          "sourceRow": 12
+        },
+        {
+          "id": "Tools-13",
+          "values": [
+            "TF-12",
+            "Postgres MCP Pro",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 13
+        },
+        {
+          "id": "Tools-14",
+          "values": [
+            "TF-13",
+            "DBHub",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Adopted",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 14
+        },
+        {
+          "id": "Tools-15",
+          "values": [
+            "TF-14",
+            "MongoDB (official)",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 15
+        },
+        {
+          "id": "Tools-16",
+          "values": [
+            "TF-15",
+            "Neo4j",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 16
+        },
+        {
+          "id": "Tools-17",
+          "values": [
+            "TF-16",
+            "Qdrant (official)",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 17
+        },
+        {
+          "id": "Tools-18",
+          "values": [
+            "TF-17",
+            "Filesystem (reference)",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Add to config",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 18
+        },
+        {
+          "id": "Tools-19",
+          "values": [
+            "TF-18",
+            "Fetch (reference)",
+            "MCPs",
+            "TBD",
+            "TBD",
+            "Add to config",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "MCP server",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 19
+        },
+        {
+          "id": "Tools-20",
+          "values": [
+            "TF-19",
+            "PaddleOCR",
+            "OSS",
+            "PaddlePaddle/PaddleOCR",
+            "TBD",
+            "Adopted",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 20
+        },
+        {
+          "id": "Tools-21",
+          "values": [
+            "TF-20",
+            "crawl4ai",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 21
+        },
+        {
+          "id": "Tools-22",
+          "values": [
+            "TF-21",
+            "Stirling-PDF",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 22
+        },
+        {
+          "id": "Tools-23",
+          "values": [
+            "TF-22",
+            "Paperless-ngx",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 23
+        },
+        {
+          "id": "Tools-24",
+          "values": [
+            "TF-23",
+            "OCRmyPDF",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 24
+        },
+        {
+          "id": "Tools-25",
+          "values": [
+            "TF-24",
+            "FreeCAD",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 25
+        },
+        {
+          "id": "Tools-26",
+          "values": [
+            "TF-25",
+            "ezdxf",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 26
+        },
+        {
+          "id": "Tools-27",
+          "values": [
+            "TF-26",
+            "KiBot",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 27
+        },
+        {
+          "id": "Tools-28",
+          "values": [
+            "TF-27",
+            "Strapi",
+            "OSS",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "OSS repo",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 28
+        },
+        {
+          "id": "Tools-29",
+          "values": [
+            "TF-28",
+            "mcp-builder",
+            "Skills",
+            "Skill Library (install cmd)",
+            "TBD",
+            "High fit",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 29
+        },
+        {
+          "id": "Tools-30",
+          "values": [
+            "TF-29",
+            "pdf",
+            "Skills",
+            "TBD",
+            "TBD",
+            "High fit",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 30
+        },
+        {
+          "id": "Tools-31",
+          "values": [
+            "TF-30",
+            "xlsx",
+            "Skills",
+            "TBD",
+            "TBD",
+            "Official",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 31
+        },
+        {
+          "id": "Tools-32",
+          "values": [
+            "TF-31",
+            "claude-office-skills",
+            "Skills",
+            "TBD",
+            "TBD",
+            "Medium fit",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 32
+        },
+        {
+          "id": "Tools-33",
+          "values": [
+            "TF-32",
+            "frontend-design",
+            "Skills",
+            "TBD",
+            "TBD",
+            "862k installs",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 33
+        },
+        {
+          "id": "Tools-34",
+          "values": [
+            "TF-33",
+            "web-design-guidelines",
+            "Skills",
+            "TBD",
+            "TBD",
+            "613k installs",
+            "Snapshot 19-10-2026",
+            "Monthly re-pull",
+            "TBD",
+            "Skill",
+            "Skill Library",
+            "-"
+          ],
+          "sourceRow": 34
+        },
+        {
+          "id": "Tools-35",
+          "values": [
+            "TF-34",
+            "firecrawl",
+            "APIs",
+            "firecrawl/firecrawl",
+            "TBD",
+            "Watch",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "API",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 35
+        },
+        {
+          "id": "Tools-36",
+          "values": [
+            "TF-35",
+            "Exa",
+            "APIs",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "API",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 36
+        },
+        {
+          "id": "Tools-37",
+          "values": [
+            "TF-36",
+            "PostHog",
+            "APIs",
+            "TBD",
+            "TBD",
+            "In use",
+            "TBD",
+            "TBD",
+            "TBD",
+            "API",
+            "Tech Stack",
+            "-"
+          ],
+          "sourceRow": 37
+        },
+        {
+          "id": "Tools-38",
+          "values": [
+            "TF-37",
+            "OpenConnector",
+            "APIs",
+            "TBD",
+            "TBD",
+            "Planned",
+            "TBD",
+            "TBD",
+            "TBD",
+            "API",
+            "Tech Stack",
+            "-"
+          ],
+          "sourceRow": 38
+        },
+        {
+          "id": "Tools-39",
+          "values": [
+            "TF-38",
+            "Refine.dev",
+            "Frameworks",
+            "refinedev/refine",
+            "TBD",
+            "In use",
+            "v5.0.12",
+            "TBD",
+            "TBD",
+            "Framework",
+            "Tech Stack",
+            "-"
+          ],
+          "sourceRow": 39
+        },
+        {
+          "id": "Tools-40",
+          "values": [
+            "TF-39",
+            "AG Grid",
+            "Frameworks",
+            "TBD",
+            "TBD",
+            "In use",
+            "TBD",
+            "TBD",
+            "TBD",
+            "Framework",
+            "Tech Stack",
+            "-"
+          ],
+          "sourceRow": 40
+        },
+        {
+          "id": "Tools-41",
+          "values": [
+            "TF-40",
+            "FastAPI",
+            "Frameworks",
+            "TBD",
+            "TBD",
+            "Adopted",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Framework",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 41
+        },
+        {
+          "id": "Tools-42",
+          "values": [
+            "TF-41",
+            "LangChain",
+            "Frameworks",
+            "TBD",
+            "TBD",
+            "Reference",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Framework",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 42
+        },
+        {
+          "id": "Tools-43",
+          "values": [
+            "TF-42",
+            "crewAI",
+            "Frameworks",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 27-10-2026",
+            "Weekly scan",
+            "TBD",
+            "Framework",
+            "Repo Library classics",
+            "-"
+          ],
+          "sourceRow": 43
+        },
+        {
+          "id": "Tools-44",
+          "values": [
+            "TF-43",
+            "SAP OData (BTP)",
+            "Enterprise systems",
+            "Repo Library (ERP row)",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 44
+        },
+        {
+          "id": "Tools-45",
+          "values": [
+            "TF-44",
+            "SAP ABAP ADT",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 45
+        },
+        {
+          "id": "Tools-46",
+          "values": [
+            "TF-45",
+            "Salesforce (official, via CLI)",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Watch",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "BuLLM Tested"
+          ],
+          "sourceRow": 46
+        },
+        {
+          "id": "Tools-47",
+          "values": [
+            "TF-46",
+            "Stripe (official)",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Pilot",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 47
+        },
+        {
+          "id": "Tools-48",
+          "values": [
+            "TF-47",
+            "ClickUp",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Pilot, scan first",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "BuLLM Recommended"
+          ],
+          "sourceRow": 48
+        },
+        {
+          "id": "Tools-49",
+          "values": [
+            "TF-48",
+            "Zoho CRM/Books",
+            "Enterprise systems",
+            "Gap - generate per client",
+            "TBD",
+            "Gap",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 49
+        },
+        {
+          "id": "Tools-50",
+          "values": [
+            "TF-49",
+            "Infor LN",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Gap",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 50
+        },
+        {
+          "id": "Tools-51",
+          "values": [
+            "TF-50",
+            "QuoteWin (Supplyframe)",
+            "Enterprise systems",
+            "TBD",
+            "TBD",
+            "Gap",
+            "Snapshot 24-10-2026",
+            "TBD",
+            "TBD",
+            "Enterprise system",
+            "Repo Library",
+            "-"
+          ],
+          "sourceRow": 51
+        }
+      ],
       "removedRows": [],
       "notes": [],
       "readOnly": false

@@ -67,11 +67,12 @@ try{
 
  await page.getByRole('button',{name:/Organization 2/,exact:true}).click();
  await page.getByText('2 of 2 rows',{exact:true}).waitFor();
- for(const tab of ['Rules','Skills','Tools','Agents']){
+ const tabCounts={Rules:5,Skills:0,'Tool Factory':50,Agents:0};
+ for(const tab of ['Rules','Skills','Tool Factory','Agents']){
   await page.getByRole('button',{name:new RegExp('^'+tab+' '),exact:true}).click();
-  await page.getByText('0 of 0 rows',{exact:true}).waitFor();
+  await page.getByText(`${tabCounts[tab]} of ${tabCounts[tab]} rows`,{exact:true}).waitFor();
  }
- report.push('The unrelated Leave approvals sheet landed nowhere: every other editable tab stays empty.');
+ report.push('The unrelated Leave approvals sheet landed nowhere: every other tab keeps only its seeded master rows.');
 
  // Re-importing the same file skips the already-present rows instead of duplicating them.
  await page.getByRole('button',{name:'Masters',exact:true}).click();

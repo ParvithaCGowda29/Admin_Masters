@@ -21,19 +21,19 @@ try{
  await page.getByRole('region',{name:'Organization information',exact:true}).hover();await page.waitForTimeout(250);assert.equal(await page.getByRole('region',{name:'Organization information',exact:true}).count(),1);
  await page.screenshot({path:screenshotDir+'/masters-info.png',fullPage:true});
  await page.getByRole('heading',{name:'Organization Master',exact:true}).hover();
- await page.getByRole('button',{name:'Collapse masters',exact:true}).click();assert.equal(await page.getByRole('button',{name:'Tools 0'}).count(),0);await page.getByRole('button',{name:'Expand masters',exact:true}).click();
+ await page.getByRole('button',{name:'Collapse masters',exact:true}).click();assert.equal(await page.getByRole('button',{name:/^Tool Factory/}).count(),0);await page.getByRole('button',{name:'Expand masters',exact:true}).click();
  await page.getByRole('button',{name:'Masters',exact:true}).click();await page.getByRole('heading',{name:'Masters overview',exact:true}).waitFor();await page.screenshot({path:screenshotDir+'/masters-parent.png',fullPage:true});
  await page.getByRole('button',{name:/Organization 1/,exact:true}).click();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
  // Test representative records in a disposable browser context, never in the shipped workbook.
  await page.evaluate(async()=>{
  const {saveRows}=await import('/src/provider.ts');
  saveRows('Tools',[
- {id:'t1',values:['TOOL-01','Internal search','API','https://example.test/api','BuLLM','Active','v1','Daily','RULE-01']},
- {id:'t2',values:['TOOL-02','Document lookup','MCP','https://example.test/mcp','Customer','Active','v2','Weekly','RULE-02']},
- {id:'t3',values:['TOOL-03','Cost estimator','API','/tools/estimate','BuLLM','Paused','v1','Daily','RULE-03']}
+ {id:'t1',values:['TOOL-01','Internal search','API','https://example.test/api','BuLLM','Active','v1','Daily','RULE-01','API','Repo Library','-']},
+ {id:'t2',values:['TOOL-02','Document lookup','MCP','https://example.test/mcp','Customer','Active','v2','Weekly','RULE-02','MCP server','Repo Library','-']},
+ {id:'t3',values:['TOOL-03','Cost estimator','API','/tools/estimate','BuLLM','Paused','v1','Daily','RULE-03','API','Repo Library','-']}
  ]);
  });
- await page.getByRole('button',{name:'Tools 0',exact:true}).click();
+ await page.getByRole('button',{name:/^Tool Factory /}).click();
  await page.getByText('3 of 3 rows',{exact:true}).waitFor();
  assert.equal(await page.locator('summary').filter({hasText:/^Category/}).count(),0);
  await page.screenshot({path:screenshotDir+'/masters-no-filter-bar.png',fullPage:true});

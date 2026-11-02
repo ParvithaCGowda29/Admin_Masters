@@ -51,13 +51,13 @@ try{
 
  // Stacked display: top-level commas stack one item per line in the same cell and row.
  await page.evaluate(async()=>{const {saveRows}=await import('/src/provider.ts');saveRows('Tools',[
-  {id:'t1',values:['TOOL-MKTG-08','GA4, Search Console, Google Tag Manager, Mixpanel','Analytical tools','TBD','','Active','','','']},
-  {id:'t2',values:['TOOL-MKTG-09','Policies (IT, HR, RBAC)','Guidelines','TBD','','Active','','','']},
-  {id:'t4',values:['TOOL-MKTG-11','Intake: RFQ pointer; BOM fields, https://x.test:8080/a','Guidelines','TBD','','Active','','','']},
-  {id:'t3',values:['TOOL-MKTG-10','Single tool','API','TBD','','Paused','','','']},
+  {id:'t1',values:['TOOL-MKTG-08','GA4, Search Console, Google Tag Manager, Mixpanel','Analytical tools','TBD','','Active','','','','','','']},
+  {id:'t2',values:['TOOL-MKTG-09','Policies (IT, HR, RBAC)','Guidelines','TBD','','Active','','','','','','']},
+  {id:'t4',values:['TOOL-MKTG-11','Intake: RFQ pointer; BOM fields, https://x.test:8080/a','Guidelines','TBD','','Active','','','','','','']},
+  {id:'t3',values:['TOOL-MKTG-10','Single tool','API','TBD','','Paused','','','','','','']},
  ]);});
  await page.reload();await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
- await page.getByRole('button',{name:'Tools 4',exact:true}).click();
+ await page.getByRole('button',{name:'Tool Factory 4',exact:true}).click();
  await page.getByText('4 of 4 rows',{exact:true}).waitFor();
  assert.deepEqual(await page.locator('[row-id=t1] .stacked-item').allTextContents(),['GA4','Search Console','Google Tag Manager','Mixpanel']);
  assert.deepEqual(await page.locator('[row-id=t4] .stacked-item').allTextContents(),['Intake:','RFQ pointer','BOM fields','https://x.test:8080/a']);
@@ -167,7 +167,7 @@ try{
  report.push('Filled list templates are blocked from Masters and pointed at Add templates.');
 
  // Add rows moved out of the toolbar into the grid's right-click menu.
- await page.getByRole('button',{name:'Tools 4',exact:true}).click();
+ await page.getByRole('button',{name:'Tool Factory 4',exact:true}).click();
  await page.getByText('4 of 4 rows',{exact:true}).waitFor();
  assert.equal(await page.locator('.toolbar .add-rows').count(),0);
  await page.locator('.ag-row[row-id=t1]').first().click({button:'right'});
