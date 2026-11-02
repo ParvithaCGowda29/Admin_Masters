@@ -50,7 +50,7 @@ try{
  await page.screenshot({path:screenshotDir+'/masters-onyx-connected.png',fullPage:true});
  await page.getByLabel('Choose files from this device').setInputFiles({name:'org.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-O-1,Onyx co')});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.locator('.ex-dialog').getByText(/sent to Onyx/).first().waitFor();
  assert.equal(onyxUploads,1);
@@ -130,7 +130,7 @@ try{
  await page.locator('.uppy-Dashboard-Item').first().waitFor();
  await page.getByRole('button',{name:'Close file picker',exact:true}).click();
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const reviewText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(reviewText[0].includes('Organization')&&reviewText[0].includes('Tools'));
@@ -147,7 +147,7 @@ try{
   {name:'org.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-F-2,Second co')},
  ]);
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const multiText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(multiText[0].includes('Everything maps into the Organization tab only.'));
@@ -190,11 +190,11 @@ try{
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'Employee List.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.locator('.ex-dialog').getByText(/Add templates/).first().waitFor();
  await page.locator('.ex-dialog').getByText(/not imported into Masters/).first().waitFor();
- assert.equal(await page.getByRole('button',{name:/^(Import|Allow read-write & import)/}).isDisabled(),true);
+ assert.equal(await page.getByRole('button',{name:/^Import/}).isDisabled(),true);
  await page.screenshot({path:screenshotDir+'/masters-template-blocked.png',fullPage:true});
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Filled list templates are blocked from Masters and pointed at Add templates.');

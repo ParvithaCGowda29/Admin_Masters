@@ -30,10 +30,11 @@ try{
   await page.getByLabel('Choose files from this device').setInputFiles({...file,buffer:Buffer.from(write(wb,{type:'array',bookType:'xlsx'}))});
   await popup.getByRole('button',{name:'Done (1 file)',exact:true}).click();
   await page.getByRole('button',{name:'Continue',exact:true}).click();
-  // Default Read-only permission, exactly like the user's recording.
-  await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+  // Read-write is the only permission and is pre-selected.
+  assert.equal(await page.getByText(/Read-only/).count(),0);await page.screenshot({path:dir+`/permission-${mode}.png`});
+  await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
   await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
-  const imp=page.getByRole('button',{name:/Allow read-write & import 1 ready table/});
+  const imp=page.getByRole('button',{name:/Import 1 ready table/});
   await imp.waitFor();assert.ok(await imp.isEnabled());
   await page.screenshot({path:dir+`/review-import-${mode}.png`});
   await imp.click();
@@ -43,5 +44,5 @@ try{
   // clear for second pass: re-import should skip duplicate, not fail
  }
  assert.deepEqual(errors,[]);
- console.log('PASS: read-only default flow imports rows in light+dark. Screenshots in '+dir);
+ console.log('PASS: default flow imports rows in light+dark. Screenshots in '+dir);
 }finally{await browser.close();server.kill();}

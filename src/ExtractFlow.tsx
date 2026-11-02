@@ -50,7 +50,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
  const[step,setStep]=useState<Step>('source');
  const[files,setFiles]=useState<Picked[]>([]);
  const[types,setTypes]=useState({xlsx:true,csv:true});
- const[access,setAccess]=useState<Access>('read');
+ const[access,setAccess]=useState<Access>('write');
  const[pickError,setPickError]=useState('');
  const[plans,setPlans]=useState<TablePlan[]>([]);
  const[failed,setFailed]=useState<string[]>([]);
@@ -228,7 +228,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
    onClose();
   }catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
- const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Fetching tables',review:'Review where each file maps'};
+ const titles:Record<Step,string>={source:'Add files',permission:'Allow read-write access to your files',find:'Fetching tables',review:'Review where each file maps'};
  return <><dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(dropOpen){setDropOpen('');return;}if(!busy)onClose();}}>
   <div className="bulk-heading">
    <div>
@@ -298,13 +298,9 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     {pickError&&<p role="alert" className="bulk-error">{pickError}</p>}
     <p className="ex-label">ACCESS LEVEL</p>
     <div className="ex-access" role="radiogroup" aria-label="Access level">
-     <button type="button" role="radio" aria-checked={access==='read'} className={'ex-access-card'+(access==='read'?' on':'')} onClick={()=>setAccess('read')}>
-      <strong>Read-only <span>(Extract)</span></strong>
-      <small>BuLLM reads the ticked files and maps their content into the master columns. Nothing is added to the masters.</small>
-     </button>
      <button type="button" role="radio" aria-checked={access==='write'} className={'ex-access-card'+(access==='write'?' on':'')} onClick={()=>setAccess('write')}>
       <strong>Read-write <span>(Extract + authorize)</span></strong>
-      <small>Everything in Read-only, plus BuLLM may add the rows you approve to the masters on the review step.</small>
+      <small>BuLLM reads the ticked files, maps their content into the master columns, and adds the rows you approve on the review step.</small>
      </button>
     </div>
     <div className="ex-perm">
@@ -334,9 +330,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
       <p className="ex-label">2. WHAT THIS PERMISSION ALLOWS</p>
       <div className="ex-panel ex-allow">
        <p className="ex-yes"><b>✓</b> Read contents of the files you ticked<small>For this extraction job only, to map them into the masters</small></p>
-       {access==='write'
-        ?<p className="ex-yes"><b>✓</b> Add the rows you approve to the masters<small>Only after you review the mapping and confirm the import</small></p>
-        :<p><b>✗</b> Add anything to the masters<small>Read-only job: mappings are reviewed, never imported</small></p>}
+       <p className="ex-yes"><b>✓</b> Add the rows you approve to the masters<small>Only after you review the mapping and confirm the import</small></p>
        <p><b>✗</b> Edit, move or delete your files</p>
        <p><b>✗</b> Share files or read other folders</p>
        <p><b>✗</b> Keep reading after this extraction job ends</p>
@@ -347,7 +341,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
        <p><img src={bullMark} alt="" aria-hidden="true"/> Map columns to master fields<small>Automated - you review every mapping</small></p>
        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Confirm access<small>You - this step</small></p>
        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Review the mapping<small>You - next step</small></p>
-       <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Approve the import<small>You - {access==='write'?'final step':'off in a read-only job'}</small></p>
+       <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Approve the import<small>You - final step</small></p>
       </div>
       <p className="ex-note">BuLLM can only read the files you picked here. Unticked files are never opened.</p>
       <p className="ex-note amber">This choice limits what BuLLM extracts in this job. It does not change your device or account permissions. You can stop the job at any time.</p>
@@ -382,8 +376,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet: {mappedCount(p)>0?`the ID column did not match any ${p.master} field`:`no columns matched any ${p.master} field`}.</p>)}
     {plans.filter(p=>!p.blocked&&resolvable(p)&&p.ignored.length>0).slice(0,1).map(p=><p key={`${p.id}-ignored`} className="ex-note amber"><b>{p.file}</b>: {ignoredCount(p)} column{ignoredCount(p)===1?'':'s'} with content did not match any {p.master} field and {ignoredCount(p)===1?'was':'were'} ignored - that data stays out of the import.</p>)}
     <p className="ex-note">A table shows Mapped Yes when the ID column is mapped. Columns that match no master field are ignored automatically and their data stays out of the import. Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
-    {access==='read'&&<p className="ex-note amber">This is a read-only job, so nothing is imported yet. Click "Allow read-write & import" to add the ready tables to the masters.</p>}
-    {error&&<p role="alert" className="bulk-error">{error}</p>}
+        {error&&<p role="alert" className="bulk-error">{error}</p>}
     {busy&&<p role="status">Importing rows...</p>}
    </>}
   </div>
@@ -396,17 +389,17 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
    {step==='permission'&&<>
     <span>{selected.length} of {files.filter(p=>p.kind==='table').length} tabular file{files.filter(p=>p.kind==='table').length===1?'':'s'} selected</span>
     <button onClick={()=>setStep('source')}>Back</button>
-    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>{access==='read'?'Allow read-only':'Allow read-write'} & fetch files</button>
+    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>Allow read-write & fetch files</button>
    </>}
    {step==='find'&&<>
-    <span>{access==='read'?'Read-only':'Read-write'}. This extraction job only.</span>
+    <span>Read-write. This extraction job only.</span>
     <button onClick={()=>{stopRef.current=true;setStep('source');}}>Stop extraction</button>
    </>}
    {step==='review'&&<>
-    <span>{access==='read'?'Read-only job - import needs read-write':'Nothing is imported until you confirm'}</span>
+    <span>Nothing is imported until you confirm</span>
     <button disabled={busy} onClick={onClose}>Stop extraction</button>
     <button disabled={busy} onClick={()=>setStep('permission')}>Back</button>
-    <button className="primary" disabled={busy||!readyCount} title={access==='read'?'Switches this job to read-write, then imports':undefined} onClick={()=>{if(access==='read')setAccess('write');void confirmImport()}}>{access==='read'?'Allow read-write & import':'Import'} {readyCount||''} ready table{readyCount===1?'':'s'}</button>
+    <button className="primary" disabled={busy||!readyCount} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
    </>}
   </div>
   {dropOpen&&<div className="ex-drop-popup" onClick={()=>setDropOpen('')}>

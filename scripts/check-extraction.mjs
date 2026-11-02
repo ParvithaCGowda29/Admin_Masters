@@ -28,7 +28,7 @@ try{
  async function toReview(files){
   await page.getByLabel('Choose files from this device').setInputFiles(files);
   await page.getByRole('button',{name:'Continue',exact:true}).click();
-  await page.getByRole('heading',{name:'Allow read-only access to your files',exact:true}).waitFor();
+  await page.getByRole('heading',{name:'Allow read-write access to your files',exact:true}).waitFor();
   await page.getByRole('radio',{name:/Read-write/}).click();
  await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
   await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
@@ -71,11 +71,12 @@ try{
 
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('heading',{name:'Allow read-only access to your files',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Allow read-write access to your files',exact:true}).waitFor();
  await page.screenshot({path:screenshotDir+'/ex-2-permission-light.png'});
  const permText=(await page.getByRole('dialog').allTextContents()).join(' ').replace(/\s+/g,' ');
  assert.ok(permText.includes('masters.xlsx')&&permText.includes('this extraction job')&&permText.includes('stop the job at any time'));
  report.push('Permission step lists the real picked files, the read-only scope, the job-only limit and the stop wording.');
+ assert.equal(await page.getByRole('radio',{name:/Read-only/}).count(),0);
  await page.getByRole('radio',{name:/Read-write/}).click();
  await page.getByRole('button',{name:'Allow read-write & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
