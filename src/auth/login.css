@@ -4,29 +4,29 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 .login-banner, .login-banner *, .login-page, .login-page * { box-sizing: border-box; }
 .login-page {
   --lg-bg: #EEF2F8; --lg-card: #FFFFFF; --lg-border: #D5DBE7; --lg-text: #101828; --lg-muted: #667085;
-  --lg-input: #F5F7FB; --lg-link: #1B6FC2; --lg-err: #D92D20; --lg-card-shadow: 0 30px 70px rgba(16, 24, 40, .12);
+  --lg-input: #F5F7FB; --lg-link: #0084C2; --lg-err: #D92D20; --lg-card-shadow: 0 30px 70px rgba(16, 24, 40, .12);
   --lg-glow: radial-gradient(36% 34% at 0% 0%, rgba(255, 196, 140, .7), transparent 72%),
-    radial-gradient(38% 40% at 100% 100%, rgba(150, 200, 245, .65), transparent 72%);
-  --lg-ring: 0 0 0 3px rgba(27, 111, 194, .25);
+    radial-gradient(38% 40% at 100% 100%, rgba(150, 214, 245, .65), transparent 72%);
+  --lg-ring: 0 0 0 3px rgba(0, 132, 194, .25);
   --lg-pad: clamp(8px, 4vh, 40px);
   min-height: 100vh; display: grid; place-items: center; padding: var(--lg-pad) 20px;
   background: var(--lg-glow), var(--lg-bg); color: var(--lg-text);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-page {
     --lg-bg: #080D18; --lg-card: #141B2B; --lg-border: #2D3750; --lg-text: #F1F4FA; --lg-muted: #9AA4B8;
-    --lg-input: #1B2336; --lg-link: #5AA9E6; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+    --lg-input: #1B2336; --lg-link: #56B8EF; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
     --lg-glow: radial-gradient(38% 34% at 0% 0%, rgba(236, 132, 38, .55), transparent 72%),
-      radial-gradient(40% 42% at 100% 100%, rgba(26, 108, 196, .5), transparent 72%),
+      radial-gradient(40% 42% at 100% 100%, rgba(0, 132, 194, .5), transparent 72%),
       radial-gradient(30% 22% at 50% 100%, rgba(190, 96, 40, .22), transparent 72%);
-    --lg-ring: 0 0 0 3px rgba(90, 169, 230, .45);
+    --lg-ring: 0 0 0 3px rgba(86, 184, 239, .45);
 } }
 :root[data-theme="dark"] .login-page {
   --lg-bg: #080D18; --lg-card: #141B2B; --lg-border: #2D3750; --lg-text: #F1F4FA; --lg-muted: #9AA4B8;
-  --lg-input: #1B2336; --lg-link: #5AA9E6; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+  --lg-input: #1B2336; --lg-link: #56B8EF; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
   --lg-glow: radial-gradient(38% 34% at 0% 0%, rgba(236, 132, 38, .55), transparent 72%),
-    radial-gradient(40% 42% at 100% 100%, rgba(26, 108, 196, .5), transparent 72%),
+    radial-gradient(40% 42% at 100% 100%, rgba(0, 132, 194, .5), transparent 72%),
     radial-gradient(30% 22% at 50% 100%, rgba(190, 96, 40, .22), transparent 72%);
-  --lg-ring: 0 0 0 3px rgba(90, 169, 230, .45);
+  --lg-ring: 0 0 0 3px rgba(86, 184, 239, .45);
 }
 .login-card {
   /* Whole card fits the window height: sizes below scale with vh, so short or zoomed screens never scroll. */
@@ -98,8 +98,8 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
   display: flex; flex-direction: column; color: #fff;
   background:
     radial-gradient(55% 36% at 50% 82%, rgba(236, 104, 52, .5), transparent 72%),
-    radial-gradient(48% 40% at 0% 100%, rgba(8, 58, 130, .7), transparent 72%),
-    linear-gradient(180deg, #3D86C0 0%, #14568F 58%, #0A5A96 100%);
+    radial-gradient(48% 40% at 0% 100%, rgba(0, 86, 126, .7), transparent 72%),
+    linear-gradient(180deg, #2E9BD6 0%, #0073AA 58%, #00567E 100%);
 }
 .login-panel-art {
   /* Sized by the height the panel has left (width follows the aspect ratio, never cropped by height), centred, and

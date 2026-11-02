@@ -3,14 +3,14 @@ import {detectHeader,importDataRows,matchingTemplate,readImportFile,type ImportS
 import type {MastersTemplate} from './templates';
 import {loadHeaders,loadList} from './templateLists';
 
-type Props={template:MastersTemplate;onClose:()=>void;onImport:(headers:string[],values:string[][])=>Promise<void>};
+type Props={template:MastersTemplate;client?:boolean;onClose:()=>void;onImport:(headers:string[],values:string[][])=>Promise<void>};
 // Uploads a new version of one list template (Employee list, Customers, Assets or
 // Systems). The upload replaces that template completely: the file's column names and
 // rows become the template (2026-10-29 decision) and the previous columns and rows are
 // discarded. Only this list changes - the other lists and the master tabs stay
 // untouched, and the download in the Organization column header follows the new
 // structure.
-export function TemplateUpload({template,onClose,onImport}:Props){
+export function TemplateUpload({template,client,onClose,onImport}:Props){
  const [sheets,setSheets]=useState<ImportSheet[]>([]);
  const [sheetIndex,setSheetIndex]=useState(0);
  const [headerRow,setHeaderRow]=useState(0);
@@ -45,7 +45,7 @@ export function TemplateUpload({template,onClose,onImport}:Props){
   catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
  return <dialog ref={dialog} className="bulk-dialog" aria-labelledby="template-upload-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
-  <div className="bulk-heading"><div><h2 id="template-upload-title">Upload a new {template.label} template</h2><p>The uploaded file becomes your {template.label} template: its column names and rows replace the current ones. Only this list changes; the other lists and the masters stay unchanged.</p></div><button aria-label="Close template upload" disabled={busy} onClick={onClose}>×</button></div>
+  <div className="bulk-heading"><div><h2 id="template-upload-title">Upload {client?"your client\u2019s":"a new"} {template.label} template</h2><p>The uploaded file becomes your {template.label} template: its column names and rows replace the current ones.{client?" The client workbook\u2019s columns are kept as they are.":""} Only this list changes; the other lists and the masters stay unchanged.</p></div><button aria-label="Close template upload" disabled={busy} onClick={onClose}>×</button></div>
   <div className="bulk-body">
    <label className="bulk-file">Excel or CSV file<input aria-label="Upload file" type="file" accept=".xlsx,.csv" disabled={busy} onClick={e=>{e.currentTarget.value='';}} onChange={e=>{void choose(e.target.files?.[0]);}}/><small>.xlsx and .csv only · Up to 10 MB · Processed in this browser</small></label>
    {selected&&<>

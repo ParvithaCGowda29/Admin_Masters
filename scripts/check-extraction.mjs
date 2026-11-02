@@ -29,8 +29,9 @@ try{
   await page.getByLabel('Choose files from this device').setInputFiles(files);
   await page.getByRole('button',{name:'Continue',exact:true}).click();
   await page.getByRole('heading',{name:'Allow read-only access to your files',exact:true}).waitFor();
-  await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
-  await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+  await page.getByRole('radio',{name:/Read-write/}).click();
+ await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  }
  await page.getByRole('button',{name:'Masters',exact:true}).click();
  await openFlow();
@@ -47,8 +48,9 @@ try{
  const permText=(await page.getByRole('dialog').allTextContents()).join(' ').replace(/\s+/g,' ');
  assert.ok(permText.includes('masters.xlsx')&&permText.includes('this extraction job')&&permText.includes('stop the job at any time'));
  report.push('Permission step lists the real picked files, the read-only scope, the job-only limit and the stop wording.');
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('radio',{name:/Read-write/}).click();
+ await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.screenshot({path:screenshotDir+'/ex-3-review-light.png'});
 
  const dialogText=()=>page.getByRole('dialog').allTextContents().then(t=>t.join(' ').replace(/\s+/g,' '));
@@ -105,8 +107,9 @@ try{
  ]);
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('checkbox',{name:/tools\.csv/}).uncheck();
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('radio',{name:/Read-write/}).click();
+ await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const reviewText=await dialogText();
  assert.ok(reviewText.includes('agents.csv')&&!reviewText.includes('tools.csv'));
  await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
@@ -134,7 +137,7 @@ try{
  await openFlow();
  await toReview({name:'org-renamed.xlsx',mimeType:xlsxType,buffer:renamed});
  const renamedRow=page.locator('.ex-table tr',{hasText:'org-renamed.xlsx'});
- assert.ok(/9\s*of\s*12|75%/.test((await renamedRow.allTextContents()).join(' ').replace(/\s+/g,' ')));
+ assert.equal(await renamedRow.locator('.ex-pill').textContent(),'No');
  assert.ok(/3 columns need review/.test((await renamedRow.allTextContents()).join(' ').replace(/\s+/g,' ')));
  assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:'Import ready tables',exact:true}).isDisabled(),true);
@@ -145,6 +148,7 @@ try{
  await page.getByRole('combobox',{name:'Map column 12: Software in use'}).selectOption({label:'Ignore this column'});
  await page.screenshot({path:screenshotDir+'/ex-7-renamed-resolved.png'});
  assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),false);
+ assert.equal(await renamedRow.locator('.ex-pill').textContent(),'Yes');
  await renamedRow.locator('input[type=checkbox]').check();
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'1 new row'}).waitFor();
@@ -190,8 +194,9 @@ try{
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.screenshot({path:screenshotDir+'/ex-5-permission-dark.png'});
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('radio',{name:/Read-write/}).click();
+ await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.screenshot({path:screenshotDir+'/ex-6-review-dark.png'});
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Dark theme renders across source, permission and review steps.');

@@ -90,7 +90,7 @@ try{
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const reviewText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(reviewText[0].includes('Organization')&&reviewText[0].includes('Tools'));
  await page.screenshot({path:screenshotDir+'/masters-parent-bulkall.png',fullPage:true});
@@ -107,7 +107,7 @@ try{
  ]);
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  const multiText=await page.locator('.ex-dialog').allTextContents();
  assert.ok(multiText[0].includes('Everything maps into the Organization tab only.'));
  assert.equal((multiText[0].match(/Organization/g)||[]).length>=2,true);
@@ -158,7 +158,7 @@ try{
  await page.getByLabel('Choose files from this device').setInputFiles({name:'Employee List.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.locator('.ex-dialog').getByText(/Add templates/).first().waitFor();
  await page.locator('.ex-dialog').getByText(/not imported into Masters/).first().waitFor();
  assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);

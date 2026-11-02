@@ -2,6 +2,7 @@ import {useRef,useState} from 'react';
 import {unzipSync} from 'fflate';
 import {autoMap,detectHeader,importDataRows,mappedRows,readImportFile,sheetKey,templateInRows,type ImportSheet,type MasterTarget} from './bulkImport';
 import {newId} from './id';
+import bullMark from './assets/login/bull-logo.png';
 
 export type ExtractScope={type:'all'}|{type:'tab';tab:string};
 type Props={scope:ExtractScope;masters:MasterTarget[];onClose:()=>void;onImport:(entries:{master:string;values:string[][]}[])=>Promise<void>};
@@ -14,7 +15,20 @@ const STEPS:{key:Step;label:string}[]=[{key:'source',label:'Source'},{key:'permi
 const MATCH_OK=60;
 const IGNORE=-2; // mapping select value for "Ignore this column" (stored in plan.ignored)
 
-type Picked={file:File;allowed:boolean};
+// Intake takes any project document. Only tabular master data (.xlsx/.csv) is read and
+// mapped; drawings, SOPs and client emails are listed so the set of project documents
+// stays complete, and are never opened in this version.
+const isTable=(name:string)=>/\.(xlsx|csv)$/i.test(name);
+const isDoc=(name:string)=>/\.(pdf|dxf|dwg|step|stp|docx|md|txt|eml|msg)$/i.test(name);
+const docKind=(name:string)=>{
+ if(/\.(eml|msg)$/i.test(name))return 'Client email';
+ if(/\.(docx|md|txt)$/i.test(name))return 'SOP';
+ if(/\.(dxf|dwg|step|stp)$/i.test(name))return 'Drawing';
+ return 'Drawing / SOP'; // .pdf
+};
+
+type Picked={file:File;allowed:boolean;kind:'table'|'doc'};
+type Access='read'|'write';
 type TablePlan={id:string;file:string;sheet:string;rows:string[][];headerRow:number;master:string;mapping:number[];ignored:number[];content:boolean[];included:boolean;blocked:string|null};
 type FindProgress={done:number;total:number;current:string;found:number};
 
@@ -28,6 +42,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
  const[step,setStep]=useState<Step>('source');
  const[files,setFiles]=useState<Picked[]>([]);
  const[types,setTypes]=useState({xlsx:true,csv:true});
+ const[access,setAccess]=useState<Access>('read');
  const[pickError,setPickError]=useState('');
  const[plans,setPlans]=useState<TablePlan[]>([]);
  const[failed,setFailed]=useState<string[]>([]);
@@ -45,11 +60,19 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
  const reviewCount=(p:TablePlan)=>p.content.reduce((n,has,i)=>n+(has&&p.mapping[i]<0&&!p.ignored.includes(i)?1:0),0);
  const idMapped=(p:TablePlan)=>p.mapping.includes(0);
  // Safe to include only when nothing is silently dropped: ID mapped and every
- // content-bearing source column either mapped or explicitly ignored.
+ // content-bearing source column either mapped or explicitly ignored. This is also the
+ // Mapped Yes/No rule: a table shows Yes only when every column with content is resolved.
  const resolvable=(p:TablePlan)=>!p.blocked&&mappedCount(p)>0&&idMapped(p)&&reviewCount(p)===0;
  const ignoredCount=(p:TablePlan)=>p.ignored.length;
  const ready=plans.filter(p=>p.included&&resolvable(p));
  const readyCount=ready.length;
+ const needMapping=plans.filter(p=>!p.blocked&&!resolvable(p)).length;
+ // Unmapped and needs-mapping tables list first; ready tables after them; held-back
+ // template files last.
+ const sortedPlans=[...plans].sort((a,b)=>{
+  const rank=(p:TablePlan)=>p.blocked?2:resolvable(p)?1:0;
+  return rank(a)-rank(b);
+ });
 
  function analyze(file:string,sheet:ImportSheet,master:string):Pick<TablePlan,'headerRow'|'mapping'|'content'>{
   const headers=headersOf(master);
@@ -104,26 +127,28 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    return {...next,included:p.included&&resolvable(next)};
   }));
  }
- const selected=files.filter(p=>p.allowed&&extOk(p.file.name,types));
+ const selected=files.filter(p=>p.kind==='table'&&p.allowed&&extOk(p.file.name,types));
  async function addFiles(list:FileList|File[]){
   setPickError('');
-  const out:File[]=[];const skipped:string[]=[];
+  const out:Picked[]=[];const skipped:string[]=[];
   for(const f of [...list]){
    if(/\.zip$/i.test(f.name)){
     try{
      const entries=unzipSync(new Uint8Array(await f.arrayBuffer()));
      const inner=Object.entries(entries).filter(([path])=>/\.(xlsx|csv)$/i.test(path)&&!path.split('/').some(part=>part.startsWith('.')||part==='__MACOSX'));
      if(!inner.length){skipped.push(`${f.name} (no .xlsx or .csv inside)`);continue;}
-     for(const [path,data] of inner)out.push(new File([data.buffer as ArrayBuffer],path.split('/').pop()||path));
+     for(const [path,data] of inner)out.push({file:new File([data.buffer as ArrayBuffer],path.split('/').pop()||path),allowed:true,kind:'table'});
     }catch{skipped.push(`${f.name} (could not be read)`);}
     continue;
    }
-   if(/\.(xlsx|csv)$/i.test(f.name))out.push(f);else skipped.push(`${f.name} (only .xlsx and .csv are read)`);
+   if(isTable(f.name)){out.push({file:f,allowed:true,kind:'table'});continue;}
+   if(isDoc(f.name)){out.push({file:f,allowed:false,kind:'doc'});continue;}
+   skipped.push(`${f.name} (not a project document type)`);
   }
   if(skipped.length)setPickError(`Skipped: ${skipped.join('; ')}.`);
   setFiles(current=>{
    const seen=new Set(current.map(p=>p.file.name));
-   return [...current,...out.filter(f=>!seen.has(f.name)).map(file=>({file,allowed:true}))];
+   return [...current,...out.filter(p=>!seen.has(p.file.name))];
   });
  }
  async function runFind(){
@@ -159,7 +184,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    onClose();
   }catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
- const titles:Record<Step,string>={source:'Add files',permission:'Allow read-only access to your files',find:'Finding tables',review:'Review where each file goes'};
+ const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Finding tables',review:'Review where each file maps'};
  return <dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
   <div className="bulk-heading">
    <div>
@@ -177,16 +202,22 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
   </div>
   <div className="bulk-body">
    {step==='source'&&<>
-    <p className="ex-label">UPLOAD FILES</p>
+    <p className="ex-label">UPLOAD PROJECT DOCUMENTS</p>
     <div className="ex-drop" role="button" tabIndex={0}
      onClick={()=>fileInput.current?.click()}
      onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.current?.click();}}}
      onDragOver={e=>e.preventDefault()}
      onDrop={e=>{e.preventDefault();void addFiles(e.dataTransfer.files);}}>
-     <strong>Drop .xlsx / .csv here</strong> or browse your device
-     <small>Content is mapped automatically on the review step. Rows are added, never replaced.</small>
+     <strong>Drop project documents here</strong> or browse your device
+     <span className="ex-chips" aria-label="Accepted document types">
+      <span className="ex-chip">Master data <b>.xlsx .csv</b></span>
+      <span className="ex-chip">Drawings <b>.pdf .dxf .dwg .step</b></span>
+      <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
+      <span className="ex-chip">Client emails <b>.eml .msg</b></span>
+     </span>
+     <small>Only relevant content maps into the master tabs. Rows are added, never replaced.</small>
     </div>
-    <input ref={fileInput} type="file" hidden multiple accept=".xlsx,.csv,.zip" aria-label="Choose files from this device" onChange={e=>{if(e.target.files?.length)void addFiles(e.target.files);e.target.value='';}}/>
+    <input ref={fileInput} type="file" hidden multiple accept=".xlsx,.csv,.zip,.pdf,.dxf,.dwg,.step,.stp,.docx,.md,.txt,.eml,.msg" aria-label="Choose files from this device" onChange={e=>{if(e.target.files?.length)void addFiles(e.target.files);e.target.value='';}}/>
     <p className="ex-label">OR EXTRACT FROM A SOURCE</p>
     <div className="ex-sources">
      <button type="button" className="ex-source" onClick={()=>folderInput.current?.click()}>
@@ -213,12 +244,27 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
     <p className="ex-note">Extraction never reads more than the files you choose. You pick exactly which files on the next step, everything is processed in this browser only, and nothing is imported until you confirm.</p>
    </>}
    {step==='permission'&&<>
+    <p className="ex-label">ACCESS LEVEL</p>
+    <div className="ex-access" role="radiogroup" aria-label="Access level">
+     <button type="button" role="radio" aria-checked={access==='read'} className={'ex-access-card'+(access==='read'?' on':'')} onClick={()=>setAccess('read')}>
+      <strong>Read-only <span>(Extract)</span></strong>
+      <small>BuLLM reads the ticked files and maps their content into the master columns. Nothing is added to the masters.</small>
+     </button>
+     <button type="button" role="radio" aria-checked={access==='write'} className={'ex-access-card'+(access==='write'?' on':'')} onClick={()=>setAccess('write')}>
+      <strong>Read-write <span>(Extract + authorize)</span></strong>
+      <small>Everything in Read-only, plus BuLLM may add the rows you approve to the masters on the review step.</small>
+     </button>
+    </div>
     <div className="ex-perm">
      <div>
       <p className="ex-label">1. CHOOSE WHAT BULLM MAY READ</p>
       <div className="ex-panel">
        {files.map((p,i)=>{
-        const typeOff=!extOk(p.file.name,types);
+        const typeOff=p.kind==='table'&&!extOk(p.file.name,types);
+        if(p.kind==='doc')return <label key={`${p.file.name}-${i}`} className="ex-check off">
+         <input type="checkbox" disabled/>
+         <span>{p.file.name}<small>{Math.max(1,Math.round(p.file.size/1024))} KB · {docKind(p.file.name)} - listed, not read yet</small></span>
+        </label>;
         return <label key={`${p.file.name}-${i}`} className={'ex-check'+(typeOff?' off':'')}>
          <input type="checkbox" checked={p.allowed&&!typeOff} disabled={typeOff} onChange={e=>setFiles(current=>current.map((q,j)=>j===i?{...q,allowed:e.target.checked}:q))}/>
          <span>{p.file.name}<small>{Math.max(1,Math.round(p.file.size/1024))} KB{isCsv(p.file.name)?' · CSV':' · Excel'}</small></span>
@@ -229,16 +275,27 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
       <div className="ex-panel">
        <label className="ex-check"><input type="checkbox" checked={types.xlsx} onChange={e=>setTypes(t=>({...t,xlsx:e.target.checked}))}/><span>Excel (.xlsx)</span></label>
        <label className="ex-check"><input type="checkbox" checked={types.csv} onChange={e=>setTypes(t=>({...t,csv:e.target.checked}))}/><span>CSV (.csv)</span></label>
-       <label className="ex-check off"><input type="checkbox" disabled/><span>Other (PDF, Word) - later</span></label>
+       <label className="ex-check off"><input type="checkbox" disabled/><span>Drawings, SOPs and client emails - listed, not read yet</span></label>
       </div>
      </div>
      <div>
       <p className="ex-label">2. WHAT THIS PERMISSION ALLOWS</p>
       <div className="ex-panel ex-allow">
        <p className="ex-yes"><b>✓</b> Read contents of the files you ticked<small>For this extraction job only, to map them into the masters</small></p>
+       {access==='write'
+        ?<p className="ex-yes"><b>✓</b> Add the rows you approve to the masters<small>Only after you review the mapping and confirm the import</small></p>
+        :<p><b>✗</b> Add anything to the masters<small>Read-only job: mappings are reviewed, never imported</small></p>}
        <p><b>✗</b> Edit, move or delete your files</p>
        <p><b>✗</b> Share files or read other folders</p>
        <p><b>✗</b> Keep reading after this extraction job ends</p>
+      </div>
+      <p className="ex-label">3. WHO DOES WHAT</p>
+      <div className="ex-panel ex-who">
+       <p><img src={bullMark} alt="" aria-hidden="true"/> Find tables in the ticked files<small>Automated</small></p>
+       <p><img src={bullMark} alt="" aria-hidden="true"/> Map columns to master fields<small>Automated - you review every mapping</small></p>
+       <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Confirm access<small>You - this step</small></p>
+       <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Review the mapping<small>You - next step</small></p>
+       <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg> Approve the import<small>You - {access==='write'?'final step':'off in a read-only job'}</small></p>
       </div>
       <p className="ex-note">BuLLM can only read the files you picked here. Unticked files are never opened.</p>
       <p className="ex-note amber">This choice limits what BuLLM extracts in this job. It does not change your device or account permissions. You can stop the job at any time.</p>
@@ -252,17 +309,12 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
    </>}
    {step==='review'&&<>
     {scope.type==='tab'&&<p className="bulk-hint">Everything maps into the {scope.tab} tab only.</p>}
-    <div className="ex-tiles">
-     <div className="ex-tile"><b>{plans.length}</b><span>tables found</span></div>
-     <div className="ex-tile"><b>{readyCount}</b><span>ready to import</span></div>
-     <div className="ex-tile"><b>{plans.filter(p=>!p.blocked&&!p.included).length}</b><span>needs mapping (not included)</span></div>
-     <div className="ex-tile"><b>0</b><span>imported yet</span></div>
-    </div>
+    <p className="ex-summary">{plans.length} table{plans.length===1?'':'s'} found · {readyCount} ready to import · {needMapping} need mapping</p>
     <table className="mapping-table ex-table">
-     <thead><tr><th></th><th>File / sheet</th><th>Goes to tab</th><th>Match</th><th>Columns</th><th></th></tr></thead>
+     <thead><tr><th></th><th>File / sheet</th><th>Maps with</th><th>Mapped</th><th>Columns</th><th></th></tr></thead>
      <tbody>
-      {plans.map(p=>{
-       const headers=headersOf(p.master);const total=headers.length;const mapped=mappedCount(p);const pct=matchPct(p);
+      {sortedPlans.map(p=>{
+       const headers=headersOf(p.master);const total=headers.length;const mapped=mappedCount(p);
        const waiting=!resolvable(p);
        const reviewN=reviewCount(p);
        const columnNote=p.blocked?'Template file, never imported'
@@ -274,7 +326,7 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
         <td>{!p.blocked&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} disabled={!resolvable(p)} title={resolvable(p)?undefined:'Map or ignore every column with content, and map the ID column, first'} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
         <td>{p.file}{p.file!==p.sheet&&<small>{p.sheet}</small>}</td>
         <td>{p.blocked?'Add templates':scope.type==='tab'?p.master:<select aria-label={`Destination tab for ${p.sheet}`} value={p.master} onChange={e=>retarget(p.id,e.target.value)}>{masters.map(m=><option key={m.name} value={m.name}>{m.name}</option>)}</select>}</td>
-        <td>{p.blocked?'-':<span className={'ex-match '+(waiting?'warn':'good')}>{pct}%</span>}</td>
+        <td>{p.blocked?'-':<span className={'ex-pill '+(waiting?'no':'yes')}>{waiting?'No':'Yes'}</span>}</td>
         <td>{columnNote}</td>
         <td>{!p.blocked&&toggle}</td>
        </tr>
@@ -296,7 +348,8 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
     {failed.length>0&&<p className="bulk-hint review-skipped"><b>Files that could not be read:</b> {failed.join('; ')}.</p>}
     {plans.some(p=>p.blocked)&&<p className="bulk-hint review-skipped"><b>Held back:</b> {plans.filter(p=>p.blocked).map(p=>`${p.file}${p.file!==p.sheet?` · ${p.sheet}`:''} (${p.blocked})`).join('; ')}.</p>}
     {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet. {reviewCount(p)>0?`${reviewCount(p)} column${reviewCount(p)===1?'':'s'} with content ${reviewCount(p)===1?'is':'are'} not mapped`:'The ID column is not mapped'}. Open Map columns and map or ignore each one, then tick the table to include it. Nothing is dropped without your choice.</p>)}
-    <p className="ex-note">Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
+    <p className="ex-note">A table shows Mapped Yes only when every column with content is mapped or ignored and the ID column is mapped. Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
+    {access==='read'&&<p className="ex-note amber">This is a read-only job: mappings are reviewed but nothing is imported. Go back and choose Read-write (Extract + authorize) to import the ready tables.</p>}
     {error&&<p role="alert" className="bulk-error">{error}</p>}
     {busy&&<p role="status">Importing rows...</p>}
    </>}
@@ -308,19 +361,19 @@ export function ExtractFlow({scope,masters,onClose,onImport}:Props){
     <button className="primary" disabled={!files.length} onClick={()=>setStep('permission')}>Continue</button>
    </>}
    {step==='permission'&&<>
-    <span>{selected.length} of {files.length} file{files.length===1?'':'s'} selected</span>
+    <span>{selected.length} of {files.filter(p=>p.kind==='table').length} tabular file{files.filter(p=>p.kind==='table').length===1?'':'s'} selected</span>
     <button onClick={()=>setStep('source')}>Back</button>
-    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>Allow read-only & find files</button>
+    <button className="primary" disabled={!selected.length} onClick={()=>void runFind()}>{access==='read'?'Allow read-only':'Allow read-write'} & find files</button>
    </>}
    {step==='find'&&<>
-    <span>Read-only. This extraction job only.</span>
+    <span>{access==='read'?'Read-only':'Read-write'}. This extraction job only.</span>
     <button onClick={()=>{stopRef.current=true;setStep('source');}}>Stop extraction</button>
    </>}
    {step==='review'&&<>
-    <span>Nothing is imported until you confirm</span>
+    <span>{access==='read'?'Read-only job - nothing is imported':'Nothing is imported until you confirm'}</span>
     <button disabled={busy} onClick={onClose}>Stop extraction</button>
     <button disabled={busy} onClick={()=>setStep('permission')}>Back</button>
-    <button className="primary" disabled={busy||!readyCount} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
+    <button className="primary" disabled={busy||!readyCount||access==='read'} title={access==='read'?'Read-only job: switch to Read-write on the permission step to import':undefined} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
    </>}
   </div>
  </dialog>;

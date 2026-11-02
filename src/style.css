@@ -216,3 +216,44 @@
 .master-info-panel .field-guide .field-row{display:flex;gap:10px;align-items:baseline}
 .master-info-panel .field-guide .field-row>b{flex:0 0 14em;min-width:0;font-weight:600}
 .master-info-panel .field-guide .field-row>span{flex:1;min-width:0}
+/* Masters overview guide cards in dark mode: keep text readable on a dark card. */
+:root[data-theme=dark] .guide article{background:#17212f;color:#e2e9f2;border-color:#36465a}
+:root[data-theme=dark] .guide-intro p,:root[data-theme=dark] .guide article small{color:#a6b8cc}
+/* Add files intake: document type chips. */
+.ex-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px}
+.ex-chip{font-size:12px;color:#5e7083;background:#fff;border:1px solid #dfe5ed;border-radius:12px;padding:3px 10px}
+.ex-chip b{font-weight:600;color:#00689d}
+/* Permission step: read-only vs read-write cards. */
+.ex-access{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ex-access-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:14px 16px;border:1.5px solid #dfe5ed;border-radius:8px;background:#fff;white-space:normal}
+.ex-access-card strong{font-size:14px;color:#354050}
+.ex-access-card strong span{font-weight:400;color:#7e8998}
+.ex-access-card small{color:#7e8998;font-size:12px;line-height:1.5;white-space:normal}
+.ex-access-card.on{border-color:#0084c2;background:#f2f9fd;box-shadow:0 0 0 1px #0084c2 inset}
+/* Permission step: who does what. */
+.ex-who p{display:flex;gap:10px;align-items:baseline;padding:7px 2px;border-bottom:1px solid #eef1f5;font-size:14px;color:#354050}
+.ex-who p:last-child{border-bottom:0}
+.ex-who img,.ex-who svg{flex:none;width:18px;height:18px;object-fit:contain;align-self:center;color:#354050}
+.ex-who p small{display:block;color:#9aa3b1;font-size:12px;margin-top:2px}
+/* Review step: summary line and Mapped yes/no pills. */
+.ex-summary{font-size:14px;color:#425166;margin:4px 0 12px;font-weight:600}
+.ex-pill{display:inline-block;font-size:12px;font-weight:700;border-radius:10px;padding:3px 10px}
+.ex-pill.yes{color:#2d8a6c;border:1px solid #3aaf8b;background:#eafaf3}
+.ex-pill.no{color:#c07c1f;border:1px solid #e8a13a;background:#fdf6e9}
+@media(max-width:600px){.ex-access{grid-template-columns:1fr}}
+:root[data-theme=dark] .ex-chip{background:#202d3e;border-color:#485a70;color:#a6b8cc}
+:root[data-theme=dark] .ex-chip b{color:#86d4ff}
+:root[data-theme=dark] .ex-access-card{background:#202d3e;border-color:#485a70}
+:root[data-theme=dark] .ex-access-card strong{color:#e2e9f2}
+:root[data-theme=dark] .ex-access-card.on{border-color:#239ccc;background:#17364b;box-shadow:0 0 0 1px #239ccc inset}
+:root[data-theme=dark] .ex-access-card small,:root[data-theme=dark] .ex-access-card strong span{color:#a6b8cc}
+:root[data-theme=dark] .ex-who p{color:#e2e9f2;border-color:#36465a}
+:root[data-theme=dark] .ex-who svg{color:#e2e9f2}
+:root[data-theme=dark] .ex-summary{color:#e2e9f2}
+:root[data-theme=dark] .ex-pill.yes{color:#6fe0b4;border-color:#3d8c69;background:#12362c}
+:root[data-theme=dark] .ex-pill.no{color:#f0b45c;border-color:#7a5a1d;background:#2e2a1c}
+:root[data-theme=dark] .ex-who p small{color:#a6b8cc}
+/* Add templates menu: three options - recommended, your own, client's. */
+.templates-group{padding:10px 10px 4px;font-size:12px;letter-spacing:1.1px;font-weight:700;color:#8894a4}
+.templates-group-note{padding:0 10px 6px;font-size:12px;color:#8b97a6;white-space:normal;line-height:1.5}
+:root[data-theme=dark] .templates-group,:root[data-theme=dark] .templates-group-note{color:#a6b8cc}

@@ -28,14 +28,15 @@ try{
  await page.getByRole('dialog').waitFor();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:mixed});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
- await page.getByRole('button',{name:'Allow read-only & find files',exact:true}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor();
+ await page.getByRole('radio',{name:/Read-write/}).click();
+ await page.getByRole('button',{name:'Allow read-write & find files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.screenshot({path:dir+'/review-nosecure.png'});
  const text=(await page.getByRole('dialog').allTextContents()).join(' ');
  assert.ok(!text.includes('could not be read'),'no read failures expected, got: '+text.slice(0,300));
  assert.ok(text.includes('1'),'a table should be found');
  await page.getByRole('button',{name:/Import .* ready table/}).click();
- await page.getByRole('heading',{name:'Review where each file goes',exact:true}).waitFor({state:'detached'});
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor({state:'detached'});
  await page.waitForTimeout(800);
  await page.screenshot({path:dir+'/after-import-nosecure.png'});
  const bodyText=await page.evaluate(()=>document.body.innerText);
