@@ -300,3 +300,8 @@
 :root[data-theme=dark] .ex-option:hover{border-color:#239ccc;background:#293c51}
 :root[data-theme=dark] .ex-option strong{color:#e2e9f2}
 :root[data-theme=dark] .ex-option small{color:#a6b8cc}
+
+/* Onyx connection dialog */
+.onyx-dialog{width:min(560px,calc(100vw - 28px))}
+.onyx-dialog .bulk-options{display:flex;flex-direction:column;gap:10px}
+.onyx-dialog .bulk-options input{width:100%}

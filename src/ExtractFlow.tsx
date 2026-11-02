@@ -3,7 +3,9 @@ import Uppy from '@uppy/core';
 import Dashboard from '@uppy/react/dashboard';
 import '@uppy/core/css/style.min.css';
 import '@uppy/dashboard/css/style.min.css';
-import {IconFolder,IconUpload,IconArchive} from './icons';
+import {IconFolder,IconUpload,IconArchive,IconStack2} from './icons';
+import {OnyxSettings} from './OnyxSettings';
+import {loadOnyxConfig,uploadToOnyx,type OnyxConfig} from './onyx';
 import {unzipSync} from 'fflate';
 import {autoMap,detectHeader,importDataRows,mappedRows,readImportFile,sheetKey,templateInRows,type ImportSheet,type MasterTarget} from './bulkImport';
 import {newId} from './id';
@@ -68,6 +70,12 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
  },[uppy]);
  const[busy,setBusy]=useState(false);
  const[error,setError]=useState('');
+ // Onyx: when connected, the picked files are also sent to the Onyx server to read and
+ // index at the fetch step (docs like drawings/SOPs/emails become tickable then).
+ const[onyxCfg,setOnyxCfg]=useState<OnyxConfig|null>(()=>loadOnyxConfig());
+ const[onyxConnected,setOnyxConnected]=useState(false);
+ const[onyxOpen,setOnyxOpen]=useState(false);
+ const[onyxResult,setOnyxResult]=useState<{sent:string[];failed:string[]}|null>(null);
 
  const stepIndex=STEPS.findIndex(s=>s.key===step);
  const headersOf=(name:string)=>masters.find(m=>m.name===name)?.headers||[];
@@ -198,6 +206,12 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   }
   if(stopRef.current)return;
   setProgress({done:chosen.length,total:chosen.length,current:'',found:next.length});
+  // Onyx reads and indexes every file this job may read - including the documents this
+  // browser cannot parse. Its result is reported on the review step, never silently.
+  if(onyxCfg&&onyxConnected){
+   const forOnyx=files.filter(p=>p.allowed&&(p.kind==='doc'||extOk(p.file.name,types))).map(p=>p.file);
+   setOnyxResult(forOnyx.length?await uploadToOnyx(onyxCfg,forOnyx):null);
+  }else setOnyxResult(null);
   setPlans(next);setFailed(failedFiles);setExpanded(new Set());
   setStep('review');
  }
@@ -215,7 +229,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   }catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
  const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Fetching tables',review:'Review where each file maps'};
- return <dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
+ return <><dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
   <div className="bulk-heading">
    <div>
     <h2 id="ex-title">{titles[step]}</h2>
@@ -265,6 +279,12 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     <input ref={folderInput} type="file" hidden multiple {...({webkitdirectory:'',directory:''} as object)} aria-label="Choose a folder from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
     <p className="ex-label">OR EXTRACT FROM A SOURCE</p>
     <div className="ex-sources">
+     <button type="button" className="ex-source" onClick={()=>setOnyxOpen(true)}>
+      <span className="ex-icon" aria-hidden="true"><IconStack2 size={15}/></span>
+      <strong>Onyx</strong>
+      <small>{onyxCfg&&onyxConnected?`Linked to ${(()=>{try{return new URL(onyxCfg.url).host}catch{return 'your Onyx server'}})()}. Files you tick are sent to Onyx to read and index.`:onyxCfg?'Connection saved. Open to test or update it.':'Connect your Onyx server so it reads and indexes the picked files.'}</small>
+      <span className={'ex-badge'+(onyxCfg&&onyxConnected?'':' off')}>{onyxCfg&&onyxConnected?'Connected':'Not connected'}</span>
+     </button>
      <button type="button" className="ex-source" disabled title="SharePoint needs company sign-in and a backend service, which this app doesn't have yet">
       <span className="ex-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7 1.6A4 4 0 0 0 6 19z"/></svg></span>
       <strong>SharePoint</strong>
@@ -300,9 +320,9 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
       <div className="ex-panel">
        {files.map((p,i)=>{
         const typeOff=p.kind==='table'&&!extOk(p.file.name,types);
-        if(p.kind==='doc')return <label key={`${p.file.name}-${i}`} className="ex-check off">
-         <input type="checkbox" disabled/>
-         <span>{p.file.name}<small>{Math.max(1,Math.round(p.file.size/1024))} KB · {docKind(p.file.name)} - listed, not read yet</small></span>
+        if(p.kind==='doc')return <label key={`${p.file.name}-${i}`} className={'ex-check'+(onyxConnected?'':' off')}>
+         <input type="checkbox" checked={p.allowed} disabled={!onyxConnected} onChange={e=>setFiles(current=>current.map((q,j)=>j===i?{...q,allowed:e.target.checked}:q))}/>
+         <span>{p.file.name}<small>{Math.max(1,Math.round(p.file.size/1024))} KB · {docKind(p.file.name)} - {onyxConnected?'sent to Onyx for reading':'listed, not read yet'}</small></span>
         </label>;
         return <label key={`${p.file.name}-${i}`} className={'ex-check'+(typeOff?' off':'')}>
          <input type="checkbox" checked={p.allowed&&!typeOff} disabled={typeOff} onChange={e=>setFiles(current=>current.map((q,j)=>j===i?{...q,allowed:e.target.checked}:q))}/>
@@ -314,7 +334,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
       <div className="ex-panel">
        <label className="ex-check"><input type="checkbox" checked={types.xlsx} onChange={e=>setTypes(t=>({...t,xlsx:e.target.checked}))}/><span>Excel (.xlsx)</span></label>
        <label className="ex-check"><input type="checkbox" checked={types.csv} onChange={e=>setTypes(t=>({...t,csv:e.target.checked}))}/><span>CSV (.csv)</span></label>
-       <label className="ex-check off"><input type="checkbox" disabled/><span>Drawings, SOPs and client emails - listed, not read yet</span></label>
+       <label className="ex-check off"><input type="checkbox" disabled/><span>Drawings, SOPs and client emails - {onyxConnected?'read by Onyx when ticked above':'listed, not read yet'}</span></label>
       </div>
      </div>
      <div>
@@ -384,6 +404,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
       })}
      </tbody>
     </table>
+    {onyxResult&&<p className="ex-note"><b>Onyx:</b> {onyxResult.sent.length?`${onyxResult.sent.length} file${onyxResult.sent.length===1?'':'s'} sent to Onyx, which reads and indexes them (including documents this browser cannot parse)`:''}{onyxResult.failed.length?` Could not send: ${onyxResult.failed.join('; ')}.`:''} The master mapping above still runs in this browser.</p>}
     {failed.length>0&&<p className="bulk-hint review-skipped"><b>Files that could not be read:</b> {failed.join('; ')}.</p>}
     {plans.some(p=>p.blocked)&&<p className="bulk-hint review-skipped"><b>Held back:</b> {plans.filter(p=>p.blocked).map(p=>`${p.file}${p.file!==p.sheet?` · ${p.sheet}`:''} (${p.blocked})`).join('; ')}.</p>}
     {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet. {reviewCount(p)>0?`${reviewCount(p)} column${reviewCount(p)===1?'':'s'} with content ${reviewCount(p)===1?'is':'are'} not mapped`:'The ID column is not mapped'}. Open Map columns and map or ignore each one, then tick the table to include it. Nothing is dropped without your choice.</p>)}
@@ -415,5 +436,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     <button className="primary" disabled={busy||!readyCount||access==='read'} title={access==='read'?'Read-only job: switch to Read-write on the permission step to import':undefined} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
    </>}
   </div>
- </dialog>;
+ </dialog>
+ {onyxOpen&&<OnyxSettings config={onyxCfg} onClose={()=>setOnyxOpen(false)} onSaved={(config,connected)=>{setOnyxCfg(config);setOnyxConnected(connected);setOnyxOpen(false);}}/>}
+ </>;
 }

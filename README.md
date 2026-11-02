@@ -73,3 +73,13 @@ The source workbook remains the initial schema and seed-data reference in `src/w
 - Existing workbook columns, browser storage key, duplicate protection and read-only Filetype are unchanged. No backend or external list storage is added.
 
 Checks: `npm test`, `npm run test:bulk`, `npm run test:extraction`, `node scripts/check-master-ui.mjs`, and `node scripts/check-ui-review.mjs` and `node scripts/check-templates-routing.mjs` (Playwright browser required; optionally set `CHROME_PATH` and `UI_SCREENSHOT_DIR`). `npm run build` checks TypeScript and produces the production bundle.
+
+## Onyx integration (file extraction)
+
+The Add files flow can send the picked project documents to an [Onyx](https://github.com/onyx-dot-app/onyx) server (self-hosted or Onyx Cloud), whose pipeline reads and indexes them - including drawings, SOPs and client emails that this browser-only app cannot parse itself.
+
+Setup: Add files → Onyx (under "Or extract from a source") → enter the server URL and an API key (Onyx Admin Panel → Integrations → Service Accounts, Basic group is enough) or a Personal Access Token (Settings → Accounts & Access). A project ID is optional. The config is saved on this device only.
+
+When connected, every file ticked on the permission step is uploaded to Onyx at the Fetch files step (`POST {server}/api/user/projects/file/upload`, [docs](https://docs.onyx.app/developers/api_reference/projects/upload_user_files)), and the review step reports what was sent. The master table mapping and import still run in this browser.
+
+Not yet wired (needs the running server and a scope decision): pulling Onyx-parsed content back into the masters mapping, and chat-based field extraction through Onyx's LLM pipeline.

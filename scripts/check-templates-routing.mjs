@@ -29,7 +29,29 @@ try{
  assert.ok((await page.getByRole('dialog').allTextContents()).join(' ').includes('Not connected'));
  await page.screenshot({path:screenshotDir+'/masters-bam-menu.png',fullPage:true});
  report.push('Add files opens the extraction flow (Source / Permission / Fetch files / Mapping) with the three upload options feeding the Uppy dashboard; SharePoint and Google Drive show Not connected and stay disabled.');
- await page.getByRole('button',{name:'Close add files',exact:true}).click();
+
+ // Onyx source: configure against a stubbed server, test, save; ticked files then go to
+ // Onyx on the fetch step and the review reports the handoff.
+ await page.route('**/api/me/permissions',route=>route.fulfill({status:200,contentType:'application/json',body:'{"permissions":[],"is_owner":false}'}));
+ let onyxUploads=0;
+ await page.route('**/api/user/projects/file/upload',route=>{onyxUploads++;return route.fulfill({status:200,contentType:'application/json',body:'{"user_files":[]}'});});
+ await page.getByRole('button',{name:/Onyx/}).click();
+ await page.getByRole('heading',{name:'Connect Onyx',exact:true}).waitFor();
+ await page.getByLabel('Server URL',{exact:true}).fill('https://onyx.example.test');
+ await page.getByLabel('API key or token',{exact:true}).fill('test-token');
+ await page.getByRole('button',{name:'Test connection',exact:true}).click();
+ await page.getByText('Connected. Onyx accepted the token.',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'Save connection',exact:true}).click();
+ await page.locator('.ex-source',{hasText:'Onyx'}).getByText('Connected',{exact:true}).waitFor();
+ await page.screenshot({path:screenshotDir+'/masters-onyx-connected.png',fullPage:true});
+ await page.getByLabel('Choose files from this device').setInputFiles({name:'org.csv',mimeType:'text/csv',buffer:Buffer.from('Org ID,Company / Type\nORG-O-1,Onyx co')});
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
+ await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
+ await page.locator('.ex-dialog').getByText(/sent to Onyx/).first().waitFor();
+ assert.equal(onyxUploads,1);
+ report.push('Onyx source: connect + test + save works, ticked files are sent to Onyx on the fetch step and the review reports the handoff.');
+ await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
 
  // Placement B: Add templates opens the finalised wireframe modal with the three source cards.
  await page.getByRole('button',{name:'Add templates',exact:true}).click();
