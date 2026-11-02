@@ -194,7 +194,7 @@ try{
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();
  await page.locator('.ex-dialog').getByText(/Add templates/).first().waitFor();
  await page.locator('.ex-dialog').getByText(/not imported into Masters/).first().waitFor();
- assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);
+ assert.equal(await page.getByRole('button',{name:/^(Import|Allow read-write & import)/}).isDisabled(),true);
  await page.screenshot({path:screenshotDir+'/masters-template-blocked.png',fullPage:true});
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Filled list templates are blocked from Masters and pointed at Add templates.');

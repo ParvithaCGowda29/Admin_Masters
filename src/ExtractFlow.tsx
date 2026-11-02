@@ -382,7 +382,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet: {mappedCount(p)>0?`the ID column did not match any ${p.master} field`:`no columns matched any ${p.master} field`}.</p>)}
     {plans.filter(p=>!p.blocked&&resolvable(p)&&p.ignored.length>0).slice(0,1).map(p=><p key={`${p.id}-ignored`} className="ex-note amber"><b>{p.file}</b>: {ignoredCount(p)} column{ignoredCount(p)===1?'':'s'} with content did not match any {p.master} field and {ignoredCount(p)===1?'was':'were'} ignored - that data stays out of the import.</p>)}
     <p className="ex-note">A table shows Mapped Yes when the ID column is mapped. Columns that match no master field are ignored automatically and their data stays out of the import. Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
-    {access==='read'&&<p className="ex-note amber">This is a read-only job: mappings are reviewed but nothing is imported. Go back and choose Read-write (Extract + authorize) to import the ready tables.</p>}
+    {access==='read'&&<p className="ex-note amber">This is a read-only job, so nothing is imported yet. Click "Allow read-write & import" to add the ready tables to the masters.</p>}
     {error&&<p role="alert" className="bulk-error">{error}</p>}
     {busy&&<p role="status">Importing rows...</p>}
    </>}
@@ -403,10 +403,10 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     <button onClick={()=>{stopRef.current=true;setStep('source');}}>Stop extraction</button>
    </>}
    {step==='review'&&<>
-    <span>{access==='read'?'Read-only job - nothing is imported':'Nothing is imported until you confirm'}</span>
+    <span>{access==='read'?'Read-only job - import needs read-write':'Nothing is imported until you confirm'}</span>
     <button disabled={busy} onClick={onClose}>Stop extraction</button>
     <button disabled={busy} onClick={()=>setStep('permission')}>Back</button>
-    <button className="primary" disabled={busy||!readyCount||access==='read'} title={access==='read'?'Read-only job: switch to Read-write on the permission step to import':undefined} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
+    <button className="primary" disabled={busy||!readyCount} title={access==='read'?'Switches this job to read-write, then imports':undefined} onClick={()=>{if(access==='read')setAccess('write');void confirmImport()}}>{access==='read'?'Allow read-write & import':'Import'} {readyCount||''} ready table{readyCount===1?'':'s'}</button>
    </>}
   </div>
   {dropOpen&&<div className="ex-drop-popup" onClick={()=>setDropOpen('')}>
