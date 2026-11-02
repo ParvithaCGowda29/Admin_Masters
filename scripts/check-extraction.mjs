@@ -58,10 +58,13 @@ try{
  assert.ok(/ready to import/.test(await dialogText()));
  // The unrelated sheet stays visible but unticked and is never imported - but it keeps a manual mapping path.
  const leaveRow=page.locator('.ex-table tr',{hasText:'Leave approvals'});
- assert.ok((await leaveRow.allTextContents()).join(' ').match(/Unresolved/));
+ assert.equal(await leaveRow.locator('.ex-pill').textContent(),'No');
  assert.equal(await leaveRow.locator('input[type=checkbox]').isDisabled(),true);
  assert.equal(await leaveRow.getByRole('button',{name:'Map columns',exact:true}).count(),1);
- report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, with a Map columns path.');
+ // No Columns column on the mapping table; the amber note names what is unresolved.
+ assert.equal(await page.locator('.ex-table > thead > tr > th',{hasText:'Columns'}).count(),0);
+ assert.ok(/masters\.xlsx is not included yet\. 3 columns with content are not mapped/.test((await dialogText()).replace(/\s+/g,' ')));
+ report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, Mapped No, with a Map columns path; no Columns column, the amber note carries the unresolved count.');
 
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'2 new rows added'}).waitFor();
@@ -138,7 +141,7 @@ try{
  await toReview({name:'org-renamed.xlsx',mimeType:xlsxType,buffer:renamed});
  const renamedRow=page.locator('.ex-table tr',{hasText:'org-renamed.xlsx'});
  assert.equal(await renamedRow.locator('.ex-pill').textContent(),'No');
- assert.ok(/3 columns need review/.test((await renamedRow.allTextContents()).join(' ').replace(/\s+/g,' ')));
+ assert.ok(/org-renamed\.xlsx is not included yet\. 3 columns with content are not mapped/.test((await dialogText()).replace(/\s+/g,' ')));
  assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:'Import ready tables',exact:true}).isDisabled(),true);
  // Resolve: map Website & socials onto Brand Properties, ignore the other two explicitly.
@@ -186,6 +189,21 @@ try{
  assert.equal(zeroRowSaved.values[1],'Zero co');
  assert.equal(zeroRowSaved.values.some(v=>v==='Extra fact'),false);
  report.push('Zero-match table maps manually through Map columns; a reused master field frees the earlier column visibly instead of overwriting it; ignored content is not imported.');
+
+ // README sheets never enter the mapping list: their content belongs to each tab's info icon.
+ const withReadme=toXlsx([
+  ['README',[['BuLLM masters'],['Organization: business units and locations.']]],
+  ['Organization',[orgHeaders,['ORG-RM-1','Readme co','','','','','','','','','','']]],
+ ]);
+ await page.getByRole('button',{name:'Masters',exact:true}).click();
+ await openFlow();
+ await toReview({name:'workbook.xlsx',mimeType:xlsxType,buffer:withReadme});
+ const readmeText=await dialogText();
+ assert.ok(/1\s*table found/.test(readmeText));
+ assert.ok(!readmeText.includes('README'));
+ assert.equal(await page.locator('.ex-table tr',{hasText:'README'}).count(),0);
+ await page.getByRole('button',{name:'Close add files',exact:true}).click();
+ report.push('README sheets never enter the mapping list: only the real data table is found and listed.');
 
  // Dark theme over the same flow.
  await page.getByRole('button',{name:'Switch to dark mode'}).click();

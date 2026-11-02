@@ -7,7 +7,6 @@ const FACETS:Record<string,string[]>={
  Skills:['Workflow step','Status'],
  Rules:['Status','Owner / version'],
  Tools:['Category','Status','Owner / access','Refresh Frequency'],
- Filetype:['Domain','Type / category'],
 };
 export function facetFields(name:string,headers:string[]){return (FACETS[name]||[]).map(label=>({label,index:headers.indexOf(label)})).filter(f=>f.index>=0);}
 // Treat a source cell as one value: splitting prose or paths could change its meaning.

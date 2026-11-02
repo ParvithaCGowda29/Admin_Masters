@@ -102,13 +102,18 @@ try{
 
  // Masters parent is a real selection with an overview; chevron alone collapses.
  await page.getByRole('button',{name:'Collapse masters',exact:true}).click();
- assert.equal(await page.locator('.nav-branches').count(),0);
+ assert.equal(await page.locator('#masters-branches').count(),0);
+ assert.equal(await page.locator('#admin-branches').count(),1);
  await page.getByRole('button',{name:'Expand masters',exact:true}).click();
+ await page.getByRole('button',{name:'Collapse admin',exact:true}).click();
+ assert.equal(await page.locator('#admin-branches').count(),0);
+ assert.equal(await page.locator('#masters-branches').count(),1);
+ await page.getByRole('button',{name:'Expand admin',exact:true}).click();
  await page.getByRole('button',{name:'Masters',exact:true}).click();
  await page.getByRole('heading',{name:'Masters overview',exact:true}).waitFor();
  assert.equal(await page.locator('.nav-parent.parent-selected').count(),1);
  await page.screenshot({path:screenshotDir+'/masters-parent-overview.png',fullPage:true});
- report.push('Masters parent selects an overview; the chevron alone collapses the tree.');
+ report.push('Masters parent selects an overview; the chevron alone collapses the tree; the Admin tree collapses independently.');
 
  // Parent routing: the extraction flow reviews a workbook across every matching tab.
  const book=utils.book_new();
@@ -145,14 +150,6 @@ try{
  await page.screenshot({path:screenshotDir+'/masters-tab-routing.png',fullPage:true});
  await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
  report.push('On a specific tab, the flow maps every file into that tab only.');
-
- // Filetype is read-only: all import choices are disabled there.
- await page.getByRole('button',{name:'Filetype 43',exact:true}).click();
- await page.getByText('43 of 43 rows',{exact:true}).waitFor();
- await page.getByRole('button',{name:'Add files',exact:true}).click();
- await page.getByRole('alert').filter({hasText:'read-only'}).waitFor();
- assert.equal(await page.getByRole('dialog').count(),0);
- report.push('Filetype stays read-only: Add files shows a read-only notice there and no import flow opens.');
 
  // Each tab's info panel is specific to that tab; shared README rows stay under the parent.
  await page.getByRole('button',{name:'Agents 0',exact:true}).click();

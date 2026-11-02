@@ -305,3 +305,8 @@
 .onyx-dialog{width:min(560px,calc(100vw - 28px))}
 .onyx-dialog .bulk-options{display:flex;flex-direction:column;gap:10px}
 .onyx-dialog .bulk-options input{width:100%}
+.status-chip{display:inline-block;padding:3px 12px;border-radius:11px;font-size:12px;border:1px solid #d7dde5;background:#eef1f5;color:#6c7787;white-space:nowrap}
+.status-chip.on{background:#e6f6ee;border-color:#bfe6d2;color:#1c7a4d}
+:root[data-theme=dark] .status-chip{background:#202d3e;border-color:#485a70;color:#a6b8cc}
+:root[data-theme=dark] .status-chip.on{background:#12362c;border-color:#3d8c69;color:#6fe0b4}
+.ex-dot-icon{width:13px;height:13px;display:block;object-fit:contain}

@@ -1,16 +1,23 @@
 import {chromium} from 'playwright';
 import {spawn} from 'node:child_process';
 import fs from 'node:fs';
-// Seed one Skills row in the same scoped storage key the app derives from the workbook.
+import os from 'node:os';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import ts from 'typescript';
+// Seed one Skills row in the same scoped storage key the app derives from the workbook and admin tabs.
 const workbook=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
-const revision=JSON.stringify(workbook);
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),'isatvon-'));
+fs.writeFileSync(path.join(temp,'admin.mjs'),ts.transpileModule(fs.readFileSync('src/admin.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText);
+const {ADMIN_SHEETS}=await import(pathToFileURL(path.join(temp,'admin.mjs')));
+const revision=JSON.stringify(workbook)+JSON.stringify(ADMIN_SHEETS);
 let hash=2166136261;
 for(let i=0;i<revision.length;i++)hash=Math.imul(hash^revision.charCodeAt(i),16777619);
 const KEY=`bullm-masters-v2-${(hash>>>0).toString(16)}`;
 const screenshotDir=process.env.UI_SCREENSHOT_DIR||'/downloads';fs.mkdirSync(screenshotDir,{recursive:true});
 const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1'],{stdio:'ignore'});
 try{
- const browser=await chromium.launch({args:['--no-sandbox']});
+ const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--no-sandbox']});
  const page=await browser.newPage({viewport:{width:1600,height:900}});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(([key])=>{try{

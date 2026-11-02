@@ -1,0 +1,82 @@
+// Admin tabs: workspace administration tables that sit under the Admin parent in the
+// sidebar, next to Masters. They reuse the master grid (fixed columns, browser-only
+// storage) but are not workbook sheets, so imports never target them.
+export type AdminRow={id:string;values:string[]};
+export type AdminSheet={name:string;noun:string;headers:string[];descriptions:string[];rows:AdminRow[];readOnly?:boolean};
+export const ADMIN_SHEETS:AdminSheet[]=[
+ {name:'System Settings',noun:'settings',
+  headers:['Setting ID','Setting','Value','Scope','Owner','Updated','Status'],
+  descriptions:[
+   'Unique identifier for the workspace setting.',
+   'Name of the configuration option.',
+   'Current value applied across the workspace.',
+   'Where the setting applies: tenant, hosting, security, compliance or UI.',
+   'Role responsible for the setting.',
+   'Date the setting was last changed (dd-mm-yyyy).',
+   'Whether the setting is active.'],
+  rows:[
+   {id:'seed-set-01',values:['SET-01','Instance name','BuLLM','Tenant','Admin','28-10-2026','Active']},
+   {id:'seed-set-02',values:['SET-02','Environment','Production','Tenant','Admin','28-10-2026','Active']},
+   {id:'seed-set-03',values:['SET-03','Region','ap-south-1 · Mumbai','Hosting','Admin','28-10-2026','Active']},
+   {id:'seed-set-04',values:['SET-04','Timezone','Asia/Calcutta','Tenant','Admin','28-10-2026','Active']},
+   {id:'seed-set-05',values:['SET-05','Session timeout','30 min','Security','Admin','28-10-2026','Active']},
+   {id:'seed-set-06',values:['SET-06','Data residency','India','Compliance','Admin','28-10-2026','Active']},
+   {id:'seed-set-07',values:['SET-07','Default theme','System','UI','Per user','28-10-2026','Active']},
+   {id:'seed-set-08',values:['SET-08','Maintenance mode','Off','Tenant','Admin','28-10-2026','Off']}]},
+ {name:'User Management',noun:'users',
+  headers:['User ID','Name','Email','Role','Workspace','Last active','Status'],
+  descriptions:[
+   'Unique identifier for the user.',
+   'Full name of the user.',
+   'Work email used to sign in.',
+   'Workspace role, such as Admin or FDE.',
+   'Workspace or team the user belongs to.',
+   'When the user last signed in.',
+   'Whether the user can sign in.'],
+  rows:[]},
+ {name:'Model Switching',noun:'models',
+  headers:['Model ID','Model','Provider','Tier','Use case','Default','Status'],
+  descriptions:[
+   'Unique identifier for the model entry.',
+   'Model name shown when switching.',
+   'Provider serving the model.',
+   'Cost or capability tier.',
+   'Workflow the model is used for.',
+   'Whether this is the default model.',
+   'Whether the model is available.'],
+  rows:[]},
+ {name:'License & Payments',noun:'records',
+  headers:['License ID','Plan','Seats','Renewal','Amount','Billing contact','Status'],
+  descriptions:[
+   'Unique identifier for the license.',
+   'Subscription plan name.',
+   'Number of seats on the plan.',
+   'Next renewal date (dd-mm-yyyy).',
+   'Amount billed each cycle.',
+   'Who receives billing emails.',
+   'Whether the license is current.'],
+  rows:[]},
+ {name:'Tool Setup & Integrations',noun:'integrations',
+  headers:['Integration ID','Tool','Category','Connection','Owner','Updated','Status'],
+  descriptions:[
+   'Unique identifier for the integration.',
+   'Tool or service connected.',
+   'Kind of tool, such as storage or AI.',
+   'How the tool connects, such as API key or OAuth.',
+   'Role responsible for the integration.',
+   'Date the integration was last changed (dd-mm-yyyy).',
+   'Whether the integration is connected.'],
+  rows:[]},
+ {name:'File Type & Standardization',noun:'file types',
+  headers:['Type ID','File type','Extension','Standard','Ingestion','Owner','Status'],
+  descriptions:[
+   'Unique identifier for the file type.',
+   'Name of the file type.',
+   'File extension, such as .pdf.',
+   'Standardization rule applied on upload.',
+   'How the file type is ingested for RAG.',
+   'Role responsible for the file type.',
+   'Whether the file type is accepted.'],
+  rows:[]},
+];
+export function adminSheet(name:string){return ADMIN_SHEETS.find(s=>s.name===name);}

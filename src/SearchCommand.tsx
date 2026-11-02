@@ -32,7 +32,7 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const suggestions=useMemo(()=>{
   const vals:string[]=[];
   for(const c of categorical)for(const v of c.values){if(!vals.includes(v))vals.push(v);if(vals.length>=4)return vals}
-  // Tabs without a few-valued column (Skills, Filetype): fall back to real cell values, name column first, short values first.
+  // Tabs without a few-valued column (Skills): fall back to real cell values, name column first, short values first.
   const order=[displayIdx,...headers.map((_,i)=>i).filter(i=>i!==displayIdx)];
   for(const maxLen of [60,Infinity])for(const i of order)for(const r of rows){const v=(r.values[i]||'').trim();if(v&&v.length<=maxLen&&!vals.includes(v)){vals.push(v);if(vals.length>=4)return vals}}
   return vals;

@@ -1,20 +1,23 @@
 import type { DataProvider } from '@refinedev/core';
 import workbook from './workbook.json';
+import {ADMIN_SHEETS,adminSheet} from './admin';
 export type RecordRow = {id:string;values:string[];sourceRow?:number};
 // Scope edits to the exact shipped workbook. Older snapshots remain untouched
 // under their old key, but cannot hide updated workbook rows after a pull.
-const revision=JSON.stringify(workbook);
+const revision=JSON.stringify(workbook)+JSON.stringify(ADMIN_SHEETS);
 let hash=2166136261;
 for(let i=0;i<revision.length;i++)hash=Math.imul(hash^revision.charCodeAt(i),16777619);
 const KEY=`bullm-masters-v2-${(hash>>>0).toString(16)}`;
+// Admin tabs share the masters' browser-only storage, keyed by their own names.
+function tableMeta(name:string){return workbook.sheets.find(s=>s.name===name)||adminSheet(name);}
 export function loadRows(name:string):RecordRow[]{
- const sheet=workbook.sheets.find(s=>s.name===name)!;
+ const sheet=tableMeta(name)!;
  if(sheet.readOnly)return structuredClone(sheet.rows);
  try { const saved=JSON.parse(localStorage.getItem(KEY)||'{}')[name];if(Array.isArray(saved)&&saved.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string')))return saved; }catch{}
  return structuredClone(sheet.rows);
 }
 export function saveRows(name:string,rows:RecordRow[]){
- if(workbook.sheets.find(s=>s.name===name)?.readOnly)throw Error('Filetype is read-only for FDE.');
+ if(tableMeta(name)?.readOnly)throw Error('This table is read-only for FDE.');
  let saved:any={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}
  localStorage.setItem(KEY,JSON.stringify({...saved,[name]:rows}));
 }

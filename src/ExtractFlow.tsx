@@ -199,7 +199,9 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
    setProgress({done:i,total:chosen.length,current:chosen[i].name,found:next.length});
    try{
     const sheets=await readImportFile(chosen[i]);
-    for(const sheet of sheets)next.push(planFor(chosen[i].name,sheet));
+    // README sheets are documentation, not data: their content lives on each tab's (i)
+    // info icon, so they never enter the mapping list.
+    for(const sheet of sheets){if(/^read\s*me\b/i.test(sheet.name.trim()))continue;next.push(planFor(chosen[i].name,sheet));}
    }catch(err){failedFiles.push(`${chosen[i].name} (${err instanceof Error?err.message:'could not be read'})`);}
    // Let the progress step paint between files.
    await new Promise(r=>setTimeout(r,120));
@@ -237,7 +239,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
      {STEPS.map((s,i)=><span key={s.key} className="ex-step-wrap">
       {i>0&&<span className="ex-link" aria-hidden="true"/>}
       <span className={'ex-step'+(i===stepIndex?' current':'')+(i<stepIndex?' done':'')} aria-current={i===stepIndex?'step':undefined}>
-       <span className="ex-dot">{i<stepIndex?'✓':i+1}</span><span>{s.label}</span>
+       <span className="ex-dot">{i<stepIndex?'✓':s.key==='find'?<img className="ex-dot-icon" src={bullMark} alt="" aria-hidden="true"/>:<svg className="ex-dot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"/></svg>}</span><span>{s.label}</span>
       </span>
      </span>)}
     </div>
@@ -370,26 +372,20 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     {scope.type==='tab'&&<p className="bulk-hint">Everything maps into the {scope.tab} tab only.</p>}
     <p className="ex-summary">{plans.length} table{plans.length===1?'':'s'} found · {readyCount} ready to import · {needMapping} need mapping</p>
     <table className="mapping-table ex-table">
-     <thead><tr><th></th><th>File / sheet</th><th>Maps with</th><th>Mapped</th><th>Columns</th><th></th></tr></thead>
+     <thead><tr><th></th><th>File / sheet</th><th>Maps with</th><th>Mapped</th><th></th></tr></thead>
      <tbody>
       {sortedPlans.map(p=>{
-       const headers=headersOf(p.master);const total=headers.length;const mapped=mappedCount(p);
+       const headers=headersOf(p.master);
        const waiting=!resolvable(p);
-       const reviewN=reviewCount(p);
-       const columnNote=p.blocked?'Template file, never imported'
-        :reviewN>0?`Unresolved: ${reviewN} column${reviewN===1?'':'s'} need${reviewN===1?'s':''} review`
-        :!idMapped(p)?'Unresolved: map the ID column'
-        :`${mapped} of ${total} columns mapped${ignoredCount(p)?`, ${ignoredCount(p)} ignored`:''}`;
        const toggle=<button type="button" className="ex-map-toggle" aria-expanded={expanded.has(p.id)} onClick={()=>setExpanded(current=>{const next=new Set(current);if(next.has(p.id))next.delete(p.id);else next.add(p.id);return next;})}>{expanded.has(p.id)?'Hide columns':'Map columns'}</button>;
        return <><tr key={p.id} className={waiting&&!p.blocked?'ex-waiting':''}>
         <td>{!p.blocked&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} disabled={!resolvable(p)} title={resolvable(p)?undefined:'Map or ignore every column with content, and map the ID column, first'} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
         <td>{p.file}{p.file!==p.sheet&&<small>{p.sheet}</small>}</td>
-        <td>{p.blocked?'Add templates':scope.type==='tab'?p.master:<select aria-label={`Destination tab for ${p.sheet}`} value={p.master} onChange={e=>retarget(p.id,e.target.value)}>{masters.map(m=><option key={m.name} value={m.name}>{m.name}</option>)}</select>}</td>
+        <td>{p.blocked?<span>Add templates<small>{p.blocked}</small></span>:scope.type==='tab'?p.master:<select aria-label={`Destination tab for ${p.sheet}`} value={p.master} onChange={e=>retarget(p.id,e.target.value)}>{masters.map(m=><option key={m.name} value={m.name}>{m.name}</option>)}</select>}</td>
         <td>{p.blocked?'-':<span className={'ex-pill '+(waiting?'no':'yes')}>{waiting?'No':'Yes'}</span>}</td>
-        <td>{columnNote}</td>
         <td>{!p.blocked&&toggle}</td>
        </tr>
-       {expanded.has(p.id)&&!p.blocked&&<tr key={`${p.id}-map`} className="ex-map-row"><td colSpan={6}>
+       {expanded.has(p.id)&&!p.blocked&&<tr key={`${p.id}-map`} className="ex-map-row"><td colSpan={5}>
         <table className="mapping-table"><thead><tr><th>File column</th><th>Sample value</th><th>{p.master} field</th></tr></thead><tbody>
          {p.mapping.map((target,i)=>{
           const name=p.rows[p.headerRow]?.[i]?.trim()||`Column ${i+1}`;

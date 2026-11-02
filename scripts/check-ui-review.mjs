@@ -42,8 +42,8 @@ try{
  await page.reload();await page.getByRole('button',{name:'Switch to light mode'}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();await page.getByRole('dialog').waitFor();await page.screenshot({path:screenshotDir+'/masters-addfiles-dark.png',fullPage:true});
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
- await page.getByRole('button',{name:'Filetype 43',exact:true}).click();await page.getByText('43 of 43 rows',{exact:true}).waitFor();
- assert.equal(await page.getByRole('button',{name:'＋ Add Row',exact:true}).count(),0);
+ // The Filetype tab was removed from the masters: it no longer appears in the tree.
+ assert.equal(await page.getByRole('button',{name:/Filetype/}).count(),0);
  await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Toggle navigation'}).click();await page.screenshot({path:screenshotDir+'/masters-mobile.png',fullPage:true});
  await page.setViewportSize({width:1440,height:1000});await page.getByRole('button',{name:/Organization 1/,exact:true}).click();await page.getByText('1 of 1 rows',{exact:true}).waitFor();
  // Exercise the Add files extraction flow and its duplicate guard.
@@ -62,5 +62,5 @@ try{
  await page.locator('.ag-center-cols-container [row-id="org-persist"] [col-id="1"]').dblclick();const editor=page.locator('.ag-large-text-input textarea');await editor.fill('Edited business');await page.keyboard.press('Control+Enter');await page.getByRole('status').filter({hasText:'Changes saved on this device.'}).waitFor();
  await page.reload();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
  const saved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization')});assert.equal(saved[0].values[11],'Keep me');assert.equal(saved[0].values[1],'Edited business');assert.equal(saved.length,2);
- assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, no filter bar, removed Upload/README, theme persistence, extraction flow, protected Filetype, mobile.');
+ assert.deepEqual(errors,[]);console.log('UI tests passed: tree, info, no filter bar, removed Upload/README and Filetype, theme persistence, extraction flow, mobile.');
 }finally{await browser.close();server.kill();}
