@@ -72,7 +72,7 @@ try{
  assert.equal(await leaveRow.getByRole('button',{name:'Map columns',exact:true}).count(),0);
  // No Columns column on the mapping table; the amber note names what is unresolved.
  assert.equal(await page.locator('.ex-table > thead > tr > th',{hasText:'Columns'}).count(),0);
- assert.ok(/masters\.xlsx is not included yet: no columns matched a .* field/.test((await dialogText()).replace(/\s+/g,' ')));
+ assert.ok(/masters\.xlsx is not included yet: no columns matched any .* field/.test((await dialogText()).replace(/\s+/g,' ')));
  report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, Mapped No, with no Map columns path - unmatched columns are auto-ignored and the amber note names why it stays out.');
 
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
@@ -150,7 +150,7 @@ try{
  await toReview({name:'org-renamed.xlsx',mimeType:xlsxType,buffer:renamed});
  const renamedRow=page.locator('.ex-table tr',{hasText:'org-renamed.xlsx'});
  assert.equal(await renamedRow.locator('.ex-pill').textContent(),'Yes');
- assert.ok(/org-renamed\.xlsx: 3 columns with content did not match a Organization field and were ignored/.test((await dialogText()).replace(/\s+/g,' ')));
+ assert.ok(/org-renamed\.xlsx: 3 columns with content did not match any Organization field and were ignored/.test((await dialogText()).replace(/\s+/g,' ')));
  assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),false);
  assert.equal(await renamedRow.locator('input[type=checkbox]').isChecked(),true);
  await page.screenshot({path:screenshotDir+'/ex-7-renamed-resolved.png'});
@@ -174,7 +174,7 @@ try{
  assert.equal(await zeroRow.locator('.ex-pill').textContent(),'No');
  assert.equal(await zeroRow.locator('input[type=checkbox]').isDisabled(),true);
  assert.equal(await zeroRow.getByRole('button',{name:'Map columns',exact:true}).count(),0);
- assert.ok(/zero\.xlsx is not included yet: no columns matched a .* field/.test((await dialogText()).replace(/\s+/g,' ')));
+ assert.ok(/zero\.xlsx is not included yet: no columns matched any .* field/.test((await dialogText()).replace(/\s+/g,' ')));
  assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Zero-match table stays out with the reason in the amber note; unmatched columns are auto-ignored, no manual Map columns step.');
