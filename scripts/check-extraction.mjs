@@ -39,7 +39,16 @@ try{
  assert.equal(await page.getByRole('button',{name:/SharePoint/}).isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:/Google Drive/}).isDisabled(),true);
  assert.ok((await page.getByRole('dialog').allTextContents()).join(' ').includes('Not connected'));
- report.push('Source step: the three upload options (Choose folder, Bulk upload, Zip upload) feed the Uppy dashboard; SharePoint and Google Drive are disabled with Not connected.');
+ // No inline dropzone: each upload option opens the drop/browse area in a centered popup.
+ assert.equal(await page.locator('.uppy-Dashboard').count(),0);
+ await page.getByRole('button',{name:/Bulk upload/}).click();
+ const popup=page.getByRole('dialog',{name:'Bulk upload'});
+ await popup.locator('.uppy-Dashboard-inner').waitFor();
+ assert.ok((await popup.allTextContents()).join(' ').includes('Master data'));
+ await page.screenshot({path:screenshotDir+'/ex-1b-source-popup-light.png'});
+ await page.getByRole('button',{name:'Close file picker',exact:true}).click();
+ assert.equal(await page.locator('.uppy-Dashboard').count(),0);
+ report.push('Source step: the three upload options (Choose folder, Bulk upload, Zip upload) each open the drop/browse area with the type chips in a popup; SharePoint and Google Drive are disabled with Not connected.');
 
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
  await page.getByRole('button',{name:'Continue',exact:true}).click();
@@ -60,11 +69,11 @@ try{
  const leaveRow=page.locator('.ex-table tr',{hasText:'Leave approvals'});
  assert.equal(await leaveRow.locator('.ex-pill').textContent(),'No');
  assert.equal(await leaveRow.locator('input[type=checkbox]').isDisabled(),true);
- assert.equal(await leaveRow.getByRole('button',{name:'Map columns',exact:true}).count(),1);
+ assert.equal(await leaveRow.getByRole('button',{name:'Map columns',exact:true}).count(),0);
  // No Columns column on the mapping table; the amber note names what is unresolved.
  assert.equal(await page.locator('.ex-table > thead > tr > th',{hasText:'Columns'}).count(),0);
- assert.ok(/masters\.xlsx is not included yet\. 3 columns with content are not mapped/.test((await dialogText()).replace(/\s+/g,' ')));
- report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, Mapped No, with a Map columns path; no Columns column, the amber note carries the unresolved count.');
+ assert.ok(/masters\.xlsx is not included yet: no columns matched a .* field/.test((await dialogText()).replace(/\s+/g,' ')));
+ report.push('Review: matching sheet is ticked and ready; the unrelated sheet stays listed, unticked, checkbox disabled, Mapped No, with no Map columns path - unmatched columns are auto-ignored and the amber note names why it stays out.');
 
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'2 new rows added'}).waitFor();
@@ -130,8 +139,8 @@ try{
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Filled list templates stay blocked from Masters and point at Add templates.');
 
- // Renamed headers: 9 of 12 columns auto-map, but the 3 unmapped columns with content keep the
- // table unticked and its checkbox disabled until each is mapped or explicitly ignored.
+ // Renamed headers: 9 of 12 columns auto-map and the 3 unmatched content columns are
+ // auto-ignored, so the table is ticked and ready on its own - no Map columns step.
  const renamed=toXlsx([['Organization',[
   ['Code','Company Name','Registered address','Certifications','Offerings','Client accounts','Knowledge bases','Hardware','Notes','Website & socials','Team size & roles','Software in use'],
   ['ORG-R-1','Renamed co','Mysuru','ISO','Widgets','Clients','KB','Laptop','note','https://example.test','5 engineers','Excel'],
@@ -140,30 +149,21 @@ try{
  await openFlow();
  await toReview({name:'org-renamed.xlsx',mimeType:xlsxType,buffer:renamed});
  const renamedRow=page.locator('.ex-table tr',{hasText:'org-renamed.xlsx'});
- assert.equal(await renamedRow.locator('.ex-pill').textContent(),'No');
- assert.ok(/org-renamed\.xlsx is not included yet\. 3 columns with content are not mapped/.test((await dialogText()).replace(/\s+/g,' ')));
- assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),true);
- assert.equal(await page.getByRole('button',{name:'Import ready tables',exact:true}).isDisabled(),true);
- // Resolve: map Website & socials onto Brand Properties, ignore the other two explicitly.
- await renamedRow.getByRole('button',{name:'Map columns',exact:true}).click();
- await page.getByRole('combobox',{name:'Map column 10: Website & socials'}).selectOption({label:'Brand Properties'});
- await page.getByRole('combobox',{name:'Map column 11: Team size & roles'}).selectOption({label:'Ignore this column'});
- await page.getByRole('combobox',{name:'Map column 12: Software in use'}).selectOption({label:'Ignore this column'});
- await page.screenshot({path:screenshotDir+'/ex-7-renamed-resolved.png'});
- assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),false);
  assert.equal(await renamedRow.locator('.ex-pill').textContent(),'Yes');
- await renamedRow.locator('input[type=checkbox]').check();
+ assert.ok(/org-renamed\.xlsx: 3 columns with content did not match a Organization field and were ignored/.test((await dialogText()).replace(/\s+/g,' ')));
+ assert.equal(await renamedRow.locator('input[type=checkbox]').isDisabled(),false);
+ assert.equal(await renamedRow.locator('input[type=checkbox]').isChecked(),true);
+ await page.screenshot({path:screenshotDir+'/ex-7-renamed-resolved.png'});
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'1 new row'}).waitFor();
  const renamedSaved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization');});
  const renamedRowSaved=renamedSaved.find(r=>r.values[0]==='ORG-R-1');
- assert.equal(renamedRowSaved.values[2],'https://example.test');
- assert.equal(renamedRowSaved.values.some(v=>v==='5 engineers'||v==='Excel'),false);
- report.push('Renamed headers (9/12): table waits unticked with checkbox disabled until the 3 content columns are mapped or ignored; ignored column data never lands.');
+ assert.equal(renamedRowSaved.values[1],'Renamed co');
+ assert.equal(renamedRowSaved.values.some(v=>v==='5 engineers'||v==='Excel'||v==='https://example.test'),false);
+ report.push('Renamed headers (9/12): the 3 unmatched content columns are auto-ignored, the table is ticked and ready on its own, and ignored column data never lands.');
 
- // Zero-match table: Map columns still gives a manual path, and one master field can take
- // only one source column - mapping onto a used field frees the earlier column instead of
- // silently overwriting it.
+ // Zero-match table: nothing maps, so the table stays out with the reason in the amber
+ // note - there is no manual Map columns step; unmatched columns are auto-ignored.
  const zero=toXlsx([['Sheet1',[
   ['Foo','Bar','Baz'],
   ['ORG-Z-1','Zero co','Extra fact'],
@@ -171,24 +171,13 @@ try{
  await openFlow();
  await toReview({name:'zero.xlsx',mimeType:xlsxType,buffer:zero});
  const zeroRow=page.locator('.ex-table tr',{hasText:'zero.xlsx'});
+ assert.equal(await zeroRow.locator('.ex-pill').textContent(),'No');
  assert.equal(await zeroRow.locator('input[type=checkbox]').isDisabled(),true);
- await zeroRow.getByRole('button',{name:'Map columns',exact:true}).click();
- await page.getByRole('combobox',{name:'Map column 1: Foo'}).selectOption({label:'Org ID (ID)'});
- await page.getByRole('combobox',{name:'Map column 2: Bar'}).selectOption({label:'Company / Type'});
- await page.getByRole('combobox',{name:'Map column 3: Baz'}).selectOption({label:'Org ID (ID)'});
- assert.equal(await page.getByRole('combobox',{name:'Map column 1: Foo'}).inputValue(),'-1');
- assert.equal(await page.getByRole('combobox',{name:'Map column 3: Baz'}).inputValue(),'0');
- await page.getByRole('combobox',{name:'Map column 3: Baz'}).selectOption({label:'Ignore this column'});
- await page.getByRole('combobox',{name:'Map column 1: Foo'}).selectOption({label:'Org ID (ID)'});
- assert.equal(await zeroRow.locator('input[type=checkbox]').isDisabled(),false);
- await zeroRow.locator('input[type=checkbox]').check();
- await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
- await page.getByRole('status').filter({hasText:'1 new row'}).waitFor();
- const zeroSaved=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization');});
- const zeroRowSaved=zeroSaved.find(r=>r.values[0]==='ORG-Z-1');
- assert.equal(zeroRowSaved.values[1],'Zero co');
- assert.equal(zeroRowSaved.values.some(v=>v==='Extra fact'),false);
- report.push('Zero-match table maps manually through Map columns; a reused master field frees the earlier column visibly instead of overwriting it; ignored content is not imported.');
+ assert.equal(await zeroRow.getByRole('button',{name:'Map columns',exact:true}).count(),0);
+ assert.ok(/zero\.xlsx is not included yet: no columns matched a .* field/.test((await dialogText()).replace(/\s+/g,' ')));
+ assert.equal(await page.getByRole('button',{name:/Import/}).isDisabled(),true);
+ await page.getByRole('button',{name:'Close add files',exact:true}).click();
+ report.push('Zero-match table stays out with the reason in the amber note; unmatched columns are auto-ignored, no manual Map columns step.');
 
  // README sheets never enter the mapping list: their content belongs to each tab's info icon.
  const withReadme=toXlsx([

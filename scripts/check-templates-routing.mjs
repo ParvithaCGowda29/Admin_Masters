@@ -17,18 +17,22 @@ try{
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
 
  // Add files opens one extraction flow: Source, Permission, Fetch files, Mapping. The intake
- // is three options (Choose folder / Bulk upload / Zip upload) feeding an Uppy dashboard.
+ // is three options (Choose folder / Bulk upload / Zip upload); each opens the Uppy
+ // dashboard in a popup instead of an inline dropzone.
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByRole('dialog').waitFor();
  await page.getByRole('heading',{name:'Add files',exact:true}).waitFor();
  for(const label of ['Source','Permission','Fetch files','Mapping'])await page.locator('.ex-steps').getByText(label,{exact:true}).waitFor();
  assert.deepEqual(await page.locator('.ex-option strong').allTextContents(),['Choose folder','Bulk upload','Zip upload']);
- await page.locator('.uppy-Dashboard-inner').waitFor();
+ assert.equal(await page.locator('.uppy-Dashboard').count(),0,'no inline dropzone on the Source step');
+ await page.getByRole('button',{name:/Bulk upload/}).click();
+ await page.getByRole('dialog',{name:'Bulk upload'}).locator('.uppy-Dashboard-inner').waitFor();
+ await page.getByRole('button',{name:'Close file picker',exact:true}).click();
  assert.equal(await page.getByRole('button',{name:/SharePoint/}).isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:/Google Drive/}).isDisabled(),true);
  assert.ok((await page.getByRole('dialog').allTextContents()).join(' ').includes('Not connected'));
  await page.screenshot({path:screenshotDir+'/masters-bam-menu.png',fullPage:true});
- report.push('Add files opens the extraction flow (Source / Permission / Fetch files / Mapping) with the three upload options feeding the Uppy dashboard; SharePoint and Google Drive show Not connected and stay disabled.');
+ report.push('Add files opens the extraction flow (Source / Permission / Fetch files / Mapping) with the three upload options each opening the Uppy dashboard in a popup; SharePoint and Google Drive show Not connected and stay disabled.');
 
  // Onyx source: configure against a stubbed server, test, save; ticked files then go to
  // Onyx on the fetch step and the review reports the handoff.
@@ -122,7 +126,9 @@ try{
  const bytes=Buffer.from(write(book,{type:'array',bookType:'xlsx'}));
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
+ await page.getByRole('button',{name:/Bulk upload/}).click();
  await page.locator('.uppy-Dashboard-Item').first().waitFor();
+ await page.getByRole('button',{name:'Close file picker',exact:true}).click();
  await page.getByRole('button',{name:'Continue',exact:true}).click();
  await page.getByRole('button',{name:'Allow read-only & fetch files',exact:true}).click();
  await page.getByRole('heading',{name:'Review where each file maps',exact:true}).waitFor();

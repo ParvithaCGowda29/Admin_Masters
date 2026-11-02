@@ -221,6 +221,14 @@
 :root[data-theme=dark] .guide-intro p,:root[data-theme=dark] .guide article small{color:#a6b8cc}
 /* Add files intake: document type chips. */
 .ex-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px}
+.ex-drop-popup{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(19,30,43,.45)}
+.ex-drop-panel{width:min(660px,calc(100vw - 60px));background:#fff;border:1px solid #dfe5ed;border-radius:10px;box-shadow:0 18px 60px #10203038;padding:16px 18px}
+.ex-drop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ex-drop-head h3{margin:0;font-size:16px}
+.ex-drop-head button{width:26px;height:26px;border:1px solid #dfe5ed;border-radius:6px;background:#fff;font-size:15px;line-height:1;color:#5e7083;display:flex;align-items:center;justify-content:center;box-shadow:none;padding:0}
+:root[data-theme=dark] .ex-drop-popup{background:rgba(4,9,16,.6)}
+:root[data-theme=dark] .ex-drop-panel{background:#17212f;border-color:#36465a}
+:root[data-theme=dark] .ex-drop-head button{background:#202d3e;border-color:#485a70;color:#a6b8cc}
 .ex-chip{font-size:12px;color:#5e7083;background:#fff;border:1px solid #dfe5ed;border-radius:12px;padding:3px 10px}
 .ex-chip b{font-weight:600;color:#00689d}
 /* Permission step: read-only vs read-write cards. */

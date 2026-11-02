@@ -20,7 +20,7 @@ const STEPS:{key:Step;label:string}[]=[{key:'source',label:'Source'},{key:'permi
 // percentage alone never ticks a table: every source column with content must be
 // mapped or explicitly ignored, and the master's ID column must be mapped.
 const MATCH_OK=60;
-const IGNORE=-2; // mapping select value for "Ignore this column" (stored in plan.ignored)
+const ACCEPT=['.xlsx','.csv','.zip','.pdf','.dxf','.dwg','.step','.stp','.docx','.md','.txt','.eml','.msg'];
 
 // Intake takes any project document. Only tabular master data (.xlsx/.csv) is read and
 // mapped; drawings, SOPs and client emails are listed so the set of project documents
@@ -55,12 +55,11 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
  const[plans,setPlans]=useState<TablePlan[]>([]);
  const[failed,setFailed]=useState<string[]>([]);
  const[progress,setProgress]=useState<FindProgress>({done:0,total:0,current:'',found:0});
- const[expanded,setExpanded]=useState<Set<string>>(new Set());
  const[uppyCount,setUppyCount]=useState(0);
  // The Uppy dashboard is the intake preview for all three options (folder, bulk, zip). It
  // never uploads anywhere: Continue reads its file list and hands the File objects to the
  // same processing the typed inputs used before (zip expansion, type classification).
- const[uppy]=useState(()=>new Uppy({autoProceed:false,restrictions:{maxNumberOfFiles:null,allowedFileTypes:['.xlsx','.csv','.zip','.pdf','.dxf','.dwg','.step','.stp','.docx','.md','.txt','.eml','.msg']}}));
+ const[uppy]=useState(()=>new Uppy({autoProceed:false,restrictions:{maxNumberOfFiles:null,allowedFileTypes:ACCEPT}}));
  useEffect(()=>{
   const update=()=>setUppyCount(uppy.getFiles().length);
   uppy.on('file-added',update);uppy.on('file-removed',update);
@@ -68,6 +67,11 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   // second setup still uses. The dialog is short-lived; Dashboard uninstalls its plugin on unmount.
   return()=>{uppy.off('file-added',update);uppy.off('file-removed',update);};
  },[uppy]);
+ // Which upload option's drop/browse popup is open. The Source step itself shows no
+ // dropzone: clicking an option opens the dashboard in a centered popup instead.
+ const[dropOpen,setDropOpen]=useState<''|'folder'|'bulk'|'zip'>('');
+ // The zip option narrows the accepted types to .zip while its popup is open.
+ useEffect(()=>{uppy.setOptions({restrictions:{maxNumberOfFiles:null,allowedFileTypes:dropOpen==='zip'?['.zip']:ACCEPT}});},[dropOpen,uppy]);
  const[busy,setBusy]=useState(false);
  const[error,setError]=useState('');
  // Onyx: when connected, the picked files are also sent to the Onyx server to read and
@@ -81,14 +85,13 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
  const headersOf=(name:string)=>masters.find(m=>m.name===name)?.headers||[];
  const mappedCount=(p:TablePlan)=>p.mapping.filter(i=>i>=0).length;
  const matchPct=(p:TablePlan)=>{const total=headersOf(p.master).length;return total?Math.round(mappedCount(p)/total*100):0;};
- // Columns with any content (heading or a cell) must each be resolved before import.
- const needsReview=(p:TablePlan,i:number)=>p.content[i]&&p.mapping[i]<0&&!p.ignored.includes(i);
- const reviewCount=(p:TablePlan)=>p.content.reduce((n,has,i)=>n+(has&&p.mapping[i]<0&&!p.ignored.includes(i)?1:0),0);
  const idMapped=(p:TablePlan)=>p.mapping.includes(0);
- // Safe to include only when nothing is silently dropped: ID mapped and every
- // content-bearing source column either mapped or explicitly ignored. This is also the
- // Mapped Yes/No rule: a table shows Yes only when every column with content is resolved.
- const resolvable=(p:TablePlan)=>!p.blocked&&mappedCount(p)>0&&idMapped(p)&&reviewCount(p)===0;
+ // Columns that match no master field are ignored automatically (the user asked for
+ // auto-ignore instead of a per-row Map columns step), so a table is safe to include
+ // once something maps and the ID column is mapped. Ignored data is never imported.
+ const resolvable=(p:TablePlan)=>!p.blocked&&mappedCount(p)>0&&idMapped(p);
+ // Content-bearing source columns with no master-field match go straight to ignored.
+ const autoIgnored=(a:Pick<TablePlan,'mapping'|'content'>)=>a.mapping.map((v,i)=>v<0&&a.content[i]?i:-1).filter(i=>i>=0);
  const ignoredCount=(p:TablePlan)=>p.ignored.length;
  const ready=plans.filter(p=>p.included&&resolvable(p));
  const readyCount=ready.length;
@@ -127,30 +130,17 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   const template=templateInRows(sheet.rows);
   const blocked=template?`${template} template - filled template lists are uploaded under Add templates in the sidebar, not imported into Masters`:null;
   const master=suggestMaster(sheet,file);
-  const plan:TablePlan={id:newId(),file,sheet:sheet.name,rows:sheet.rows,master,ignored:[],included:false,blocked,...analyze(file,sheet,master)};
+  const found=analyze(file,sheet,master);
+  const plan:TablePlan={id:newId(),file,sheet:sheet.name,rows:sheet.rows,master,ignored:autoIgnored(found),included:false,blocked,...found};
   plan.included=resolvable(plan)&&matchPct(plan)>=MATCH_OK;
   return plan;
  }
  function retarget(id:string,master:string){
   setPlans(current=>current.map(p=>{
    if(p.id!==id)return p;
-   const next={...p,master,ignored:[],included:false,...analyze(p.file,{name:p.sheet,rows:p.rows},master)};
+   const found=analyze(p.file,{name:p.sheet,rows:p.rows},master);
+   const next={...p,master,ignored:autoIgnored(found),included:false,...found};
    return next;
-  }));
- }
- // One master column can receive one source column. Mapping onto a used target frees the
- // previous source column back to "needs review" instead of silently overwriting it.
- function remap(id:string,column:number,value:number){
-  setPlans(current=>current.map(p=>{
-   if(p.id!==id)return p;
-   const mapping=p.mapping.map((v,j)=>{
-    if(j===column)return value>=0?value:-1;
-    if(value>=0&&v===value)return -1;
-    return v;
-   });
-   const ignored=value===IGNORE?[...p.ignored,column]:p.ignored.filter(j=>j!==column&&mapping[j]<0);
-   const next={...p,mapping,ignored:[...new Set(ignored)]};
-   return {...next,included:p.included&&resolvable(next)};
   }));
  }
  const selected=files.filter(p=>p.kind==='table'&&p.allowed&&extOk(p.file.name,types));
@@ -185,6 +175,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   for(const file of [...list]){try{uppy.addFile({name:file.name,type:file.type,data:file});}catch{}}
  }
  async function continueFromSource(){
+  setDropOpen('');
   const picked=uppy.getFiles().map(f=>new File([f.data as Blob],f.name,{type:f.type||undefined}));
   const added=await addFiles(picked);
   if(added>0)setStep('permission');
@@ -214,7 +205,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
    const forOnyx=files.filter(p=>p.allowed&&(p.kind==='doc'||extOk(p.file.name,types))).map(p=>p.file);
    setOnyxResult(forOnyx.length?await uploadToOnyx(onyxCfg,forOnyx):null);
   }else setOnyxResult(null);
-  setPlans(next);setFailed(failedFiles);setExpanded(new Set());
+  setPlans(next);setFailed(failedFiles);
   setStep('review');
  }
  async function confirmImport(){
@@ -231,7 +222,7 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
   }catch(err){setError(err instanceof Error?err.message:String(err));setBusy(false);}
  }
  const titles:Record<Step,string>={source:'Add files',permission:access==='read'?'Allow read-only access to your files':'Allow read-write access to your files',find:'Fetching tables',review:'Review where each file maps'};
- return <><dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(!busy)onClose();}}>
+ return <><dialog ref={el=>{if(el&&!el.open)el.showModal();}} className="bulk-dialog ex-dialog" aria-labelledby="ex-title" onCancel={e=>{e.preventDefault();if(dropOpen){setDropOpen('');return;}if(!busy)onClose();}}>
   <div className="bulk-heading">
    <div>
     <h2 id="ex-title">{titles[step]}</h2>
@@ -250,32 +241,25 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
    {step==='source'&&<>
     <p className="ex-label">UPLOAD PROJECT DOCUMENTS</p>
     <div className="ex-options" role="group" aria-label="Upload options">
-     <button type="button" className="ex-option" onClick={()=>folderInput.current?.click()}>
+     <button type="button" className="ex-option" onClick={()=>setDropOpen('folder')}>
       <span className="ex-option-num" aria-hidden="true">1</span>
       <IconFolder size={17}/>
       <strong>Choose folder</strong>
       <small>Every project document in the folder you pick</small>
      </button>
-     <button type="button" className="ex-option" onClick={()=>fileInput.current?.click()}>
+     <button type="button" className="ex-option" onClick={()=>setDropOpen('bulk')}>
       <span className="ex-option-num" aria-hidden="true">2</span>
       <IconUpload size={17}/>
       <strong>Bulk upload</strong>
       <small>Pick several files at once</small>
      </button>
-     <button type="button" className="ex-option" onClick={()=>zipInput.current?.click()}>
+     <button type="button" className="ex-option" onClick={()=>setDropOpen('zip')}>
       <span className="ex-option-num" aria-hidden="true">3</span>
       <IconArchive size={17}/>
       <strong>Zip upload</strong>
       <small>One .zip of project documents</small>
      </button>
     </div>
-    <Dashboard uppy={uppy} width="100%" height={280} proudlyDisplayPoweredByUppy={false} hideUploadButton theme={dark?'dark':'light'} note="Only relevant content maps into the master tabs. Rows are added, never replaced."/>
-    <span className="ex-chips" aria-label="Accepted document types">
-     <span className="ex-chip">Master data <b>.xlsx .csv</b></span>
-     <span className="ex-chip">Drawings <b>.pdf .dxf .dwg .step</b></span>
-     <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
-     <span className="ex-chip">Client emails <b>.eml .msg</b></span>
-    </span>
     <input ref={fileInput} type="file" hidden multiple accept=".xlsx,.csv,.pdf,.dxf,.dwg,.step,.stp,.docx,.md,.txt,.eml,.msg" aria-label="Choose files from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
     <input ref={zipInput} type="file" hidden accept=".zip" aria-label="Choose a zip file from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
     <input ref={folderInput} type="file" hidden multiple {...({webkitdirectory:'',directory:''} as object)} aria-label="Choose a folder from this device" onChange={e=>{addToDashboard(e.target.files);e.target.value='';}}/>
@@ -372,39 +356,25 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     {scope.type==='tab'&&<p className="bulk-hint">Everything maps into the {scope.tab} tab only.</p>}
     <p className="ex-summary">{plans.length} table{plans.length===1?'':'s'} found · {readyCount} ready to import · {needMapping} need mapping</p>
     <table className="mapping-table ex-table">
-     <thead><tr><th></th><th>File / sheet</th><th>Maps with</th><th>Mapped</th><th></th></tr></thead>
+     <thead><tr><th></th><th>File / sheet</th><th>Maps with</th><th>Mapped</th></tr></thead>
      <tbody>
       {sortedPlans.map(p=>{
-       const headers=headersOf(p.master);
        const waiting=!resolvable(p);
-       const toggle=<button type="button" className="ex-map-toggle" aria-expanded={expanded.has(p.id)} onClick={()=>setExpanded(current=>{const next=new Set(current);if(next.has(p.id))next.delete(p.id);else next.add(p.id);return next;})}>{expanded.has(p.id)?'Hide columns':'Map columns'}</button>;
-       return <><tr key={p.id} className={waiting&&!p.blocked?'ex-waiting':''}>
-        <td>{!p.blocked&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} disabled={!resolvable(p)} title={resolvable(p)?undefined:'Map or ignore every column with content, and map the ID column, first'} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
+       return <tr key={p.id} className={waiting&&!p.blocked?'ex-waiting':''}>
+        <td>{!p.blocked&&<input type="checkbox" aria-label={`Include ${p.sheet} from ${p.file}`} checked={p.included} disabled={!resolvable(p)} title={resolvable(p)?undefined:`The ID column must match a ${p.master} field first`} onChange={e=>setPlans(current=>current.map(q=>q.id===p.id?{...q,included:e.target.checked}:q))}/>}</td>
         <td>{p.file}{p.file!==p.sheet&&<small>{p.sheet}</small>}</td>
         <td>{p.blocked?<span>Add templates<small>{p.blocked}</small></span>:scope.type==='tab'?p.master:<select aria-label={`Destination tab for ${p.sheet}`} value={p.master} onChange={e=>retarget(p.id,e.target.value)}>{masters.map(m=><option key={m.name} value={m.name}>{m.name}</option>)}</select>}</td>
         <td>{p.blocked?'-':<span className={'ex-pill '+(waiting?'no':'yes')}>{waiting?'No':'Yes'}</span>}</td>
-        <td>{!p.blocked&&toggle}</td>
-       </tr>
-       {expanded.has(p.id)&&!p.blocked&&<tr key={`${p.id}-map`} className="ex-map-row"><td colSpan={5}>
-        <table className="mapping-table"><thead><tr><th>File column</th><th>Sample value</th><th>{p.master} field</th></tr></thead><tbody>
-         {p.mapping.map((target,i)=>{
-          const name=p.rows[p.headerRow]?.[i]?.trim()||`Column ${i+1}`;
-          const sample=importDataRows(p.rows,p.headerRow).find(r=>r[i]?.trim())?.[i]||'-';
-          const value=p.ignored.includes(i)?IGNORE:target;
-          return <tr key={i} className={needsReview(p,i)?'ex-waiting':''}><td>{name}<small>Column {i+1}</small></td><td className="bulk-sample">{sample}</td><td><select aria-label={`Map column ${i+1}: ${name}`} value={value} onChange={e=>remap(p.id,i,Number(e.target.value))}><option value={-1}>Needs review</option><option value={IGNORE}>Ignore this column</option>{headers.map((h,j)=><option key={j} value={j}>{h}{j===0?' (ID)':''}</option>)}</select></td></tr>;
-         })}
-        </tbody></table>
-        <p className="bulk-hint">Every column with content must be mapped to a {p.master} field or explicitly ignored before this table can be included. Ignored columns are left out of the import.</p>
-       </td></tr>}
-       </>;
+       </tr>;
       })}
      </tbody>
     </table>
     {onyxResult&&<p className="ex-note"><b>Onyx:</b> {onyxResult.sent.length?`${onyxResult.sent.length} file${onyxResult.sent.length===1?'':'s'} sent to Onyx, which reads and indexes them (including documents this browser cannot parse)`:''}{onyxResult.failed.length?` Could not send: ${onyxResult.failed.join('; ')}.`:''} The master mapping above still runs in this browser.</p>}
     {failed.length>0&&<p className="bulk-hint review-skipped"><b>Files that could not be read:</b> {failed.join('; ')}.</p>}
     {plans.some(p=>p.blocked)&&<p className="bulk-hint review-skipped"><b>Held back:</b> {plans.filter(p=>p.blocked).map(p=>`${p.file}${p.file!==p.sheet?` · ${p.sheet}`:''} (${p.blocked})`).join('; ')}.</p>}
-    {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet. {reviewCount(p)>0?`${reviewCount(p)} column${reviewCount(p)===1?'':'s'} with content ${reviewCount(p)===1?'is':'are'} not mapped`:'The ID column is not mapped'}. Open Map columns and map or ignore each one, then tick the table to include it. Nothing is dropped without your choice.</p>)}
-    <p className="ex-note">A table shows Mapped Yes only when every column with content is mapped or ignored and the ID column is mapped. Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
+    {plans.filter(p=>!p.blocked&&!resolvable(p)).slice(0,1).map(p=><p key={p.id} className="ex-note amber"><b>{p.file}</b> is not included yet: {mappedCount(p)>0?`the ID column did not match a ${p.master} field`:`no columns matched a ${p.master} field`}.</p>)}
+    {plans.filter(p=>!p.blocked&&resolvable(p)&&p.ignored.length>0).slice(0,1).map(p=><p key={`${p.id}-ignored`} className="ex-note amber"><b>{p.file}</b>: {ignoredCount(p)} column{ignoredCount(p)===1?'':'s'} with content did not match a {p.master} field and {ignoredCount(p)===1?'was':'were'} ignored - that data stays out of the import.</p>)}
+    <p className="ex-note">A table shows Mapped Yes when the ID column is mapped. Columns that match no master field are ignored automatically and their data stays out of the import. Masters columns stay fixed. New rows are added to the end of each tab. Nothing is imported until you confirm.</p>
     {access==='read'&&<p className="ex-note amber">This is a read-only job: mappings are reviewed but nothing is imported. Go back and choose Read-write (Extract + authorize) to import the ready tables.</p>}
     {error&&<p role="alert" className="bulk-error">{error}</p>}
     {busy&&<p role="status">Importing rows...</p>}
@@ -432,6 +402,28 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     <button className="primary" disabled={busy||!readyCount||access==='read'} title={access==='read'?'Read-only job: switch to Read-write on the permission step to import':undefined} onClick={()=>void confirmImport()}>Import {readyCount||''} ready table{readyCount===1?'':'s'}</button>
    </>}
   </div>
+  {dropOpen&&<div className="ex-drop-popup" onClick={()=>setDropOpen('')}>
+   <div className="ex-drop-panel" role="dialog" aria-label={dropOpen==='folder'?'Choose folder':dropOpen==='zip'?'Zip upload':'Bulk upload'} onClick={e=>e.stopPropagation()}>
+    <div className="ex-drop-head">
+     <h3>{dropOpen==='folder'?'Choose folder':dropOpen==='zip'?'Zip upload':'Bulk upload'}</h3>
+     <button type="button" aria-label="Close file picker" onClick={()=>setDropOpen('')}>×</button>
+    </div>
+    <div onClickCapture={e=>{
+     // Browse uses the same per-option pickers as before: folder tree, many files, or one zip.
+     if(!(e.target as HTMLElement).closest('.uppy-Dashboard-browse'))return;
+     e.preventDefault();e.stopPropagation();
+     (dropOpen==='folder'?folderInput:dropOpen==='zip'?zipInput:fileInput).current?.click();
+    }}>
+     <Dashboard uppy={uppy} width="100%" height={280} proudlyDisplayPoweredByUppy={false} hideUploadButton theme={dark?'dark':'light'}/>
+    </div>
+    <span className="ex-chips" aria-label="Accepted document types">
+     <span className="ex-chip">Master data <b>.xlsx .csv</b></span>
+     <span className="ex-chip">Drawings <b>.pdf .dxf .dwg .step</b></span>
+     <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
+     <span className="ex-chip">Client emails <b>.eml .msg</b></span>
+    </span>
+   </div>
+  </div>}
  </dialog>
  {onyxOpen&&<OnyxSettings config={onyxCfg} onClose={()=>setOnyxOpen(false)} onSaved={(config,connected)=>{setOnyxCfg(config);setOnyxConnected(connected);setOnyxOpen(false);}}/>}
  </>;
