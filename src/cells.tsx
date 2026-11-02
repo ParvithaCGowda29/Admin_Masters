@@ -65,3 +65,35 @@ export function StackedHighlight(p:ICellRendererParams<RecordRow,string>&{hlKey:
  if(parts.length<2){const only=parts[0];return only?line(only.trimmed,only.start+(only.value.length-only.value.trimStart().length)):'';}
  return <span className="stacked">{parts.map((part,i)=>{const lead=part.value.length-part.value.trimStart().length;return <span className="stacked-item" key={i}>{line(capitalizeItem(part.trimmed),part.start+lead)}</span>;})}</span>;
 }
+
+// Link-only cells (Organization > Data Sources and Customers / Audience): the cell stores
+// just a link per line, optionally behind a "Label:" line. Each line shows its name, a green
+// Loaded status and a View action that opens the link. Browser links (http, https, www) open
+// in a new tab; other schemes (for example s3://) show View disabled because a browser
+// cannot open them. A cell with no link falls back to the normal stacked display.
+const LINK_RE=/^(?:[a-z][a-z0-9+.-]*:\/\/|www\.)\S+$/i;
+function linkName(url:string):string{
+ try{const u=new URL(/^www\./i.test(url)?`https://${url}`:url);const last=decodeURIComponent(u.pathname.split('/').filter(Boolean).pop()||'');return last||u.host||url;}catch{return url;}
+}
+export function LinkOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:string}){
+ const text=p.value??'';
+ const parts=splitTopLevel(text).map(x=>x.value.trim()).filter(Boolean);
+ if(!parts.some(x=>LINK_RE.test(x)))return StackedHighlight(p);
+ const items:{label:string;url:string}[]=[];
+ for(let i=0;i<parts.length;i++){
+  const part=parts[i];
+  if(LINK_RE.test(part))items.push({label:linkName(part),url:part});
+  else if(part.endsWith(':')&&LINK_RE.test(parts[i+1]||'')){items.push({label:capitalizeItem(part.slice(0,-1)),url:parts[i+1]});i++;}
+  else items.push({label:capitalizeItem(part),url:''});
+ }
+ return <span className="stacked">{items.map((item,i)=>{
+  if(!item.url)return <span className="stacked-item" key={i}>{item.label}</span>;
+  const openable=/^(?:https?:\/\/|www\.)/i.test(item.url);
+  const href=/^www\./i.test(item.url)?`https://${item.url}`:item.url;
+  return <span className="stacked-item link-row" key={i}>
+   <span className="link-row-name" title={item.url}>{item.label}</span>
+   <span className="link-status" title="The link is stored; the data itself stays in the data lake.">✓ Loaded</span>
+   {openable?<a className="link-view" href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>View ↗</a>:<span className="link-view off" title="This link cannot be opened in a browser">View ↗</span>}
+  </span>;
+ })}</span>;
+}

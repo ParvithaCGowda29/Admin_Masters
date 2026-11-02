@@ -17,7 +17,7 @@ import {IconPlus} from './icons';
 import {MasterInfo} from './MasterInfo';
 import {SearchCommand} from './SearchCommand';
 import bullmLogo from './assets/bullm-logo-lockup.png';
-import {StackedHighlight,type Hits} from './cells';
+import {StackedHighlight,LinkOnlyCell,type Hits} from './cells';
 import {SortFilter} from './SortFilter';
 import {TemplateHeader} from './TemplateHeader';
 import {TEMPLATES,templateForColumn,type MastersTemplate} from './templates';
@@ -66,6 +66,8 @@ const defs=sheet.headers.flatMap((h,i)=>{const label=sheet.name==='Skills'&&ISAT
   // Placement A: Organization columns backed by a list template carry the download in their header.
   // The file is generated from the list saved on this device, so it includes uploaded rows.
   if(sheet.name==='Organization')for(const def of defs){const template=templateForColumn(def.headerName||'');if(template)def.headerComponentParams={innerHeaderComponent:TemplateHeader,innerHeaderComponentParams:{templateLabel:template.label,onTemplateDownload:()=>downloadTemplate(template)}};}
+  // Link-only columns: one link per line with a Loaded status and a View action.
+  if(sheet.name==='Organization')for(const def of defs){if(def.headerName==='Data Sources'||def.headerName==='Customers / Audience'){def.cellRenderer=LinkOnlyCell;def.headerTooltip=def.headerName==='Data Sources'?'Data sources, one row per source: documents and artifacts (moved here from Tools). Store only the link; the cell shows Loaded and a View action that opens it.':'Link-only lists, one row per list (Customers, Suppliers, Audience, Other). Store only the link; the data stays in the data lake. The cell shows Loaded and a View action that opens it.';}}
   // Admin tabs render their Status column as pills.
   if(admin)for(const def of defs){if(def.headerName==='Status'){def.cellRenderer=StatusChip;def.cellRendererParams={};}}
   return defs},[active]);
