@@ -11,7 +11,8 @@
     "test:bulk": "node scripts/check-bulk-import.mjs",
     "test:extraction": "node scripts/check-extraction.mjs",
     "test:nosecure": "node scripts/check-nosecure.mjs",
-    "test:admin": "node scripts/check-admin.mjs"
+    "test:admin": "node scripts/check-admin.mjs",
+    "test:sort": "node scripts/check-sort-filter.mjs"
   },
   "dependencies": {
     "@refinedev/core": "^4.57.10",

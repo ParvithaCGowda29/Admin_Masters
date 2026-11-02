@@ -320,3 +320,5 @@
 .ex-dot-icon{width:13px;height:13px;display:block;object-fit:contain}
 /* Picker popup: primary Done action confirms the picked files and closes the popup. */
 .ex-drop-actions{display:flex;justify-content:flex-end;margin-top:14px}
+.sort-filter{display:flex;flex-direction:column;gap:8px;padding:10px;min-width:210px}.sort-filter .sf-sort{display:flex;gap:6px}.sort-filter .sf-sort button{flex:1;padding:6px 8px;font-size:13px}.sort-filter .sf-sort button.on{background:#0084c2;border-color:#0084c2;color:#fff}.sort-filter select,.sort-filter input[type=text]{width:100%;border:1px solid #d5dbe5;border-radius:5px;padding:7px 8px;background:#fff;color:#354050}
+:root[data-theme=dark] .sort-filter select,:root[data-theme=dark] .sort-filter input[type=text]{background:#172536;border-color:#34475c;color:#e2e9f2}:root[data-theme=dark] .sort-filter .sf-sort button{background:#1b2c3f;border-color:#34475c;color:#d6e0ec}:root[data-theme=dark] .sort-filter .sf-sort button.on{background:#0084c2;border-color:#0084c2;color:#fff}
