@@ -25,6 +25,7 @@ try{
  await page.screenshot({path:screenshotDir+'/v3-list-light.png'});
  await page.getByRole('button',{name:/Bulk upload/}).click();
  await page.getByRole('dialog',{name:'Bulk upload'}).locator('.uppy-Dashboard-inner').waitFor();
+ assert.equal(await page.getByRole('dialog',{name:'Bulk upload'}).getByRole('button',{name:'Done (0 files)',exact:true}).isDisabled(),true,'Done starts disabled with nothing picked');
  const pf=await page.evaluate(()=>{const p=document.querySelector('.ex-drop-panel').getBoundingClientRect();return{bottom:p.bottom,top:p.top,left:p.left,right:p.right,vh:innerHeight,vw:innerWidth};});
  assert.ok(pf.bottom<=pf.vh&&pf.top>=0&&pf.left>=0&&pf.right<=pf.vw,'popup fits 1529x751: '+JSON.stringify(pf));
  await page.screenshot({path:screenshotDir+'/v3-popup-light.png'});

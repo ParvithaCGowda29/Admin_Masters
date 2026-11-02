@@ -192,7 +192,14 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
     const sheets=await readImportFile(chosen[i]);
     // README sheets are documentation, not data: their content lives on each tab's (i)
     // info icon, so they never enter the mapping list.
-    for(const sheet of sheets){if(/^read\s*me\b/i.test(sheet.name.trim()))continue;next.push(planFor(chosen[i].name,sheet));}
+    for(const sheet of sheets){
+     const nm=sheet.name.trim();
+     // README sheets are documentation, not data: their content lives on each tab's (i)
+     // info icon, so they never enter the mapping list. The Filetype tab was removed from
+     // Masters, so Filetype sheets stay out of the mapping list too.
+     if(/^read\s*me\b/i.test(nm)||/^filetype$/i.test(nm))continue;
+     next.push(planFor(chosen[i].name,sheet));
+    }
    }catch(err){failedFiles.push(`${chosen[i].name} (${err instanceof Error?err.message:'could not be read'})`);}
    // Let the progress step paint between files.
    await new Promise(r=>setTimeout(r,120));
@@ -422,6 +429,9 @@ export function ExtractFlow({dark,scope,masters,onClose,onImport}:Props){
      <span className="ex-chip">SOPs <b>.pdf .docx .md .txt</b></span>
      <span className="ex-chip">Client emails <b>.eml .msg</b></span>
     </span>
+    <div className="ex-drop-actions">
+     <button type="button" className="primary" disabled={!uppyCount} onClick={()=>setDropOpen('')}>Done ({uppyCount} file{uppyCount===1?'':'s'})</button>
+    </div>
    </div>
   </div>}
  </dialog>

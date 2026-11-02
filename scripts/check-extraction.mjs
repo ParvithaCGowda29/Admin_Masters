@@ -48,6 +48,25 @@ try{
  await page.screenshot({path:screenshotDir+'/ex-1b-source-popup-light.png'});
  await page.getByRole('button',{name:'Close file picker',exact:true}).click();
  assert.equal(await page.locator('.uppy-Dashboard').count(),0);
+ // Done confirms the picked files: it closes the popup and keeps the selection on the
+ // Source step. With nothing picked it is disabled; Uppy's own Cancel still discards.
+ await page.getByRole('button',{name:/Bulk upload/}).click();
+ await popup.locator('.uppy-Dashboard-inner').waitFor();
+ assert.equal(await popup.getByRole('button',{name:'Done (0 files)',exact:true}).isDisabled(),true);
+ await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
+ const done=popup.getByRole('button',{name:'Done (1 file)',exact:true});
+ await done.waitFor();
+ await page.screenshot({path:screenshotDir+'/ex-1c-popup-done-light.png'});
+ await done.click();
+ assert.equal(await page.locator('.ex-drop-popup').count(),0);
+ assert.ok(/1 file ready/.test((await page.getByRole('dialog').allTextContents()).join(' ')));
+ await page.getByRole('button',{name:/Bulk upload/}).click();
+ await popup.getByRole('button',{name:'Done (1 file)',exact:true}).waitFor();
+ await popup.getByRole('button',{name:'Cancel',exact:true}).click();
+ await popup.getByRole('button',{name:'Done (0 files)',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Close file picker',exact:true}).click();
+ assert.ok(/Pick files, a folder or a zip to continue/.test((await page.getByRole('dialog').allTextContents()).join(' ')));
+ report.push('Picker popup: Done (with the file count) confirms the picked files, closes the popup and keeps the selection on the Source step; it is disabled with nothing picked, and Cancel still discards the picked files.');
  report.push('Source step: the three upload options (Choose folder, Bulk upload, Zip upload) each open the drop/browse area with the type chips in a popup; SharePoint and Google Drive are disabled with Not connected.');
 
  await page.getByLabel('Choose files from this device').setInputFiles({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
@@ -179,9 +198,11 @@ try{
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
  report.push('Zero-match table stays out with the reason in the amber note; unmatched columns are auto-ignored, no manual Map columns step.');
 
- // README sheets never enter the mapping list: their content belongs to each tab's info icon.
+ // README and Filetype sheets never enter the mapping list: README content belongs to
+ // each tab's info icon, and the Filetype tab was removed from Masters.
  const withReadme=toXlsx([
   ['README',[['BuLLM masters'],['Organization: business units and locations.']]],
+  ['Filetype',[['Ext'],['.xlsx']]],
   ['Organization',[orgHeaders,['ORG-RM-1','Readme co','','','','','','','','','','']]],
  ]);
  await page.getByRole('button',{name:'Masters',exact:true}).click();
@@ -190,9 +211,11 @@ try{
  const readmeText=await dialogText();
  assert.ok(/1\s*table found/.test(readmeText));
  assert.ok(!readmeText.includes('README'));
+ assert.ok(!readmeText.includes('Filetype'));
  assert.equal(await page.locator('.ex-table tr',{hasText:'README'}).count(),0);
+ assert.equal(await page.locator('.ex-table tr',{hasText:'Filetype'}).count(),0);
  await page.getByRole('button',{name:'Close add files',exact:true}).click();
- report.push('README sheets never enter the mapping list: only the real data table is found and listed.');
+ report.push('README and Filetype sheets never enter the mapping list: only the real data table is found and listed.');
 
  // Dark theme over the same flow.
  await page.getByRole('button',{name:'Switch to dark mode'}).click();

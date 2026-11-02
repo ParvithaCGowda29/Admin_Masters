@@ -318,3 +318,5 @@
 :root[data-theme=dark] .status-chip{background:#202d3e;border-color:#485a70;color:#a6b8cc}
 :root[data-theme=dark] .status-chip.on{background:#12362c;border-color:#3d8c69;color:#6fe0b4}
 .ex-dot-icon{width:13px;height:13px;display:block;object-fit:contain}
+/* Picker popup: primary Done action confirms the picked files and closes the popup. */
+.ex-drop-actions{display:flex;justify-content:flex-end;margin-top:14px}
