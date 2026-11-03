@@ -10,6 +10,8 @@ const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath
 const report=[];
 const workbook=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
 const orgHeaders=workbook.sheets.find(s=>s.name==='Organization').headers;
+const orgSeeded=workbook.sheets.find(s=>s.name==='Organization').rows.length;
+const orgAfterImport=orgSeeded+2; // 11 seeded wireframe rows plus the 2 imported test rows
 const toXlsx=(sheets)=>{const wb=utils.book_new();for(const [name,rows] of sheets)utils.book_append_sheet(wb,utils.aoa_to_sheet(rows),name);return Buffer.from(write(wb,{type:'array',bookType:'xlsx'}));};
 const xlsxType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 try{
@@ -99,8 +101,8 @@ try{
  await page.getByRole('status').filter({hasText:'2 new rows added'}).waitFor();
  report.push('Import appends only the ready table: 2 rows into Organization.');
 
- await page.getByRole('button',{name:/Organization 2/,exact:true}).click();
- await page.getByText('2 of 2 rows',{exact:true}).waitFor();
+ await page.getByRole('button',{name:new RegExp('Organization '+orgAfterImport),exact:true}).click();
+ await page.getByText(`${orgAfterImport} of ${orgAfterImport} rows`,{exact:true}).waitFor();
  const tabCounts={Rules:5,Skills:0,'Tool Factory':50,Agents:0};
  for(const tab of ['Rules','Skills','Tool Factory','Agents']){
   await page.getByRole('button',{name:new RegExp('^'+tab+' '),exact:true}).click();
@@ -114,9 +116,9 @@ try{
  await toReview({name:'masters.xlsx',mimeType:xlsxType,buffer:mixed});
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'already-present'}).waitFor();
- await page.getByRole('button',{name:/Organization 2/,exact:true}).click();
- await page.getByText('2 of 2 rows',{exact:true}).waitFor();
- report.push('Re-import is guarded: already-present rows are skipped, count stays 2.');
+ await page.getByRole('button',{name:new RegExp('Organization '+orgAfterImport),exact:true}).click();
+ await page.getByText(`${orgAfterImport} of ${orgAfterImport} rows`,{exact:true}).waitFor();
+ report.push('Re-import is guarded: already-present rows are skipped, count stays at the post-import total.');
 
  // A changed value on an existing ID is flagged and never overwrites the stored row.
  const changedCsv=[orgHeaders.slice(0,2),['ORG-T-1','CHANGED NAME']].map(r=>r.join(',')).join('\n');
@@ -126,7 +128,7 @@ try{
  await page.getByRole('checkbox',{name:'Include CSV from Organization.csv'}).check();
  await page.getByRole('button',{name:'Import 1 ready table',exact:true}).click();
  await page.getByRole('status').filter({hasText:'not overwritten'}).waitFor();
- await page.reload();await page.getByText('2 of 2 rows',{exact:true}).waitFor();
+ await page.reload();await page.getByText(`${orgAfterImport} of ${orgAfterImport} rows`,{exact:true}).waitFor();
  const kept=await page.evaluate(async()=>{const {loadRows}=await import('/src/provider.ts');return loadRows('Organization');});
  assert.equal(kept.find(r=>r.values[0]==='ORG-T-1').values[1],'Test co');
  report.push('Existing ID with different values is flagged, not overwritten; stored row and count unchanged.');

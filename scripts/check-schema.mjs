@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const data=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
 // The Filetype tab was removed from the masters (2026-11-02 decision); five masters remain.
-const expected={Organization:[12,0],Agents:[8,0],Skills:[12,0],Rules:[9,5],Tools:[12,50]};
+// Organization ships with the 11 seeded wireframe rows (ORG-DS-01..06, ORG-LK-01..05, 2026-11-03).
+const expected={Organization:[12,11],Agents:[8,0],Skills:[12,0],Rules:[9,5],Tools:[12,50]};
 assert.deepEqual(data.sheets.map(s=>s.name),Object.keys(expected));
 // The confirmed workbook includes ID-only rows (for example MFG-AG-6).
 // Reject completely empty rows without rejecting those source records.

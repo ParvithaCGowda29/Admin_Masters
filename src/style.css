@@ -322,13 +322,3 @@
 .ex-drop-actions{display:flex;justify-content:flex-end;margin-top:14px}
 .sort-filter{display:flex;flex-direction:column;gap:8px;padding:10px;min-width:210px}.sort-filter .sf-sort{display:flex;gap:6px}.sort-filter .sf-sort button{flex:1;padding:6px 8px;font-size:13px}.sort-filter .sf-sort button.on{background:#0084c2;border-color:#0084c2;color:#fff}.sort-filter select,.sort-filter input[type=text]{width:100%;border:1px solid #d5dbe5;border-radius:5px;padding:7px 8px;background:#fff;color:#354050}
 :root[data-theme=dark] .sort-filter select,:root[data-theme=dark] .sort-filter input[type=text]{background:#172536;border-color:#34475c;color:#e2e9f2}:root[data-theme=dark] .sort-filter .sf-sort button{background:#1b2c3f;border-color:#34475c;color:#d6e0ec}:root[data-theme=dark] .sort-filter .sf-sort button.on{background:#0084c2;border-color:#0084c2;color:#fff}
-/* Link-only cells: name, Loaded status, View action */
-.link-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.link-row-name{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.link-status{display:inline-flex;align-items:center;background:#e3f6ea;color:#157a3c;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:600;white-space:nowrap}
-.link-view{display:inline-flex;align-items:center;border:1px solid #0084c2;color:#00689d;border-radius:6px;padding:1px 9px;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}
-.link-view:hover{background:#e8f4fb}
-.link-view.off{opacity:.4;cursor:not-allowed}
-:root[data-theme=dark] .link-status{background:#12331f;color:#5fd68a}
-:root[data-theme=dark] .link-view{border-color:#86d4ff;color:#86d4ff}
-:root[data-theme=dark] .link-view:hover{background:#123f5b}

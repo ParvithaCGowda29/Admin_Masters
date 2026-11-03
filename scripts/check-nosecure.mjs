@@ -9,6 +9,7 @@ const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','1
 const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--no-sandbox']});
 const workbook=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
 const orgHeaders=workbook.sheets.find(s=>s.name==='Organization').headers;
+const orgSeeded=workbook.sheets.find(s=>s.name==='Organization').rows.length;
 const toXlsx=(sheets)=>{const wb=utils.book_new();for(const [name,rows] of sheets)utils.book_append_sheet(wb,utils.aoa_to_sheet(rows),name);return Buffer.from(write(wb,{type:'array',bookType:'xlsx'}));};
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}});
@@ -40,8 +41,8 @@ try{
  await page.waitForTimeout(800);
  await page.screenshot({path:dir+'/after-import-nosecure.png'});
  const bodyText=await page.evaluate(()=>document.body.innerText);
- assert.ok(/Organization\s*\n?2/.test(bodyText)||bodyText.includes('ORG-T-1'),'Organization count should be 2 after import, got: '+bodyText.slice(0,400));
+ assert.ok(new RegExp('Organization\\s*\\n?'+(orgSeeded+2)).test(bodyText)||bodyText.includes('ORG-T-1'),'Organization count should be '+(orgSeeded+2)+' after import, got: '+bodyText.slice(0,400));
  assert.deepEqual(errors,[],'no page errors');
- console.log('PASS: extraction works without crypto.randomUUID (non-secure context). File read, mapped, and 2 rows imported into Organization.');
+ console.log('PASS: extraction works without crypto.randomUUID (non-secure context). File read, mapped, and 2 rows imported into Organization (on top of the seeded rows).');
 }catch(e){console.error('FAIL:',e.message);process.exitCode=1}
 finally{await browser.close();server.kill();}
