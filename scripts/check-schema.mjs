@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 const data=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
 // The Filetype tab was removed from the masters (2026-11-02 decision); five masters remain.
 // Organization ships with the 3 workbook records (ORG-HQ-01, ORG-BU-01/02, 2026-11-03).
-// Agents uses the approved 12-column layout (type, reference, source, steps-as-skills) with the
+// Agents uses the approved Agents layout (type, reference, source) with the
 // workbook's 18 agent records mapped in. Rules keeps the 5 approved costing rules after the 36
 // workbook rules; Tools keeps the 50 Tool Factory entries before the 177 workbook tools.
-const expected={Organization:[12,3],Agents:[12,18],Skills:[12,50],Rules:[9,41],Tools:[12,227]};
+const expected={Organization:[12,3],Agents:[11,18],Skills:[12,50],Rules:[9,41],Tools:[12,227]};
 assert.deepEqual(data.sheets.map(s=>s.name),Object.keys(expected));
 // The confirmed workbook includes ID-only rows (for example MFG-AG-6).
 // Reject completely empty rows without rejecting those source records.

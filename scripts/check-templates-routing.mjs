@@ -164,7 +164,7 @@ try{
  await agentsPanel.waitFor();
  const agentsText=(await agentsPanel.allTextContents())[0];
  assert.ok(agentsText.includes('AI agents'));
- assert.ok(agentsText.includes('Steps (skills)'));
+ assert.ok(!agentsText.includes('Steps (skills)')); 
  assert.ok(!agentsText.includes('Hierarchy'));
  assert.ok(!agentsText.includes('Workflow step'));
  await page.screenshot({path:screenshotDir+'/masters-agents-info.png',fullPage:true});

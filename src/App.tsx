@@ -17,7 +17,7 @@ import {IconPlus} from './icons';
 import {MasterInfo} from './MasterInfo';
 import {SearchCommand} from './SearchCommand';
 import bullmLogo from './assets/bullm-logo-lockup.png';
-import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell,SkillChipsCell,type Hits} from './cells';
+import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell,type Hits} from './cells';
 import {ImportAgent,type ImportedAgent} from './ImportAgent';
 import {SortFilter} from './SortFilter';
 import {TemplateHeader} from './TemplateHeader';
@@ -76,7 +76,6 @@ const defs=sheet.headers.flatMap((h,i)=>{const label=sheet.name==='Skills'&&ISAT
    if(def.headerName==='Type')def.cellRenderer=AgentTypeCell;
    if(def.headerName==='Reference')def.cellRenderer=AgentRefCell;
    if(def.headerName==='Source')def.cellRenderer=AgentSourceCell;
-   if(def.headerName==='Steps (skills)')def.cellRenderer=SkillChipsCell;
   }
   return defs},[active]);
  useEffect(()=>{closeFlow();setQuery('');setNotice('');setSelectedCount(0);setMobile(false);setMenu(null);setTemplatesOpen(false)},[active]);
@@ -94,7 +93,7 @@ const defs=sheet.headers.flatMap((h,i)=>{const label=sheet.name==='Skills'&&ISAT
  async function importAgent(agent:ImportedAgent){setImportAgentOpen(false);if(sheet?.name!=='Agents'||sheet.readOnly)return;
   const existing=loadRows('Agents');let n=0;for(const r of existing){const m=/^AG-(\d+)$/.exec(r.values[0]||'');if(m)n=Math.max(n,Number(m[1]));}
   const now=new Date();const today=`${String(now.getDate()).padStart(2,'0')}-${String(now.getMonth()+1).padStart(2,'0')}-${now.getFullYear()}`;
-  const values=[`AG-${String(n+1).padStart(2,'0')}`,agent.name,agent.type,'',`Imported · ${agent.source}`,agent.skills,'TBD','TBD','TBD',agent.version,today,`Imported from ${agent.path}.`];
+  const values=[`AG-${String(n+1).padStart(2,'0')}`,agent.name,agent.type,'',`Imported · ${agent.source}`,'TBD','TBD','TBD',agent.version,today,`Imported from ${agent.path}.`];
   try{saveRows('Agents',[...existing,{id:newId(),values}]);setQuery('');await refetch();setLocalRevision(v=>v+1);message(`Agent "${agent.name}" imported. Hover the row to see its Imported tag.`)}catch(err){message(String(err),true)}}
  function contextMenu(e:ReactMouseEvent){const target=e.target as HTMLElement;const rowId=target.closest('.ag-row')?.getAttribute('row-id');const onHeader=!!target.closest('.ag-header-cell');if(!rowId&&!onHeader&&!target.closest('.ag-root'))return;e.preventDefault();setUserOpen(false);setTemplatesOpen(false);setMenuCount(1);setMenu({x:Math.min(e.clientX,window.innerWidth-230),y:Math.min(e.clientY,window.innerHeight-140),row:rowId?rows.find(r=>r.id===rowId):undefined,header:onHeader&&!rowId})}
  // Import feedback: new rows are added; exact repeats are skipped; rows that reuse an
