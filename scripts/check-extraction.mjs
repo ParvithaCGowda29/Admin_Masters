@@ -103,7 +103,7 @@ try{
 
  await page.getByRole('button',{name:new RegExp('Organization '+orgAfterImport),exact:true}).click();
  await page.getByText(`${orgAfterImport} of ${orgAfterImport} rows`,{exact:true}).waitFor();
- const tabCounts={Rules:41,Skills:50,'Tool Factory':227,Agents:18};
+ const tabCounts={Rules:41,Skills:50,'Tool Factory':227,Agents:21};
  for(const tab of ['Rules','Skills','Tool Factory','Agents']){
   await page.getByRole('button',{name:new RegExp('^'+tab+' '),exact:true}).click();
   await page.getByText(`${tabCounts[tab]} of ${tabCounts[tab]} rows`,{exact:true}).waitFor();
@@ -148,8 +148,8 @@ try{
  assert.ok(reviewText.includes('agents.csv')&&!reviewText.includes('tools.csv'));
  await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
  assert.equal(await page.getByRole('dialog').count(),0);
- await page.getByRole('button',{name:/Agents 18/,exact:true}).click();
- await page.getByText('18 of 18 rows',{exact:true}).waitFor();
+ await page.getByRole('button',{name:/Agents 21/,exact:true}).click();
+ await page.getByText('21 of 21 rows',{exact:true}).waitFor();
  report.push('Unticking a file on the permission step excludes it completely; Stop extraction imports nothing.');
 
  // Filled Add templates files are held back with the reason, never imported into Masters.

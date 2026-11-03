@@ -158,7 +158,7 @@ try{
  report.push('On a specific tab, the flow maps every file into that tab only.');
 
  // Each tab's info panel is specific to that tab; shared README rows stay under the parent.
- await page.getByRole('button',{name:'Agents 18',exact:true}).click();
+ await page.getByRole('button',{name:'Agents 21',exact:true}).click();
  await page.getByRole('button',{name:'Information about Agents',exact:true}).hover();
  const agentsPanel=page.getByRole('region',{name:'Agents information',exact:true});
  await agentsPanel.waitFor();
