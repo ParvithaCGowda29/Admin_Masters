@@ -72,7 +72,206 @@
     "Physical hardware only: asset ID, device/equipment type, assigned unit/owner and inventory/evidence ref. Legacy unclassified values retained pending review; not hardware verification.",
     "Changes, exceptions and open gaps"
    ],
-   "rows": [],
+   "rows": [
+    {
+     "id": "Organization-2",
+     "values": [
+      "ORG-DS-01",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Company profile (Document): s3://bullm/org/company-profile.pdf",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 2
+    },
+    {
+     "id": "Organization-3",
+     "values": [
+      "ORG-DS-02",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Process manual (Document): s3://bullm/org/process-manual.pdf",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 3
+    },
+    {
+     "id": "Organization-4",
+     "values": [
+      "ORG-DS-03",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Quality policy (Document): s3://bullm/org/quality-policy.pdf",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 4
+    },
+    {
+     "id": "Organization-5",
+     "values": [
+      "ORG-DS-04",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Plant layout (Artifact): s3://bullm/org/plant-layout.dwg",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 5
+    },
+    {
+     "id": "Organization-6",
+     "values": [
+      "ORG-DS-05",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Product catalogue (Artifact): s3://bullm/org/product-catalogue.xlsx",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 6
+    },
+    {
+     "id": "Organization-7",
+     "values": [
+      "ORG-DS-06",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Supplier agreement template (Document): s3://bullm/org/supplier-agreement.docx",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 7
+    },
+    {
+     "id": "Organization-8",
+     "values": [
+      "ORG-LK-01",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Customer list (Customers): s3://bullm/org/customers.csv",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 8
+    },
+    {
+     "id": "Organization-9",
+     "values": [
+      "ORG-LK-02",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Supplier list (Suppliers): s3://bullm/org/suppliers.csv",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 9
+    },
+    {
+     "id": "Organization-10",
+     "values": [
+      "ORG-LK-03",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Audience list (Audience): s3://bullm/org/audience.csv",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 10
+    },
+    {
+     "id": "Organization-11",
+     "values": [
+      "ORG-LK-04",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Other contacts (Other): s3://bullm/org/other-contacts.csv",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 11
+    },
+    {
+     "id": "Organization-12",
+     "values": [
+      "ORG-LK-05",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Dealer network (Customers): s3://bullm/org/dealers.csv",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "sourceRow": 12
+    }
+   ],
    "removedRows": [],
    "notes": [],
    "readOnly": false
