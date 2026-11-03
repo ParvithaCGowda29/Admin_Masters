@@ -3,7 +3,7 @@ export type FacetSelection=Record<string,string[]>;
 // Use only existing workbook fields. No new columns, inferred IDs or tool tags.
 const FACETS:Record<string,string[]>={
  Organization:['Company / Type','Location','Certifications'],
- Agents:['Agent Type','Runtime / status'],
+ Agents:['Type','Source'],
  Skills:['Workflow step','Status'],
  Rules:['Status','Owner / version'],
  Tools:['Category','Status','Owner / access','Refresh Frequency'],

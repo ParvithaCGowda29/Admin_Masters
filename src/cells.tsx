@@ -83,3 +83,32 @@ export function LinkOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:stri
  }
  return <span className="stacked">{items.map((item,i)=><span className="stacked-item" key={i}>{item}</span>)}</span>;
 }
+
+// Agents master (2026-11-03 approved wireframes): three agent types, a reference link for
+// proposed agents, an Imported tag that shows on row hover only, and every step as a skill.
+export function AgentTypeCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const key=/^internal$/i.test(v)?'internal':/^third/i.test(v)?'third':/^proposed$/i.test(v)?'proposed':'';
+ return <span className={'agent-type'+(key?' '+key:'')}>{v}</span>;
+}
+// "Enhances: AG-02 · Costing Agent" - the verb stays quiet, the target reads as a link. Empty shows a dash.
+export function AgentRefCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();
+ if(!v)return <span className="agent-ref-empty">—</span>;
+ const m=/^(Enhances|Integrates)\s*:\s*(.+)$/i.exec(v);
+ if(!m)return <span>{v}</span>;
+ return <span className="agent-ref"><span className="agent-ref-verb">{m[1]}:</span> <span className="agent-ref-target">{m[2]}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span></span>;
+}
+// "Built in BuLLM" stays plain. "Imported · <path>" carries the Imported tag, visible only on row hover.
+export function AgentSourceCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const m=/^Imported\s*·\s*(.+)$/i.exec(v);
+ if(!m)return <span className="agent-source-plain">{v}</span>;
+ return <span className="agent-source"><span className="imported-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg> Imported</span><span className="agent-source-path">{m[1]}</span></span>;
+}
+// Steps (skills): each step is a skill - one chip style for all, no separate knowledge step type.
+export function SkillChipsCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const skills=v.split(';').map(s=>s.trim()).filter(Boolean);
+ return <span className="skill-chips">{skills.map((skill,i)=><span className="skill-chip" key={i}>{skill}</span>)}</span>;
+}
