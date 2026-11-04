@@ -3,10 +3,6 @@ import {spawn} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-// Skill factory (approved 2026-11-04): the Skills master is renamed "Skill factory",
-// every step renders as a numbered skill chip, agents and the next skill render as links,
-// rules and tools render as chips, and Extracted Information is its own column.
-// "Notify on next" is renamed to "Next".
 const workbook=JSON.parse(fs.readFileSync('src/workbook.json','utf8'));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'skill-factory-'));
 const revision=JSON.stringify(workbook);

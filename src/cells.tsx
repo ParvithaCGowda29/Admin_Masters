@@ -123,8 +123,6 @@ export function ToolChipsCell(p:ICellRendererParams<RecordRow,string>){
  return <span className="tool-chips">{tools.map((tool,i)=><span className="tool-chip" key={i}>{tool}</span>)}</span>;
 }
 
-// Skill factory (2026-11-04 approved wireframes): "everything is a skill" - the Steps column
-// shows numbered skill chips, one chip style for all, no separate knowledge step type.
 export function SkillChipsCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();if(!v)return '';
  const skills=v.split(';').map(s=>s.trim()).filter(Boolean);

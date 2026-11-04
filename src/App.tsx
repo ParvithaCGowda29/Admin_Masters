@@ -74,8 +74,6 @@ const defs=sheet.headers.flatMap((h,i)=>{const label=h;return i===0?[col('0',lab
    if(def.headerName==='Source')def.cellRenderer=AgentSourceCell;
    if(def.headerName==='Tools')def.cellRenderer=ToolChipsCell;
   }
-  // Skill factory (approved 2026-11-04): numbered skill chips for steps, link cells for
-  // agents and the next skill, green rule chips, tool chips from the Tool Factory.
   if(sheet.name==='Skills')for(const def of defs){
    if(def.headerName==='Steps (each a skill)')def.cellRenderer=SkillChipsCell;
    if(def.headerName==='Agents'||def.headerName==='Next')def.cellRenderer=SkillLinkCell;
