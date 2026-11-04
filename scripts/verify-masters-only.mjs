@@ -12,7 +12,7 @@ try{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  for(let i=0;i<40;i++){try{await page.goto('http://127.0.0.1:5173',{timeout:2000});break}catch{await new Promise(r=>setTimeout(r,200));}}
  await page.getByRole('heading',{name:'Organization Master'}).waitFor();
- const names=[['Organization','Organization Master'],['Agents','Agents Master'],['Skills','Skills Master'],['Rules','Rules Master'],['Tool Factory','Tool Factory']];
+ const names=[['Organization','Organization Master'],['Agents','Agents Master'],['Skill factory','Skill factory'],['Rules','Rules Master'],['Tool Factory','Tool Factory']];
  const nav=page.locator('aside');
  assert.equal(await nav.getByRole('button',{name:'Masters',exact:true}).count(),1);
  assert.equal(await nav.locator('[role="group"]').count(),1);

@@ -11,7 +11,9 @@ const matchesRow=(row:RecordRow,words:string[])=>words.every(w=>row.values.some(
 
 // cmdk search panel anchored to the toolbar search field: chips, browse-by-field and grouped
 // matches drive the existing table filter; the grid stays visible behind the panel.
+const LABELS:Record<string,string>={Tools:'Tool Factory',Skills:'Skill factory'};
 export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
+ const label=LABELS[active]||active;
  const[open,setOpen]=useState(false);
  const[field,setField]=useState<number|null>(null);
  const wrap=useRef<HTMLDivElement>(null);
@@ -42,10 +44,10 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const matches=useMemo(()=>words.length?rows.filter(r=>matchesRow(r,words)).slice(0,8):[],[rows,query,words.length]);
  const pick=(value:string)=>{onQuery(value);setOpen(false);setField(null)};
  return <div className="search-cmd" ref={wrap}>
-  <Command shouldFilter={false} label={`Search ${active}`}>
+  <Command shouldFilter={false} label={`Search ${label}`}>
    <div className="search-input-row">
     <span className="search-icon" aria-hidden="true"><IconSearch size={15}/></span>
-    <Command.Input value={query} onValueChange={v=>{onQuery(v);setOpen(true)}} onFocus={()=>setOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){setOpen(false);setField(null)}}} placeholder={`Search ${active}...`} aria-label={`Search ${active}`}/>
+    <Command.Input value={query} onValueChange={v=>{onQuery(v);setOpen(true)}} onFocus={()=>setOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){setOpen(false);setField(null)}}} placeholder={`Search ${label}...`} aria-label={`Search ${label}`}/>
     {query&&<button type="button" className="search-clear" aria-label="Clear search" onMouseDown={e=>e.preventDefault()} onClick={()=>onQuery('')}>×</button>}
    </div>
    {open&&<Command.List className="search-panel">

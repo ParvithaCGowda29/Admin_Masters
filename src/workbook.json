@@ -191,7 +191,7 @@
       "Agent",
       "Third-party",
       "",
-      "Imported · GitHub",
+      "Imported \u00b7 GitHub",
       "Search API; Match DB",
       "Claude Sonnet 4.5"
      ],
@@ -205,7 +205,7 @@
       "Agent",
       "Third-party",
       "",
-      "Imported · MCP server",
+      "Imported \u00b7 MCP server",
       "OCR engine",
       "Claude Sonnet 4.5"
      ],
@@ -218,7 +218,7 @@
       "Smart Quote Reviewer",
       "Agent",
       "Proposed",
-      "Enhances: AG-02 · Costing Agent",
+      "Enhances: AG-02 \u00b7 Costing Agent",
       "Built in BuLLM",
       "LLM; Rules check",
       "Claude Sonnet 4.5"
@@ -276,932 +276,146 @@
    "name": "Skills",
    "headers": [
     "Skill ID",
-    "Workflow step",
-    "I",
-    "S",
-    "A",
-    "T",
-    "V",
-    "O",
-    "N",
-    "Quality gate",
-    "Status",
-    "Agent refs (design map)"
+    "Skill Name",
+    "Steps (each a skill)",
+    "Agents",
+    "Rules",
+    "Tools",
+    "Extracted Information",
+    "Next",
+    "Updated"
    ],
    "descriptions": [
     "Stable skill key",
-    "Reusable step",
-    "Instruction",
-    "Source. Governed S3/Postgres/DuckDB ref, not file copy",
-    "Automation",
-    "Tech stack",
-    "Variables. Critical fields after load",
-    "Outcome. What flows downstream",
-    "Notify on next",
-    "Validation and review",
-    "Proposed/approved/retired",
-    "Finalized agent IDs using this skill"
+    "Skill name",
+    "Every step is a skill - no separate knowledge step type",
+    "Agents linked to this skill; agents sit one level above skills",
+    "Rules linked to this skill",
+    "Tools pulled from the Tool Factory",
+    "Extracted information captured by the skill",
+    "The skill that runs next",
+    "Last updated"
    ],
    "rows": [
     {
      "id": "Skills-2",
      "values": [
-      "SK-INTAKE",
-      "Client/campaign intake",
-      "Capture the client brief and campaign inputs from approved sources",
-      "Brief, approved offer and brand refs",
-      "Semi-automated",
-      "Google Forms; Zoho CRM API",
-      "tenant, brand, ICP, goal, geography, owner",
-      "Tenant-scoped brief",
-      "Slack: #intake; brief owner",
-      "Confirm approved sources",
-      "Proposed",
-      "AG-AUDIT; AG-MQL; AG-CRM"
+      "SK-01",
+      "RFQ Intake",
+      "Parse email; Extract line items; Map to masters",
+      "RFQ Intake Agent",
+      "RFQ validation",
+      "Email parser; LLM",
+      "Customer, parts, due date",
+      "Drawing OCR",
+      "02-11-2026"
      ],
      "sourceRow": 2
     },
     {
      "id": "Skills-3",
      "values": [
-      "SK-CURATE",
-      "Evidence curation",
-      "Curate proof, claims and voice docs into an approved fact map",
-      "Proof/claims/voice docs refs",
-      "Semi-automated",
-      "NotebookLM; company drive",
-      "claim ID, proof, voice, version, expiry",
-      "Approved fact map",
-      "Slack: #content; claims owner",
-      "No unsupported promise",
-      "Proposed",
-      "AG-CONTENT; AG-BRAND"
+      "SK-02",
+      "Drawing OCR",
+      "Detect tables; Read dimensions; Extract tolerances",
+      "Drawing OCR Agent",
+      "Tolerance defaults",
+      "OCR engine",
+      "Dimensions, tolerances",
+      "Costing",
+      "30-10-2026"
      ],
      "sourceRow": 3
     },
     {
      "id": "Skills-4",
      "values": [
-      "SK-BRIEF",
-      "SEO/content brief",
-      "Draft an SEO/content brief from ICP and research refs",
-      "ICP/offer and research refs",
-      "Semi-automated",
-      "DataForSEO API; Ahrefs",
-      "topic, keyword intent, channel, CTA",
-      "Article/post/ad brief",
-      "Slack: #seo",
-      "Source and ICP fit",
-      "Proposed",
-      "AG-SEO; AG-CONTENT"
+      "SK-03",
+      "Costing",
+      "Material lookup; Machine hour rate; Overheads; Margin",
+      "Costing Agent",
+      "Material Pricing; Machine Hour Rate; Currency Converter",
+      "Costing engine",
+      "Unit cost breakdown",
+      "Quote Assembly",
+      "02-11-2026"
      ],
      "sourceRow": 4
     },
     {
      "id": "Skills-5",
      "values": [
-      "SK-DRAFT",
-      "Content and creative draft",
-      "Draft content and creatives against the approved brief",
-      "Brief, voice, asset refs",
-      "Semi-automated",
-      "ChatGPT; Canva",
-      "claim IDs, copy, visual/video specs",
-      "Draft asset only",
-      "Slack: #content; editor",
-      "Editor/claim review",
-      "Proposed",
-      "AG-CONTENT; AG-SOCIAL"
+      "SK-04",
+      "Supplier Lookup",
+      "Match commodity; Rank suppliers; Check certs",
+      "Supplier Lookup Agent",
+      "Supplier qualification",
+      "Search API; Match DB",
+      "Supplier shortlist + certs",
+      "Costing",
+      "28-10-2026"
      ],
      "sourceRow": 5
     },
     {
      "id": "Skills-6",
      "values": [
-      "SK-VIDEO",
-      "Video production prep",
-      "Prepare script, scenes and captions for video production",
-      "BuLLMaps SOP/brief and asset refs",
-      "Semi-automated",
-      "Pictory; ElevenLabs",
-      "script, scene plan, captions, thumbnail, approval",
-      "Video draft package",
-      "Slack: #content; client approver",
-      "Client approval before upload",
-      "Proposed",
-      "AG-CONTENT"
+      "SK-05",
+      "PFD Builder",
+      "List operations; Sequence flow; Link controls",
+      "Process Planner",
+      "Surface Finish",
+      "LLM",
+      "Operation sequence",
+      "PFMEA",
+      "27-10-2026"
      ],
      "sourceRow": 6
     },
     {
      "id": "Skills-7",
      "values": [
-      "SK-LANDING",
-      "Landing / UTM QA",
-      "QA the landing page, CTA and UTM before publish",
-      "Landing draft and channel refs",
-      "Automated checks + review",
-      "Playwright; Lighthouse CI",
-      "URL, CTA, UTM, form/privacy check",
-      "Preflight report",
-      "Slack: #web; release owner",
-      "No publish without signoff",
-      "Proposed",
-      "AG-WEBSITE; AG-PAID"
+      "SK-06",
+      "PFMEA",
+      "Identify failure modes; Score RPN; Recommend actions",
+      "Process Planner",
+      "PFMEA scoring",
+      "LLM; Rules check",
+      "RPN scores + actions",
+      "Control Plan",
+      "27-10-2026"
      ],
      "sourceRow": 7
     },
     {
      "id": "Skills-8",
      "values": [
-      "SK-LAUNCH",
-      "Launch preflight",
-      "Run the launch preflight checklist on signed-off assets",
-      "Signed-off creative, account and budget refs",
-      "Automated checks + approval",
-      "Google Ads API; Meta Ads API",
-      "final asset, audience, approval, ceiling, timing",
-      "Pass/fail checklist",
-      "Slack: #launch; budget owner",
-      "Stop unless separately approved",
-      "Proposed",
-      "AG-PAID; AG-SOCIAL; AG-REPORTS"
+      "SK-07",
+      "Control Plan",
+      "Map characteristics; Set checks; Sampling plan",
+      "Process Planner",
+      "Inspection standards",
+      "LLM",
+      "Control items + sampling",
+      "",
+      "26-10-2026"
      ],
      "sourceRow": 8
     },
     {
      "id": "Skills-9",
      "values": [
-      "SK-MEASURE",
-      "Results analysis",
-      "Analyse results and link outcomes to sources",
-      "Read-only ad/CRM/analytics refs",
-      "Automated pull + review",
-      "GA4 Data API; Mixpanel",
-      "lead source, status, owner, next action, UTM, spend",
-      "Source-linked outcome summary",
-      "Email: monthly report; account owner",
-      "Check consent, attribution and date",
-      "Proposed",
-      "AG-REPORTS; AG-CRM"
+      "SK-08",
+      "Quote Assembly",
+      "Pull costing; Apply margin; Draft quote",
+      "Smart Quote Reviewer",
+      "Margin policy; Currency Converter",
+      "LLM; Costing engine",
+      "Quote draft + pricing",
+      "",
+      "01-11-2026"
      ],
      "sourceRow": 9
-    },
-    {
-     "id": "Skills-10",
-     "values": [
-      "SK-AUDIT",
-      "Audit & Analysis",
-      "Audit current marketing and produce a fix register",
-      "Lead drivers + Audit Master",
-      "Semi-automated",
-      "DataForSEO; Ahrefs; STORM",
-      "URL; cause; exact fix; impact; owner; priority",
-      "Action register",
-      "Slack: #audit",
-      "Fix instructions, not only error names",
-      "Proposed",
-      "AG-AUDIT"
-     ],
-     "sourceRow": 10
-    },
-    {
-     "id": "Skills-11",
-     "values": [
-      "SK-GSC",
-      "GSC fix instructions",
-      "Turn Search Console issues into fix instructions",
-      "https://support.google.com/webmasters/answer/7440203?hl=en",
-      "Automated pull + review",
-      "Search Console API",
-      "URL; intended state; cause; approved change; before/after; live test",
-      "Remediation plan and evidence",
-      "Slack: #seo",
-      "Keep deliberate exclusions; approval before live change",
-      "Proposed",
-      "AG-WEBSITE; AG-SEO"
-     ],
-     "sourceRow": 11
-    },
-    {
-     "id": "Skills-12",
-     "values": [
-      "SK-STRATEGY",
-      "Go-To-Market Strategy",
-      "Build the go-to-market plan from audit and lead drivers",
-      "Frameworks + audit + lead drivers",
-      "Semi-automated",
-      "NotebookLM; STORM",
-      "ICP; offer; channels; budget; horizon; baseline; targets; assumptions",
-      "GTM plan",
-      "Slack: #strategy",
-      "No performance guarantees or implied spend approval",
-      "Proposed",
-      "AG-AUDIT"
-     ],
-     "sourceRow": 12
-    },
-    {
-     "id": "Skills-13",
-     "values": [
-      "SK-LOCAL",
-      "Bing / Apple Maps / Yelp",
-      "Maintain Bing, Apple Maps and Yelp listings",
-      "Location and policy refs",
-      "Semi-automated",
-      "Bing Places; Apple Business Connect; Yelp",
-      "listing_URL; canonical_NAP; owner; verification; gaps",
-      "Listing change drafts",
-      "Slack: #local-seo",
-      "Check eligibility and ownership",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 13
-    },
-    {
-     "id": "Skills-14",
-     "values": [
-      "SK-GBP-PHOTO",
-      "GBP photo optimisation",
-      "Optimise GBP photos per current policy",
-      "https://support.google.com/business/answer/6103862",
-      "Semi-automated",
-      "Google Business Profile; Imagify",
-      "asset; rights; dimensions; size; format; coverage",
-      "Photo QA package",
-      "Slack: #local-seo",
-      "Current policy check + final approval",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 14
-    },
-    {
-     "id": "Skills-15",
-     "values": [
-      "SK-GBP-VIDEO",
-      "GBP video optimisation",
-      "Optimise GBP videos per current policy",
-      "https://support.google.com/business/answer/6103862",
-      "Semi-automated",
-      "Google Business Profile; Pictory",
-      "asset; rights; duration; size; resolution",
-      "Video QA package",
-      "Slack: #local-seo",
-      "Current policy check + final approval",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 15
-    },
-    {
-     "id": "Skills-16",
-     "values": [
-      "SK-PUBLISH",
-      "Publishing",
-      "Publish only the final approved release record",
-      "Final approved release record",
-      "Automated with approval gate",
-      "WordPress REST API; Meta Graph API",
-      "asset_version; destination_account; audience; time; approval; rollback",
-      "Verified live result/log",
-      "Slack: #launch; publish log",
-      "Nothing outside final approved scope",
-      "Proposed",
-      "AG-REPORTS; AG-SOCIAL"
-     ],
-     "sourceRow": 16
-    },
-    {
-     "id": "Skills-17",
-     "values": [
-      "SK-RESOURCE",
-      "Component registration",
-      "Register each component with schema, scopes and owner",
-      "Marketing Masters v0.3 Resource ID / Search tag fields",
-      "Manual",
-      "BuLLM registry; MCP",
-      "category; URI; schema; version; scopes; costs; owner; tests",
-      "Validated binding record",
-      "Slack: #masters",
-      "No configuration inferred from example",
-      "Proposed",
-      "AG-AUDIT; AG-WEBSITE; AG-SEO; AG-CONTENT; AG-PAID; AG-SOCIAL; AG-BRAND; AG-MQL; AG-CRM; AG-REPORTS"
-     ],
-     "sourceRow": 17
-    },
-    {
-     "id": "Skills-18",
-     "values": [
-      "SK-RES-03",
-      "DigiBull Audit Tool",
-      "Bind the DigiBull Audit Tool endpoint and schema",
-      "User request; audit tool endpoint",
-      "Manual",
-      "DigiBull Audit Tool API",
-      "tool_id; schema; owner; test; binding",
-      "Validated component reference; not executable until bound",
-      "Slack: #masters",
-      "User-named internal component; actual endpoint/schema/capability not checked.",
-      "Proposed",
-      "AG-AUDIT"
-     ],
-     "sourceRow": 18
-    },
-    {
-     "id": "Skills-19",
-     "values": [
-      "SK-RES-04",
-      "DataForSEO",
-      "Bind DataForSEO endpoints, auth and limits",
-      "https://docs.dataforseo.com/v3/",
-      "Manual",
-      "DataForSEO API v3",
-      "endpoint; auth_ref; limits; cost; timestamp",
-      "Validated component reference; not executable until bound",
-      "Slack: #seo",
-      "REST SEO data for keyword/SERP/backlink/on-page research; auth and usage costs require setup.",
-      "Proposed",
-      "AG-AUDIT; AG-WEBSITE; AG-SEO"
-     ],
-     "sourceRow": 19
-    },
-    {
-     "id": "Skills-20",
-     "values": [
-      "SK-RES-05",
-      "OpenSEO (every-app/open-seo)",
-      "Validate the OpenSEO repo and deployment",
-      "https://github.com/every-app/open-seo",
-      "Manual",
-      "github.com/every-app/open-seo",
-      "repo; commit; license; dependency; deployment",
-      "Validated component reference; not executable until bound",
-      "Slack: #seo",
-      "Self-hostable SEO candidate. Requires DataForSEO credentials and paid data. Same-name repos exist; confirm selected repo.",
-      "Proposed",
-      "AG-AUDIT; AG-SEO"
-     ],
-     "sourceRow": 20
-    },
-    {
-     "id": "Skills-21",
-     "values": [
-      "SK-RES-06",
-      "Ahrefs",
-      "Bind the Ahrefs workspace, sites and export refs",
-      "https://ahrefs.com/webmaster-tools",
-      "Manual",
-      "Ahrefs Webmaster Tools",
-      "workspace; sites; plan; export_ref",
-      "Validated component reference; not executable until bound",
-      "Slack: #seo",
-      "Technical audits and backlink/site research; plan and verified-site limits apply. No subscription assumed.",
-      "Proposed",
-      "AG-AUDIT; AG-SEO"
-     ],
-     "sourceRow": 21
-    },
-    {
-     "id": "Skills-22",
-     "values": [
-      "SK-RES-07",
-      "Rank Math",
-      "Validate Rank Math against CMS and version",
-      "https://rankmath.com/",
-      "Manual",
-      "Rank Math plugin",
-      "cms; version; environment; rollback",
-      "Validated component reference; not executable until bound",
-      "Slack: #web",
-      "WordPress SEO plugin candidate; check CMS/version and conflicts.",
-      "Proposed",
-      "AG-WEBSITE; AG-SEO"
-     ],
-     "sourceRow": 22
-    },
-    {
-     "id": "Skills-23",
-     "values": [
-      "SK-RES-08",
-      "GMB Everywhere",
-      "Validate the GMB Everywhere extension and owner",
-      "https://www.gmbeverywhere.com/",
-      "Manual",
-      "GMB Everywhere extension",
-      "extension; version; features; owner",
-      "Validated component reference; not executable until bound",
-      "Slack: #local-seo",
-      "Local/GBP research extension; not a publishing connector.",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 23
-    },
-    {
-     "id": "Skills-24",
-     "values": [
-      "SK-RES-09",
-      "GA4",
-      "Bind the GA4 property, events and consent",
-      "https://developers.google.com/analytics/devguides/collection/ga4",
-      "Manual",
-      "GA4 Data API",
-      "property; event; conversion; timezone; consent",
-      "Validated component reference; not executable until bound",
-      "Slack: #analytics",
-      "Website/app events; approved event and conversion definitions plus consent needed.",
-      "Proposed",
-      "AG-AUDIT; AG-REPORTS"
-     ],
-     "sourceRow": 24
-    },
-    {
-     "id": "Skills-25",
-     "values": [
-      "SK-RES-10",
-      "Search Console",
-      "Bind the Search Console property and URL scope",
-      "https://support.google.com/webmasters/answer/7440203?hl=en",
-      "Manual",
-      "Search Console API",
-      "property; period; URL; intended_indexability",
-      "Validated component reference; not executable until bound",
-      "Slack: #seo",
-      "Search performance and URL indexing diagnostics; fixes do not guarantee indexing.",
-      "Proposed",
-      "AG-AUDIT; AG-WEBSITE; AG-SEO; AG-REPORTS"
-     ],
-     "sourceRow": 25
-    },
-    {
-     "id": "Skills-26",
-     "values": [
-      "SK-RES-11",
-      "Google Tag Manager",
-      "Bind the GTM container, tags and consent",
-      "https://developers.google.com/tag-platform/tag-manager/api/v2/devguide",
-      "Manual",
-      "Google Tag Manager API",
-      "container; version; tags; consent; tests",
-      "Validated component reference; not executable until bound",
-      "Slack: #analytics",
-      "Tags/triggers/variables management, not analytics reporting itself. Container publication needs approval.",
-      "Proposed",
-      "AG-REPORTS"
-     ],
-     "sourceRow": 26
-    },
-    {
-     "id": "Skills-27",
-     "values": [
-      "SK-RES-12",
-      "Mixpanel",
-      "Bind the Mixpanel project and event schema",
-      "https://docs.mixpanel.com/docs/data-structure/events-and-properties",
-      "Manual",
-      "Mixpanel API",
-      "project; event_schema; identity; retention",
-      "Validated component reference; not executable until bound",
-      "Slack: #analytics",
-      "Event/property product and funnel analytics; approved taxonomy and privacy/identity rules required.",
-      "Proposed",
-      "AG-REPORTS"
-     ],
-     "sourceRow": 27
-    },
-    {
-     "id": "Skills-28",
-     "values": [
-      "SK-RES-13",
-      "STORM",
-      "Validate STORM for cited research reports",
-      "https://github.com/stanford-oval/storm",
-      "Manual",
-      "github.com/stanford-oval/storm",
-      "topic; source; checked_at; citation_check",
-      "Validated component reference; not executable until bound",
-      "Slack: #research",
-      "Stanford cited research/report system. Review citations; hosted preview differs from self-hosted repository.",
-      "Proposed",
-      "AG-AUDIT; AG-CONTENT"
-     ],
-     "sourceRow": 28
-    },
-    {
-     "id": "Skills-29",
-     "values": [
-      "SK-RES-14",
-      "NotebookLM",
-      "Validate NotebookLM notebooks and source access",
-      "https://support.google.com/notebooklm/answer/16164461?hl=en",
-      "Manual",
-      "NotebookLM",
-      "notebook; source_refs; access; checked_claims",
-      "Validated component reference; not executable until bound",
-      "Slack: #research",
-      "Source-grounded research with citations; verify claims and source access. Official help currently uses Gemini Notebook wording; user term retained.",
-      "Proposed",
-      "AG-AUDIT; AG-REPORTS"
-     ],
-     "sourceRow": 29
-    },
-    {
-     "id": "Skills-30",
-     "values": [
-      "SK-RES-15",
-      "Model Context Protocol",
-      "Bind MCP servers, schemas and auth",
-      "https://www.anthropic.com/news/model-context-protocol",
-      "Manual",
-      "Model Context Protocol; MCP reference servers",
-      "server; transport; schema; scopes; auth_ref",
-      "Validated component reference; not executable until bound",
-      "Slack: #masters",
-      "Protocol for tool/data interfaces; bind server, schemas and auth explicitly, separate from APIs/analytics products.",
-      "Proposed",
-      "AG-RES-20"
-     ],
-     "sourceRow": 30
-    },
-    {
-     "id": "Skills-31",
-     "values": [
-      "SK-RES-16",
-      "Windsor MCP candidate",
-      "Confirm the Windsor MCP product and entitlements",
-      "https://mcp.windsor.ai/",
-      "Manual",
-      "mcp.windsor.ai",
-      "server; sources; scopes; cost; owner",
-      "Validated component reference; not executable until bound",
-      "Slack: #analytics",
-      "Original says Windsor without identity. Windsor.ai MCP is a candidate; confirm intended product and connector entitlements.",
-      "Proposed",
-      "AG-AUDIT; AG-REPORTS"
-     ],
-     "sourceRow": 31
-    },
-    {
-     "id": "Skills-32",
-     "values": [
-      "SK-RES-17",
-      "WebMCP",
-      "Evaluate WebMCP browser support and permissions",
-      "https://developer.chrome.com/docs/ai/webmcp",
-      "Manual",
-      "Chrome WebMCP (origin trial)",
-      "browser_support; tools; schemas; permissions; eval",
-      "Validated component reference; not executable until bound",
-      "Slack: #web",
-      "Proposed browser standard, experimental/origin-trial support. Exposes website functions as structured tools; not a remote MCP server or SEO ranking tool.",
-      "Proposed",
-      "AG-WEBSITE; AG-REPORTS"
-     ],
-     "sourceRow": 32
-    },
-    {
-     "id": "Skills-33",
-     "values": [
-      "SK-RES-18",
-      "Git-linked scripts",
-      "Record the actual repo, path, commit and maintainer",
-      "https://github.com/every-app/open-seo",
-      "Manual",
-      "GitHub (company org)",
-      "repo_url; path; commit; tests; owner",
-      "Validated component reference; not executable until bound",
-      "Slack: #masters",
-      "Capture actual internal repo/path/commit, maintainer, tests and rollback; no invented Git link.",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 33
-    },
-    {
-     "id": "Skills-34",
-     "values": [
-      "SK-RES-19",
-      "Awesome SEO Tools candidate",
-      "Select and review tools from the SEO catalog",
-      "https://github.com/serpapi/awesome-seo-tools",
-      "Manual",
-      "github.com/serpapi/awesome-seo-tools",
-      "catalog; selected_item; review; license",
-      "Validated component reference; not executable until bound",
-      "Slack: #seo",
-      "Original label ambiguous. serpapi list is a candidate catalog, not executable integration or vetted dependency.",
-      "Proposed",
-      "AG-SEO"
-     ],
-     "sourceRow": 34
-    },
-    {
-     "id": "Skills-35",
-     "values": [
-      "SK-RES-23",
-      "Google / Bing / Apple / Yelp / CMS / social",
-      "Record supported channel operations and scopes",
-      "Channel account refs",
-      "Manual",
-      "Google, Bing, Apple, Yelp, CMS and social APIs",
-      "channel; account; operations; scopes; auth_ref",
-      "Validated component reference; not executable until bound",
-      "Slack: #masters",
-      "Record actual supported operations and scopes; API publishing/scheduling is not assumed.",
-      "Proposed",
-      "AG-SEO; AG-REPORTS"
-     ],
-     "sourceRow": 35
-    },
-    {
-     "id": "Skills-36",
-     "values": [
-      "MFG-SK-1",
-      "RFQ Pipeline & Ingestion Status",
-      "Track RFQ ingestion and pipeline status",
-      "RFQ_EG005570.pdf, BOM_Matrix_745.xlsx, Gerber_Files.zip",
-      "Automated pull + review",
-      "AG Grid; Excel",
-      "RFQ / Inquiries: Inquiry ID: INQ-9842, Customer: Avionics Corp, Target Qtys: 500 / 1000; Currency: USD (Base), EUR conversion rate 1.08; Supplier Master: Mouser, Arrow Electronics, Future Electronics, Avnet; Commodity Pricing: Spot market live API prices, Tiered volume discounts; Shipping & Logistics: FOB - Free On Board, Lead time: 6 weeks, Freight: Air Express",
-      "Standard_Quote_Template_v3.xlsx, AG_Grid_BOM_View",
-      "Email: sourcing lead",
-      "Trigger circuit breaker if price variance > 15% or single-source risk detected",
-      "Proposed",
-      "MFG-AG-1"
-     ],
-     "sourceRow": 36
-    },
-    {
-     "id": "Skills-37",
-     "values": [
-      "MFG-SK-2",
-      "SK-INTAKE: RFQ and scenario intake",
-      "Intake the RFQ, revision, FG and scenario quantities",
-      "RFQ document / workbook ref",
-      "Semi-automated",
-      "RFQ workbook parser",
-      "RFQ / Inquiries: RFQ ID, revision, FG, Proto/VL-1 qty, batch",
-      "Scenario context keyed by RFQ/revision/FG",
-      "Email: estimator",
-      "Confirm RFQ, revision, FG and scenario quantity from approved source; missing or conflicting keys -> review",
-      "Proposed",
-      "MFG-AG-2"
-     ],
-     "sourceRow": 37
-    },
-    {
-     "id": "Skills-38",
-     "values": [
-      "MFG-SK-3",
-      "SK-BOM: BOM scrub",
-      "Scrub the BOM into normalized keys",
-      "Scrub BOM / source BOM ref",
-      "Automated",
-      "BOM parser; PaddleOCR",
-      "RFQ / Inquiries: assembly, parent, line, CPN, MPN, qty, UoM",
-      "Normalized BOM pointers",
-      "Email: sourcing engineer",
-      "Reconcile unique/shared/missing and hierarchy",
-      "Proposed",
-      "MFG-AG-2"
-     ],
-     "sourceRow": 38
-    },
-    {
-     "id": "Skills-39",
-     "values": [
-      "MFG-SK-4",
-      "SK-OFFER: Offer and inventory load",
-      "Load supplier offers, FX and inventory refs",
-      "supplier, quote, FX and stock refs",
-      "Automated pull + review",
-      "Supplier APIs; FX feed",
-      "RFQ / Inquiries: supplier, MPN, price, currency, MOQ, pack, lead, stock, validity",
-      "Selected offer + FX/stock snapshot refs",
-      "Email: sourcing lead",
-      "Review expiry, substitution, missing inputs",
-      "Proposed",
-      "MFG-AG-3"
-     ],
-     "sourceRow": 39
-    },
-    {
-     "id": "Skills-40",
-     "values": [
-      "MFG-SK-5",
-      "SK-COST: Costed BOM and excess",
-      "Cost the BOM and compute shortage and excess",
-      "normalized BOM + selected offers + rule refs",
-      "Automated",
-      "Costing rules engine",
-      "RFQ / Inquiries: FG qty, batch, converted unit cost, NRE, stock",
-      "Costed BOM / matrix / excess transaction refs",
-      "Email: cost estimator",
-      "Recompute totals and detect excess/uncosted",
-      "Proposed",
-      "MFG-AG-4"
-     ],
-     "sourceRow": 40
-    },
-    {
-     "id": "Skills-41",
-     "values": [
-      "MFG-SK-6",
-      "SK-ANALYZE: Analysis and revisions",
-      "Analyse revisions, lead time, ABC and cashflow",
-      "approved costed runs + supplier terms",
-      "Automated + review",
-      "AG Grid; Excel",
-      "RFQ / Inquiries: old/new qty/price, lead weeks, spend, NRE",
-      "Lead-time, ABC, cashflow, price-control, revision refs",
-      "Email: QA lead",
-      "Compare same basis; prevent repeated NRE",
-      "Proposed",
-      "MFG-AG-5"
-     ],
-     "sourceRow": 41
-    },
-    {
-     "id": "Skills-42",
-     "values": [
-      "MFG-SK-7",
-      "SK-EXPORT: Report QA/export",
-      "QA and export the approved report workbook",
-      "approved run + target workbook template ref",
-      "Semi-automated",
-      "Excel export; report template",
-      "RFQ / Inquiries: RFQ, scenario, FG, summary and validation state",
-      "Report artifact pointer and QA result",
-      "Email: QA lead",
-      "Excel-compatible parity check; human signoff",
-      "Proposed",
-      "MFG-AG-5; MFG-AG-6"
-     ],
-     "sourceRow": 42
-    },
-    {
-     "id": "Skills-43",
-     "values": [
-      "MFG-SK-8",
-      "SK-CORE: Core manufacturing extension",
-      "Extend intake to core machining domains",
-      "approved CAD/drawing/MTO ref",
-      "Manual",
-      "CAD/MTO parser",
-      "RFQ / Inquiries: part, material, revision, process",
-      "Core-domain RFQ context",
-      "Email: engineering reviewer",
-      "Engineer review; no target report sample",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 43
-    },
-    {
-     "id": "Skills-44",
-     "values": [
-      "MFG-SK-9",
-      "MFG-RES-006: QuoteWin",
-      "Bind QuoteWin quote/cost records with source refs",
-      "https://supplyframe.com/quoting-solutions-for-ems | approved quote/export pointer, BOM/MPN, quantity, supplier, currency, quote validity",
-      "Manual",
-      "QuoteWin (Supplyframe)",
-      "RFQ / Inquiries: Supplyframe EMS quotation/product-costing example. Candidate quote/RFQ interoperability, not assumed API integration.",
-      "Proposed normalized quote/cost records with source refs; vendor API interface",
-      "Email: sourcing lead",
-      "Verify vendor-supported access/export/API, contract and schema; no credentials or live quote invented.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 44
-    },
-    {
-     "id": "Skills-45",
-     "values": [
-      "MFG-SK-10",
-      "MFG-RES-007: PaddleOCR",
-      "Extract text and tables from scanned RFQs",
-      "https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/PP-StructureV3.html | PDF/image ref, page/region, language, extracted MPN/qty/UoM, confidence",
-      "Automated + review",
-      "PaddleOCR PP-StructureV3",
-      "RFQ / Inquiries: Official PP-StructureV3 document parsing supports OCR/layout/table extraction. Candidate for scanned RFQ, supplier quote and drawing title-block text.",
-      "Proposed text/table structure plus source page/cell pointers",
-      "Email: sourcing engineer",
-      "Check MPN character ambiguity and table alignment; human review on low confidence. Not CAD geometry interpretation.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 45
-    },
-    {
-     "id": "Skills-46",
-     "values": [
-      "MFG-SK-11",
-      "MFG-RES-008: BOM and volume normalization",
-      "Normalize BOM and volume inputs from workbooks",
-      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | RFQ, revision, FG, scenario qty, MPN/CPN, line/parent, qty/UoM",
-      "Automated",
-      "Spreadsheet parser",
-      "RFQ / Inquiries: Read documented spreadsheet BOM/volume inputs and map essential manufacturing keys.",
-      "Normalized BOM and scenario references",
-      "Email: sourcing engineer",
-      "Use deterministic spreadsheet parsing for native files; never OCR a readable workbook by default.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 46
-    },
-    {
-     "id": "Skills-47",
-     "values": [
-      "MFG-SK-12",
-      "MFG-RES-009: Supplier pricing and offer binding",
-      "Bind supplier pricing and offer records",
-      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | supplier, MPN, price breaks, currency, MOQ/pack, stock, lead time, validity/as-of",
-      "Automated pull + review",
-      "Distributor APIs (Mouser, Arrow)",
-      "RFQ / Inquiries: Distributor pricing and supplier-quote records for BOM enrichment.",
-      "Selected offers with provenance",
-      "Email: sourcing lead",
-      "API/credential bindings per vendor contract; stale, substituted or ambiguous matches require sourcing review.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 47
-    },
-    {
-     "id": "Skills-48",
-     "values": [
-      "MFG-SK-13",
-      "MFG-RES-010: Approved FX source",
-      "Bind the approved FX rate source",
-      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | currency pair, rate, as-of timestamp, approved source",
-      "Automated pull",
-      "Approved FX sheet",
-      "RFQ / Inquiries: Versioned conversion input for manufacturing supplier offers.",
-      "Same-basis converted cost reference",
-      "Email: finance",
-      "No sample FX value becomes a live rate; missing/stale FX stops costing.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 48
-    },
-    {
-     "id": "Skills-49",
-     "values": [
-      "MFG-SK-14",
-      "MFG-RES-011: Inventory and excess snapshot",
-      "Snapshot inventory and excess inputs",
-      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | stock as-of, MPN, quantity/UoM, scenario, MOQ/pack, scrap policy, supplier terms",
-      "Automated pull",
-      "Inventory sheet",
-      "RFQ / Inquiries: Stock/terms/MOQ/pack inputs for shortage and rounded-buy/excess calculations.",
-      "Shortage/excess calculation input refs",
-      "Email: sourcing lead",
-      "Do not create orders or treat excess calculation as purchase authority.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 49
-    },
-    {
-     "id": "Skills-50",
-     "values": [
-      "MFG-SK-15",
-      "MFG-RES-012: Engineering artifact parser binding",
-      "Parse engineering artifacts into a manifest",
-      "https://docs.google.com/spreadsheets/d/1MKBnjBWeQedg5INCuSL95LXRD3VDn3bkeSiUxqpctDY/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | file format, part/assembly, drawing revision, material/process, parser version",
-      "Semi-automated",
-      "Gerber/IPC parser; FreeCAD",
-      "RFQ / Inquiries: EMS Gerber/IPC and core CAD/drawing/MTO source references.",
-      "Proposed structured engineering manifest; no geometry copied into masters",
-      "Email: engineering reviewer",
-      "Engineer signoff; parser support must be tested per Filetype. PaddleOCR cannot replace CAD parsing.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 50
-    },
-    {
-     "id": "Skills-51",
-     "values": [
-      "MFG-SK-16",
-      "MFG-RES-013: Report templates and parity QA",
-      "Reconcile report templates and parity QA",
-      "https://docs.google.com/document/d/1_kRLQUcDcYh0vj8_NaVZ_fs-L9nsJO0v0e8gMEyipk8/edit?usp=drivesdk&authuser=sriniketh.s%40digibull.ai | https://docs.google.com/spreadsheets/d/1Oe1l6GM0XWQATDgTsixMiMROr-h3w-Zu/edit?usp=drivesdk&ouid=103101952948491508917&rtpof=true&sd=true&authuser=sriniketh.s%40digibull.ai | approved run, source/version, report/template ID, required totals, QA results",
-      "Semi-automated",
-      "Report templates; Excel",
-      "RFQ / Inquiries: Documented consolidated BOM, quote and readiness package/report outputs.",
-      "Versioned report artifact reference",
-      "Email: QA lead",
-      "Excel/formula/total reconciliation and human signoff before external use; no report send configured.",
-      "Proposed",
-      "MFG-AG-7"
-     ],
-     "sourceRow": 51
     }
    ],
    "removedRows": [],
@@ -1777,8 +991,8 @@
      "id": "Rules-38",
      "values": [
       "RULE-COST-01",
-      "Material Pricing · Calculation; Looks up the material price for a quote line, from a governed price source.",
-      "Lovable demo (proposed) · approval: DigiBull",
+      "Material Pricing \u00b7 Calculation; Looks up the material price for a quote line, from a governed price source.",
+      "Lovable demo (proposed) \u00b7 approval: DigiBull",
       "Org: ORG-HQ-01; Skills: MFG-SK-5; Enforce: during costing; Gate: versioned rates and checked arithmetic.",
       "Missing rate or source: stop and review.",
       "Owner: DigiBull; Version: draft-1",
@@ -1792,8 +1006,8 @@
      "id": "Rules-39",
      "values": [
       "RULE-COST-02",
-      "Surface Finish · Calculation; Adds surface finish cost from finish type and area.",
-      "Lovable demo (proposed) · approval: DigiBull",
+      "Surface Finish \u00b7 Calculation; Adds surface finish cost from finish type and area.",
+      "Lovable demo (proposed) \u00b7 approval: DigiBull",
       "Org: ORG-HQ-01; Skills: MFG-SK-5; Enforce: during costing; Gate: versioned rates and checked arithmetic.",
       "Missing rate or source: stop and review.",
       "Owner: DigiBull; Version: draft-1",
@@ -1807,8 +1021,8 @@
      "id": "Rules-40",
      "values": [
       "RULE-COST-03",
-      "Currency Converter · Calculation; Converts quote currencies into one base currency with dated rates.",
-      "Lovable demo (proposed) · approval: DigiBull",
+      "Currency Converter \u00b7 Calculation; Converts quote currencies into one base currency with dated rates.",
+      "Lovable demo (proposed) \u00b7 approval: DigiBull",
       "Org: ORG-HQ-01; Skills: MFG-SK-5; Enforce: during costing; Gate: versioned rates and checked arithmetic.",
       "Missing rate or source: stop and review.",
       "Owner: DigiBull; Version: draft-1",
@@ -1822,8 +1036,8 @@
      "id": "Rules-41",
      "values": [
       "RULE-COST-04",
-      "Machine Hour Rate · Calculation; Works out the hourly machine rate from machine cost, utilisation and overheads.",
-      "Lovable demo (proposed) · approval: DigiBull",
+      "Machine Hour Rate \u00b7 Calculation; Works out the hourly machine rate from machine cost, utilisation and overheads.",
+      "Lovable demo (proposed) \u00b7 approval: DigiBull",
       "Org: ORG-HQ-01; Skills: MFG-SK-5; Enforce: during costing; Gate: versioned rates and checked arithmetic.",
       "Missing rate or source: stop and review.",
       "Owner: DigiBull; Version: draft-1",
@@ -1837,8 +1051,8 @@
      "id": "Rules-42",
      "values": [
       "RULE-COST-05",
-      "Costing Rules · Estimation; Rolls material, finish and machine time up into one estimate.",
-      "Lovable demo (proposed) · approval: DigiBull",
+      "Costing Rules \u00b7 Estimation; Rolls material, finish and machine time up into one estimate.",
+      "Lovable demo (proposed) \u00b7 approval: DigiBull",
       "Org: ORG-HQ-01; Skills: MFG-SK-5; Enforce: during costing; Gate: versioned rates and checked arithmetic.",
       "Missing rate or source: stop and review.",
       "Owner: DigiBull; Version: draft-1",

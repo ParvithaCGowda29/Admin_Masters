@@ -123,9 +123,25 @@ export function ToolChipsCell(p:ICellRendererParams<RecordRow,string>){
  return <span className="tool-chips">{tools.map((tool,i)=><span className="tool-chip" key={i}>{tool}</span>)}</span>;
 }
 
-// Steps (skills): each step is a skill - one chip style for all, no separate knowledge step type.
+// Skill factory (2026-11-04 approved wireframes): "everything is a skill" - the Steps column
+// shows numbered skill chips, one chip style for all, no separate knowledge step type.
 export function SkillChipsCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();if(!v)return '';
  const skills=v.split(';').map(s=>s.trim()).filter(Boolean);
- return <span className="skill-chips">{skills.map((skill,i)=><span className="skill-chip" key={i}>{skill}</span>)}</span>;
+ return <span className="skill-chips">{skills.map((skill,i)=><span className="skill-chip" key={i}><span className="skill-chip-n">{i+1} &middot;</span> {skill}</span>)}</span>;
+}
+
+// Skill factory link cells (Agents and Next columns): the linked agent or the skill that
+// runs next reads as a link, mirroring the Agents master reference link. Empty shows a dash.
+export function SkillLinkCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();
+ if(!v)return <span className="skill-link-empty">&mdash;</span>;
+ return <span className="skill-link">{v}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span>;
+}
+
+// Skill factory Rules column: one green chip per linked rule (semicolon separated).
+export function RuleChipsCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const rules=v.split(';').map(s=>s.trim()).filter(Boolean);
+ return <span className="rule-chips">{rules.map((rule,i)=><span className="rule-chip" key={i}>{rule}</span>)}</span>;
 }

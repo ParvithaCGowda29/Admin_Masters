@@ -346,6 +346,11 @@
 .agent-source-plain{color:#6c7787}
 .skill-chips{display:inline-flex;flex-wrap:wrap;gap:5px}
 .skill-chip{display:inline-block;padding:3px 9px;border-radius:6px;background:#e8f4fc;color:#0b6ea8;font-size:12px;white-space:nowrap}
+.skill-chip-n{opacity:.6;font-weight:600}
+.rule-chips{display:inline-flex;flex-wrap:wrap;gap:5px}
+.rule-chip{display:inline-block;padding:3px 9px;border-radius:6px;background:#e9f8ef;color:#0a8754;font-size:12px;white-space:nowrap}
+.skill-link{color:#2b7cd3;font-weight:500;white-space:nowrap}
+.skill-link-empty{color:#98a2b3}
 :root[data-theme=dark] .agent-kind{background:#2a3648;border-color:#36465a;color:#9fb0c4}
 :root[data-theme=dark] .agent-kind.assistant{background:#31245c;border-color:#4a3f73;color:#c4b5fd}
 :root[data-theme=dark] .tool-chip{background:#2b3a4e;border-color:#36465a;color:#aebdce}
@@ -365,6 +370,9 @@
 :root[data-theme=dark] .agent-source-path{color:#86d4ff}
 :root[data-theme=dark] .agent-source-plain{color:#a6b8cc}
 :root[data-theme=dark] .skill-chip{background:#123f5b;color:#86d4ff}
+:root[data-theme=dark] .rule-chip{background:#0e2c22;color:#34d399}
+:root[data-theme=dark] .skill-link{color:#6aa5f5}
+:root[data-theme=dark] .skill-link-empty{color:#5b6b85}
 
 /* Import agent modal */
 /* Agents Master import entry point */

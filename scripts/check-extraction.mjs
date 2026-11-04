@@ -103,7 +103,7 @@ try{
 
  await page.getByRole('button',{name:new RegExp('Organization '+orgAfterImport),exact:true}).click();
  await page.getByText(`${orgAfterImport} of ${orgAfterImport} rows`,{exact:true}).waitFor();
- const tabCounts={Rules:41,Skills:50,'Tool Factory':227,Agents:21};
+ const tabCounts={Rules:41,Skills:8,'Tool Factory':227,Agents:21};
  for(const tab of ['Rules','Skills','Tool Factory','Agents']){
   await page.getByRole('button',{name:new RegExp('^'+tab+' '),exact:true}).click();
   await page.getByText(`${tabCounts[tab]} of ${tabCounts[tab]} rows`,{exact:true}).waitFor();
