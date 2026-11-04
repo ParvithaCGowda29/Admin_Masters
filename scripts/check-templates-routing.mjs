@@ -107,17 +107,14 @@ try{
  // Masters parent is a real selection with an overview; chevron alone collapses.
  await page.getByRole('button',{name:'Collapse masters',exact:true}).click();
  assert.equal(await page.locator('#masters-branches').count(),0);
- assert.equal(await page.locator('#admin-branches').count(),1);
+ assert.equal(await page.locator('[aria-label="Workspace administration"]').count(),0);
  await page.getByRole('button',{name:'Expand masters',exact:true}).click();
- await page.getByRole('button',{name:'Collapse admin',exact:true}).click();
- assert.equal(await page.locator('#admin-branches').count(),0);
  assert.equal(await page.locator('#masters-branches').count(),1);
- await page.getByRole('button',{name:'Expand admin',exact:true}).click();
  await page.getByRole('button',{name:'Masters',exact:true}).click();
  await page.getByRole('heading',{name:'Masters overview',exact:true}).waitFor();
  assert.equal(await page.locator('.nav-parent.parent-selected').count(),1);
  await page.screenshot({path:screenshotDir+'/masters-parent-overview.png',fullPage:true});
- report.push('Masters parent selects an overview; the chevron alone collapses the tree; the Admin tree collapses independently.');
+ report.push('Masters parent selects an overview; the chevron alone collapses the tree; only the Masters group is present.');
 
  // Parent routing: the extraction flow reviews a workbook across every matching tab.
  const book=utils.book_new();
@@ -139,7 +136,7 @@ try{
  report.push('On the Masters parent, the flow reviews a workbook across every matching tab.');
 
  // Tab routing: Choose folder maps every file into the open tab only.
- await page.getByRole('button',{name:'Organization 3',exact:true}).click();
+ await page.getByRole('button',{name:/^Organization 3/,exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles([
@@ -158,7 +155,7 @@ try{
  report.push('On a specific tab, the flow maps every file into that tab only.');
 
  // Each tab's info panel is specific to that tab; shared README rows stay under the parent.
- await page.getByRole('button',{name:'Agents 21',exact:true}).click();
+ await page.getByRole('button',{name:/^Agents 8/,exact:true}).click();
  await page.getByRole('button',{name:'Information about Agents',exact:true}).hover();
  const agentsPanel=page.getByRole('region',{name:'Agents information',exact:true});
  await agentsPanel.waitFor();
@@ -185,7 +182,7 @@ try{
  report.push('Add templates stays stacked under Add files in the sidebar.');
 
  // Filled list templates are held: they are blocked from Masters with the reason shown.
- await page.getByRole('button',{name:'Organization 3',exact:true}).click();
+ await page.getByRole('button',{name:/^Organization 3/,exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  await page.getByRole('button',{name:'Add files',exact:true}).click();
  await page.getByLabel('Choose files from this device').setInputFiles({name:'Employee List.csv',mimeType:'text/csv',buffer:Buffer.from('Employee,Job title,Department,Unit applicability,Verification status\nAsha,Engineer,Platform,All,Verified')});
@@ -231,12 +228,12 @@ try{
  await page.getByRole('button',{name:'Done',exact:true}).click();
  const savedLists=await page.evaluate(()=>localStorage.getItem('bullm-template-lists-v1'));
  assert.ok(savedLists?.includes('Asha R'),'edited template list row persisted');
- await page.getByRole('button',{name:'Organization 3',exact:true}).waitFor();
+ await page.getByRole('button',{name:/^Organization 3/,exact:true}).waitFor();
  report.push('A new template upload replaces that template (columns and rows); rows stay in the Add templates list, editable, masters untouched.');
 
  // Regression: after uploading rows, the header download must serve the current list,
  // not the old blank template. The download icons live on the Organization tab.
- await page.getByRole('button',{name:'Organization 3',exact:true}).click();
+ await page.getByRole('button',{name:/^Organization 3/,exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  const [download3]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Employees / Job Role"]').click()]);
  assert.equal(download3.suggestedFilename(),'Employee List.xlsx');
@@ -262,7 +259,7 @@ try{
  assert.ok((await page.locator('.templates-dialog').allTextContents()).join(' ').includes('3 columns'),'card shows the replaced column count');
  await page.screenshot({path:screenshotDir+'/masters-add-templates-menu.png'});
  await page.locator('.templates-dialog').getByRole('button',{name:'Close',exact:true}).click();
- await page.getByRole('button',{name:'Organization 3',exact:true}).click();
+ await page.getByRole('button',{name:/^Organization 3/,exact:true}).click();
  await page.getByRole('heading',{name:'Organization Master',exact:true}).waitFor();
  const [download4]=await Promise.all([page.waitForEvent('download'),page.locator('.template-download[aria-label*="Customers / Audience"]').click()]);
  assert.equal(download4.suggestedFilename(),'Sample - Customers.xlsx');

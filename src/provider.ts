@@ -1,15 +1,13 @@
 import type { DataProvider } from '@refinedev/core';
 import workbook from './workbook.json';
-import {ADMIN_SHEETS,adminSheet} from './admin';
 export type RecordRow = {id:string;values:string[];sourceRow?:number};
 // Scope edits to the exact shipped workbook. Older snapshots remain untouched
 // under their old key, but cannot hide updated workbook rows after a pull.
-const revision=JSON.stringify(workbook)+JSON.stringify(ADMIN_SHEETS);
+const revision=JSON.stringify(workbook);
 let hash=2166136261;
 for(let i=0;i<revision.length;i++)hash=Math.imul(hash^revision.charCodeAt(i),16777619);
 const KEY=`bullm-masters-v2-${(hash>>>0).toString(16)}`;
-// Admin tabs share the masters' browser-only storage, keyed by their own names.
-function tableMeta(name:string){return workbook.sheets.find(s=>s.name===name)||adminSheet(name);}
+function tableMeta(name:string){return workbook.sheets.find(s=>s.name===name);}
 export function loadRows(name:string):RecordRow[]{
  const sheet=tableMeta(name)!;
  if(sheet.readOnly)return structuredClone(sheet.rows);

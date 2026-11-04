@@ -313,10 +313,6 @@
 .onyx-dialog{width:min(560px,calc(100vw - 28px))}
 .onyx-dialog .bulk-options{display:flex;flex-direction:column;gap:10px}
 .onyx-dialog .bulk-options input{width:100%}
-.status-chip{display:inline-block;padding:3px 12px;border-radius:11px;font-size:12px;border:1px solid #d7dde5;background:#eef1f5;color:#6c7787;white-space:nowrap}
-.status-chip.on{background:#e6f6ee;border-color:#bfe6d2;color:#1c7a4d}
-:root[data-theme=dark] .status-chip{background:#202d3e;border-color:#485a70;color:#a6b8cc}
-:root[data-theme=dark] .status-chip.on{background:#12362c;border-color:#3d8c69;color:#6fe0b4}
 .ex-dot-icon{width:13px;height:13px;display:block;object-fit:contain}
 /* Picker popup: primary Done action confirms the picked files and closes the popup. */
 .ex-drop-actions{display:flex;justify-content:flex-end;margin-top:14px}
@@ -371,16 +367,6 @@
 :root[data-theme=dark] .skill-chip{background:#123f5b;color:#86d4ff}
 
 /* Import agent modal */
-/* Admin pages are workspace-level links, not children of a second group. */
-.nav-admin-items{display:flex;flex-direction:column;gap:3px;margin:10px 0 0;padding:0 3px}
-.nav-admin-entry{border-radius:5px}
-.nav-admin-entry .nav-item{width:100%;margin:0;padding:11px 8px;gap:6px;border-radius:5px}
-.nav-admin-entry.selected{background:#e4f2fc;color:#006da6}
-.nav-admin-entry.selected .nav-item{color:inherit;font-weight:600}
-.nav-admin-entry:hover{background:#eef5fa}
-:root[data-theme=dark] .nav-admin-entry.selected,:root[data-theme=dark] .nav-admin-entry.selected button{background:#123f5b;color:#86d4ff}
-:root[data-theme=dark] .nav-admin-entry:hover{background:#293c51}
-
 /* Agents Master import entry point */
 .agents-import-row{display:flex;align-items:center;margin:0 0 8px;min-height:34px}
 .agents-import-wrap{position:relative;display:inline-flex}

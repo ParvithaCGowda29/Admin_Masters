@@ -148,8 +148,8 @@ try{
  assert.ok(reviewText.includes('agents.csv')&&!reviewText.includes('tools.csv'));
  await page.getByRole('button',{name:'Stop extraction',exact:true}).click();
  assert.equal(await page.getByRole('dialog').count(),0);
- await page.getByRole('button',{name:/Agents 21/,exact:true}).click();
- await page.getByText('21 of 21 rows',{exact:true}).waitFor();
+ await page.getByRole('button',{name:/Agents 8/,exact:true}).click();
+ await page.getByText('8 of 8 rows',{exact:true}).waitFor();
  report.push('Unticking a file on the permission step excludes it completely; Stop extraction imports nothing.');
 
  // Filled Add templates files are held back with the reason, never imported into Masters.
