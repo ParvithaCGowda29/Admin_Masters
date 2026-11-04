@@ -350,3 +350,12 @@
 :root[data-theme=dark] .skill-chip{background:#123f5b;color:#86d4ff}
 
 /* Import agent modal */
+/* Admin pages are workspace-level links, not children of a second group. */
+.nav-admin-items{display:flex;flex-direction:column;gap:3px;margin:10px 0 0;padding:0 3px}
+.nav-admin-entry{border-radius:5px}
+.nav-admin-entry .nav-item{width:100%;margin:0;padding:11px 8px;gap:6px;border-radius:5px}
+.nav-admin-entry.selected{background:#e4f2fc;color:#006da6}
+.nav-admin-entry.selected .nav-item{color:inherit;font-weight:600}
+.nav-admin-entry:hover{background:#eef5fa}
+:root[data-theme=dark] .nav-admin-entry.selected,:root[data-theme=dark] .nav-admin-entry.selected button{background:#123f5b;color:#86d4ff}
+:root[data-theme=dark] .nav-admin-entry:hover{background:#293c51}
