@@ -137,383 +137,135 @@
    "headers": [
     "Agent ID",
     "Agent Name",
+    "Kind",
     "Type",
     "Reference",
     "Source",
     "Tools",
-    "Model",
-    "Owner",
-    "Version",
-    "Last updated",
-    "Notes"
+    "Model"
    ],
    "descriptions": [
-    "Stable agent ID",
-    "Agent name and what it does",
+    "Stable agent or assistant ID",
+    "Agent or assistant name and what it does",
+    "Agent: one defined job. Assistant: a cross-cutting helper across masters.",
     "Proposed agent (to be built) / Internal agent (already in the company) / Third-party or external agent",
-    "Proposed agents only: the existing agent this one enhances or integrates",
+    "Proposed agents only: the existing agent this one enhances or integrates. Assistants: what they cut across.",
     "Built in BuLLM, or Imported from another path (GitHub, MCP server, company path). The Imported tag shows on row hover.",
-    "Tools the agent uses, pulled from the Tool Factory",
-    "Model the agent runs on",
-    "Person or team responsible for the agent",
-    "Agent version; Draft for proposed agents",
-    "Last change date (dd-mm-yyyy)",
-    "Changes, exceptions and open gaps"
+    "Tools the agent or assistant uses, pulled from the Tool Factory",
+    "Model the agent or assistant runs on"
    ],
    "rows": [
     {
      "id": "Agents-2",
      "values": [
-      "AG-AUDIT",
-      "Audit & Strategy",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "AG-01",
+      "RFQ Intake Agent",
+      "Agent",
+      "Internal",
+      "",
       "Built in BuLLM",
-      "DataForSEO API; Ahrefs; STORM",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Audits current marketing and tells the owner what to do next; no live fixes or spend."
+      "Email parser; LLM",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 2
     },
     {
      "id": "Agents-3",
      "values": [
-      "AG-WEBSITE",
-      "Website",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "AG-02",
+      "Costing Agent",
+      "Agent",
+      "Internal",
+      "",
       "Built in BuLLM",
-      "WordPress REST API; Playwright; Lighthouse CI",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Fixes and improves the website and pages for search visibility; draft changes only."
+      "Costing engine",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 3
     },
     {
      "id": "Agents-4",
      "values": [
-      "AG-SEO",
-      "SEO (Organic, Local & AEO/GEO)",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
-      "Built in BuLLM",
-      "DataForSEO; Search Console API; Rank Math",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Improves organic, local and AI-search visibility; no publish authority."
+      "AG-03",
+      "Supplier Lookup Agent",
+      "Agent",
+      "Third-party",
+      "",
+      "Imported · GitHub",
+      "Search API; Match DB",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 4
     },
     {
      "id": "Agents-5",
      "values": [
-      "AG-CONTENT",
-      "Content & Creatives",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
-      "Built in BuLLM",
-      "Canva; Pictory; ElevenLabs",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Creates and improves written, visual, video and audio content; drafts only."
+      "AG-04",
+      "Drawing OCR Agent",
+      "Agent",
+      "Third-party",
+      "",
+      "Imported · MCP server",
+      "OCR engine",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 5
     },
     {
      "id": "Agents-6",
      "values": [
-      "AG-PAID",
-      "Paid Ads",
+      "AG-05",
+      "Smart Quote Reviewer",
+      "Agent",
       "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "Enhances: AG-02 · Costing Agent",
       "Built in BuLLM",
-      "Google Ads API; Meta Ads API",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Plans and improves paid ads within the approved budget; no ad-account changes."
+      "LLM; Rules check",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 6
     },
     {
      "id": "Agents-7",
      "values": [
-      "AG-SOCIAL",
-      "Social Media",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "AS-01",
+      "Quote Prep Assistant",
+      "Assistant",
+      "Internal",
+      "Cross-cutting: Quotes, RFQs",
       "Built in BuLLM",
-      "Metricool; Meta Graph API",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Plans and manages social content and conversations; no unapproved replies."
+      "LLM; Email parser",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 7
     },
     {
      "id": "Agents-8",
      "values": [
-      "AG-BRAND",
-      "Brand",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "AS-02",
+      "Meeting Notes Assistant",
+      "Assistant",
+      "Internal",
+      "Cross-cutting: All masters",
       "Built in BuLLM",
-      "NotebookLM; STORM",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Keeps the brand consistent and tracks reputation and mentions."
+      "LLM; Transcription",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 8
     },
     {
      "id": "Agents-9",
      "values": [
-      "AG-MQL",
-      "MQL",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
+      "AS-03",
+      "Data Cleanup Assistant",
+      "Assistant",
+      "Internal",
+      "Cross-cutting: All masters",
       "Built in BuLLM",
-      "Zoho CRM API; GA4",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Captures and qualifies leads, then routes them to the right owner."
+      "LLM; Dedup",
+      "Claude Sonnet 4.5"
      ],
      "sourceRow": 9
-    },
-    {
-     "id": "Agents-10",
-     "values": [
-      "AG-CRM",
-      "CRM",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
-      "Built in BuLLM",
-      "Zoho CRM/Books; PostHog",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Keeps CRM data and pipeline organized; supports lead follow-up and handoff."
-     ],
-     "sourceRow": 10
-    },
-    {
-     "id": "Agents-11",
-     "values": [
-      "AG-REPORTS",
-      "Reports & Publishing",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
-      "Built in BuLLM",
-      "GA4 Data API; Mixpanel; Excel export",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Builds scheduled and on-demand reports, dashboards and client projections."
-     ],
-     "sourceRow": 11
-    },
-    {
-     "id": "Agents-12",
-     "values": [
-      "AG-RES-20",
-      "BuLLM runtime binding",
-      "Proposed",
-      "BuLLM marketing design (26-10-2026)",
-      "Built in BuLLM",
-      "MCP runtime; FastAPI",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "Draft",
-      "26-10-2026",
-      "Binds catalog entries to verified runtime references; no deployment from the catalog."
-     ],
-     "sourceRow": 12
-    },
-    {
-     "id": "Agents-13",
-     "values": [
-      "MFG-AG-1",
-      "BOM Parser",
-      "Internal",
-      "github.com/digibull-ai/bom-parser",
-      "Imported · GitHub",
-      "MCP supplier-api-proxy; parse_bom_aggrid.py",
-      "Llama-3.3-70B",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Parses BOM files into normalized keys."
-     ],
-     "sourceRow": 13
-    },
-    {
-     "id": "Agents-14",
-     "values": [
-      "MFG-AG-2",
-      "Intake / BOM extraction",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "RFQ workbook parser; PaddleOCR",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Extracts RFQ and BOM inputs into normalized keys with source refs."
-     ],
-     "sourceRow": 14
-    },
-    {
-     "id": "Agents-15",
-     "values": [
-      "MFG-AG-3",
-      "Offer normalization",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "Distributor APIs; approved FX feed",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Normalizes supplier offers: price, currency, MOQ, lead and stock with provenance."
-     ],
-     "sourceRow": 15
-    },
-    {
-     "id": "Agents-16",
-     "values": [
-      "MFG-AG-4",
-      "Costing / excess",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "Costing rules engine; inventory snapshot",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Costed line/scenario and shortage calculation trace."
-     ],
-     "sourceRow": 16
-    },
-    {
-     "id": "Agents-17",
-     "values": [
-      "MFG-AG-5",
-      "Reconciliation / report QA",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "AG Grid; Excel export",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Queues mismatches and confirms report readiness."
-     ],
-     "sourceRow": 17
-    },
-    {
-     "id": "Agents-18",
-     "values": [
-      "MFG-AG-6",
-      "Report delivery",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "Excel export; report template",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Delivers approved quote reports to the client workspace; no send without signoff."
-     ],
-     "sourceRow": 18
-    },
-    {
-     "id": "Agents-19",
-     "values": [
-      "MFG-AG-7",
-      "BuLLM manufacturing runtime binding",
-      "Internal",
-      "Manufacturing Masters v0.2",
-      "Built in BuLLM",
-      "BuLLM runtime registry; MCP",
-      "Claude Sonnet 4.5",
-      "DigiBull",
-      "v0.1",
-      "26-10-2026",
-      "Binds intake, offer, cost and QA role IDs to approved manufacturing resources."
-     ],
-     "sourceRow": 19
-    },
-    {
-     "id": "Agents-ext-1",
-     "values": [
-      "AG-EXT-COPILOT",
-      "GitHub Copilot coding agent",
-      "External agent",
-      "https://docs.github.com/en/copilot/concepts/coding-agent/coding-agent",
-      "GitHub",
-      "GitHub repository; Actions environment; MCP extensions",
-      "GitHub Copilot models",
-      "DigiBull / configure tenant access",
-      "Example",
-      "03-11-2026",
-      "External coding agent; plan, repository and policy access must be configured."
-     ]
-    },
-    {
-     "id": "Agents-ext-2",
-     "values": [
-      "AG-EXT-CODEX",
-      "OpenAI Codex",
-      "External agent",
-      "https://openai.com/codex/",
-      "OpenAI",
-      "GitHub; connected tools and plugins",
-      "OpenAI models",
-      "DigiBull / configure tenant access",
-      "Example",
-      "03-11-2026",
-      "External coding agent; account, repository and environment access not verified."
-     ]
-    },
-    {
-     "id": "Agents-ext-3",
-     "values": [
-      "AG-EXT-CLAUDE-CODE",
-      "Claude Code",
-      "External agent",
-      "https://code.claude.com/docs/en/overview",
-      "Anthropic",
-      "Terminal/IDE; Git; MCP servers",
-      "Claude models",
-      "DigiBull / configure tenant access",
-      "Example",
-      "03-11-2026",
-      "External coding agent; local or cloud setup and permitted access must be reviewed."
-     ]
     }
    ],
    "removedRows": [],

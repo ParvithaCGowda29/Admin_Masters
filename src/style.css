@@ -324,6 +324,18 @@
 :root[data-theme=dark] .sort-filter select,:root[data-theme=dark] .sort-filter input[type=text]{background:#172536;border-color:#34475c;color:#e2e9f2}:root[data-theme=dark] .sort-filter .sf-sort button{background:#1b2c3f;border-color:#34475c;color:#d6e0ec}:root[data-theme=dark] .sort-filter .sf-sort button.on{background:#0084c2;border-color:#0084c2;color:#fff}
 
 /* Agents master (approved 2026-11-03 wireframes) */
+.agent-kind{display:inline-block;padding:3px 12px;border-radius:11px;font-size:12px;font-weight:600;border:1px solid #e5e9f0;background:#f1f4f8;color:#55606e;white-space:nowrap}
+.agent-kind.assistant{background:#ede9fe;border-color:#ddd3f2;color:#6d28d9}
+.tool-chips{display:inline-flex;flex-wrap:wrap;gap:5px}
+.tool-chip{display:inline-block;padding:3px 9px;border-radius:6px;background:#eef1f5;border:1px solid #e5e9f0;color:#5b6470;font-size:12px;white-space:nowrap}
+.agent-ref-cross{color:#6c7787}
+.kind-seg{display:inline-flex;gap:2px;background:#f1f4f8;border:1px solid #e5e9f0;border-radius:10px;padding:3px;margin:0 0 8px}
+.kind-seg button{border:1px solid transparent;background:transparent;border-radius:8px;padding:5px 14px;font-size:13px;color:#5b6470;display:inline-flex;gap:7px;align-items:center}
+.kind-seg button:hover{background:#eef1f5}
+.kind-seg button span{color:#98a2b3;font-size:12px}
+.kind-seg button.on{background:#ffffff;border-color:#e5e9f0;color:#17222e;font-weight:600;box-shadow:0 1px 2px rgba(16,24,40,.06)}
+.kind-seg button.on span{color:#66707e}
+.fixed-cols{margin-left:auto}
 .agent-type{display:inline-block;padding:3px 12px;border-radius:11px;font-size:12px;font-weight:600;border:1px solid #d7dde5;background:#eef1f5;color:#6c7787;white-space:nowrap}
 .agent-type.internal{background:#e4f3fc;border-color:#bfe0f4;color:#0b6ea8}
 .agent-type.third{background:#eef1f5;border-color:#d7dde5;color:#5b6470}
@@ -338,6 +350,15 @@
 .agent-source-plain{color:#6c7787}
 .skill-chips{display:inline-flex;flex-wrap:wrap;gap:5px}
 .skill-chip{display:inline-block;padding:3px 9px;border-radius:6px;background:#e8f4fc;color:#0b6ea8;font-size:12px;white-space:nowrap}
+:root[data-theme=dark] .agent-kind{background:#2a3648;border-color:#36465a;color:#9fb0c4}
+:root[data-theme=dark] .agent-kind.assistant{background:#31245c;border-color:#4a3f73;color:#c4b5fd}
+:root[data-theme=dark] .tool-chip{background:#2b3a4e;border-color:#36465a;color:#aebdce}
+:root[data-theme=dark] .agent-ref-cross{color:#8d9cae}
+:root[data-theme=dark] .kind-seg{background:#202d3e;border-color:#36465a}
+:root[data-theme=dark] .kind-seg button{color:#a6b8cc}
+:root[data-theme=dark] .kind-seg button:hover{background:#2a3648}
+:root[data-theme=dark] .kind-seg button span{color:#66788e}
+:root[data-theme=dark] .kind-seg button.on{background:#2e3d52;border-color:#485a70;color:#e2e9f2;box-shadow:none}
 :root[data-theme=dark] .agent-type.internal{background:#123f5b;border-color:#2c5f80;color:#86d4ff}
 :root[data-theme=dark] .agent-type.third{background:#202d3e;border-color:#485a70;color:#a6b8cc}
 :root[data-theme=dark] .agent-type.proposed{background:#3d2f17;border-color:#6b5426;color:#eda144}

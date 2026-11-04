@@ -96,7 +96,11 @@ export function AgentRefCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();
  if(!v)return <span className="agent-ref-empty">—</span>;
  const m=/^(Enhances|Integrates)\s*:\s*(.+)$/i.exec(v);
- if(!m)return <span>{v}</span>;
+ if(!m){
+  const cross=/^(Cross-cutting)\s*:\s*(.+)$/i.exec(v);
+  if(cross)return <span className="agent-ref"><span className="agent-ref-verb">{cross[1]}:</span> <span className="agent-ref-cross">{cross[2]}</span></span>;
+  return <span>{v}</span>;
+ }
  return <span className="agent-ref"><span className="agent-ref-verb">{m[1]}:</span> <span className="agent-ref-target">{m[2]}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span></span>;
 }
 // "Built in BuLLM" stays plain. "Imported · <path>" carries the Imported tag, visible only on row hover.
@@ -106,6 +110,19 @@ export function AgentSourceCell(p:ICellRendererParams<RecordRow,string>){
  if(!m)return <span className="agent-source-plain">{v}</span>;
  return <span className="agent-source"><span className="imported-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg> Imported</span><span className="agent-source-path">{m[1]}</span></span>;
 }
+
+// Agents master (2026-11-04 approved wireframes): Kind pill - neutral Agent, violet Assistant.
+export function AgentKindCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ return <span className={'agent-kind '+(/^assistant$/i.test(v)?'assistant':'agent')}>{v}</span>;
+}
+// Agents master Tools column: one neutral chip per tool (semicolon separated).
+export function ToolChipsCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const tools=v.split(';').map(s=>s.trim()).filter(Boolean);
+ return <span className="tool-chips">{tools.map((tool,i)=><span className="tool-chip" key={i}>{tool}</span>)}</span>;
+}
+
 // Steps (skills): each step is a skill - one chip style for all, no separate knowledge step type.
 export function SkillChipsCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();if(!v)return '';
