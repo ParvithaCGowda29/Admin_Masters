@@ -17,7 +17,7 @@ import {IconPlus} from './icons';
 import {MasterInfo} from './MasterInfo';
 import {SearchCommand} from './SearchCommand';
 import bullmLogo from './assets/bullm-logo-lockup.png';
-import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell,AgentKindCell,ToolChipsCell,SkillChipsCell,SkillLinkCell,RuleChipsCell,type Hits} from './cells';
+import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell,AgentKindCell,ToolChipsCell,SkillChipsCell,SkillLinkCell,RuleChipsCell,LinkedSkillChipsCell,type Hits} from './cells';
 import {SortFilter} from './SortFilter';
 import {TemplateHeader} from './TemplateHeader';
 import {TEMPLATES,templateForColumn,type MastersTemplate} from './templates';
@@ -79,6 +79,16 @@ const defs=sheet.headers.flatMap((h,i)=>{const label=h;return i===0?[col('0',lab
    if(def.headerName==='Agents'||def.headerName==='Next')def.cellRenderer=SkillLinkCell;
    if(def.headerName==='Rules')def.cellRenderer=RuleChipsCell;
    if(def.headerName==='Tools')def.cellRenderer=ToolChipsCell;
+  }
+  // Rules master: each rule row shows the skills linked to it - the reverse direction of
+  // the skill-to-rule links on the Skill factory. Skill ref becomes Skills, one blue skill
+  // chip per linked skill, and the column sits right after Rule ID.
+  if(sheet.name==='Rules'){
+   for(const def of defs){
+    if(def.headerName==='Skill ref'){def.headerName='Skills';def.headerTooltip='Skills linked to this rule; the reverse of the Rules links on the Skill factory.';def.cellRenderer=LinkedSkillChipsCell;def.minWidth=170;def.width=210;}
+   }
+   const si=defs.findIndex(d=>d.headerName==='Skills');
+   if(si>1)defs.splice(1,0,defs.splice(si,1)[0]);
   }
   return defs},[active]);
  useEffect(()=>{closeFlow();setQuery('');setNotice('');setSelectedCount(0);setKindFilter('agent');setMobile(false);setMenu(null);setTemplatesOpen(false)},[active]);

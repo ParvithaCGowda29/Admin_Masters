@@ -143,3 +143,11 @@ export function RuleChipsCell(p:ICellRendererParams<RecordRow,string>){
  const rules=v.split(';').map(s=>s.trim()).filter(Boolean);
  return <span className="rule-chips">{rules.map((rule,i)=><span className="rule-chip" key={i}>{rule}</span>)}</span>;
 }
+
+// Rules master: the reverse direction of the Rules chips on the Skill factory - one blue
+// skill chip per skill linked to this rule. Same skill-chip style as the Skill factory.
+export function LinkedSkillChipsCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return <span className="skill-link-empty">&mdash;</span>;
+ const skills=v.split(/[;,]/).map(s=>s.trim()).filter(Boolean);
+ return <span className="skill-chips">{skills.map((skill,i)=><span className="skill-chip" key={i}>{skill}</span>)}</span>;
+}
