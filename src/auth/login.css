@@ -192,4 +192,7 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 .login-brand { align-items: center; gap: 0; }
 .login-brand-copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
 .login-lockup-image { display: block; width: min(100%, 390px); height: auto; object-fit: contain; border-radius: 8px; }
-:root[data-theme="dark"] .login-lockup-image { background: #fff; padding: 5px 7px; box-shadow: 0 1px 4px #00000055; }
+.login-lockup-dark { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-lockup-light { display: none; } :root:not([data-theme="light"]) .login-lockup-dark { display: block; } }
+:root[data-theme="dark"] .login-lockup-light { display: none; }
+:root[data-theme="dark"] .login-lockup-dark { display: block; }

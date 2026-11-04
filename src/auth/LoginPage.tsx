@@ -1,7 +1,8 @@
 // /login: public, no app shell. Ported 1:1 from the Pipeline UI login (frontend3/src/features/login); only the product chip and banner text differ.
 import {useEffect,useRef,useState,type FormEvent,type KeyboardEvent,type ReactNode} from 'react';
 import {EMAIL_RE,signInRequest,startSession} from './session';
-import logo from '../assets/bullm-logo-lockup.png';
+import logoLight from '../assets/bullm-logo-light.png';
+import logoDark from '../assets/bullm-logo-dark.png';
 import panel from '../assets/login/bull-panel.png';
 import './login.css';
 
@@ -34,7 +35,8 @@ export function LoginPage({fromPipeline}:{fromPipeline:boolean}){
         <section className="login-left">
           <div className="login-brand">
             <div className="login-brand-copy">
-              <img src={logo} alt="BuLLM. Enterprise Workflows. Intelligently Done." className="login-lockup-image"/>
+              <img src={logoLight} alt="BuLLM. Enterprise Workflows. Intelligently Done." className="login-lockup-image login-lockup-light"/>
+              <img src={logoDark} alt="" aria-hidden="true" className="login-lockup-image login-lockup-dark"/>
               <div className="login-product">FDE workspace<span className="login-chip">Masters</span></div>
             </div>
           </div>
