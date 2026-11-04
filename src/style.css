@@ -380,3 +380,15 @@
 .nav-admin-entry:hover{background:#eef5fa}
 :root[data-theme=dark] .nav-admin-entry.selected,:root[data-theme=dark] .nav-admin-entry.selected button{background:#123f5b;color:#86d4ff}
 :root[data-theme=dark] .nav-admin-entry:hover{background:#293c51}
+
+/* Agents Master import entry point */
+.agents-import-row{display:flex;align-items:center;margin:0 0 8px;min-height:34px}
+.agents-import-wrap{position:relative;display:inline-flex}
+.agents-import-button{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;background:#eaf5fb;border-color:#c6e2f1;color:#087caf;font-weight:600}
+.agents-import-button:hover{background:#dceff9;border-color:#a9d4e9}
+.agents-import-tip{position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%);width:260px;padding:8px 10px;border-radius:6px;background:#253246;color:#fff;font:400 12px/1.5 Arial,sans-serif;box-shadow:0 6px 20px #10203030;z-index:25;opacity:0;visibility:hidden;pointer-events:none}
+.agents-import-tip::before{content:"";position:absolute;right:100%;top:50%;transform:translateY(-50%);border:6px solid transparent;border-right-color:#253246}
+.agents-import-wrap:hover .agents-import-tip,.agents-import-button:focus-visible+.agents-import-tip{opacity:1;visibility:visible}
+:root[data-theme=dark] .agents-import-button{background:#17364b;border-color:#2a5975;color:#86d4ff}
+:root[data-theme=dark] .agents-import-button:hover{background:#204762}
+@media(max-width:600px){.agents-import-tip{left:0;top:calc(100% + 8px);transform:none}.agents-import-tip::before{right:auto;left:16px;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:#253246}}
