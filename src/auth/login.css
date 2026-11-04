@@ -188,3 +188,8 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-banner { color: #F0B54B; background: #241C0F; border-bottom-color: rgba(240, 181, 75, .25); } }
 :root[data-theme="dark"] .login-banner { color: #F0B54B; background: #241C0F; border-bottom-color: rgba(240, 181, 75, .25); }
 .login-page.has-banner { min-height: calc(100vh - 36px); }
+/* The current BuLLM lockup includes the wordmark and tagline as one artwork. */
+.login-brand { align-items: center; gap: 0; }
+.login-brand-copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.login-lockup-image { display: block; width: min(100%, 390px); height: auto; object-fit: contain; border-radius: 8px; }
+:root[data-theme="dark"] .login-lockup-image { background: #fff; padding: 5px 7px; box-shadow: 0 1px 4px #00000055; }
