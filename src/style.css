@@ -378,3 +378,8 @@
 :root[data-theme=dark] .agents-import-button{background:#17364b;border-color:#2a5975;color:#86d4ff}
 :root[data-theme=dark] .agents-import-button:hover{background:#204762}
 @media(max-width:600px){.agents-import-tip{left:0;top:calc(100% + 8px);transform:none}.agents-import-tip::before{right:auto;left:16px;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:#253246}}
+/* Keep the Agents import action and search field on the same toolbar row. */
+.toolbar:has(.agents-import-row){justify-content:space-between;flex-wrap:nowrap}
+.agents-import-row{flex:0 0 auto;margin:0;min-height:34px}
+.toolbar:has(.agents-import-row) .search-cmd{margin-left:auto;flex:0 1 290px}
+@media(max-width:600px){.toolbar:has(.agents-import-row){flex-direction:row;align-items:center;gap:10px}.toolbar:has(.agents-import-row) .search-cmd{min-width:0;width:auto;flex:1}.toolbar:has(.agents-import-row) .search-cmd input{min-height:40px}.agents-import-tip{left:0;top:calc(100% + 8px);transform:none}}
