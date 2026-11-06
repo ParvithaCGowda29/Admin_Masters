@@ -11,7 +11,20 @@ function tableMeta(name:string){return workbook.sheets.find(s=>s.name===name);}
 export function loadRows(name:string):RecordRow[]{
  const sheet=tableMeta(name)!;
  if(sheet.readOnly)return structuredClone(sheet.rows);
- try { const saved=JSON.parse(localStorage.getItem(KEY)||'{}')[name];if(Array.isArray(saved)&&saved.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string')))return saved; }catch{}
+ try {
+  const current=JSON.parse(localStorage.getItem(KEY)||'{}');let saved=current[name];
+  // November 6: removing Tool Factory Rule refs must not hide edits to ANY master.
+  // Migrate only a missing current table from the exact previous workbook snapshot.
+  // Current edits (including an intentionally empty table) and the old snapshot stay intact.
+  if(saved===undefined){
+   const old=JSON.parse(localStorage.getItem('bullm-masters-v2-c8f5730d')||'{}')[name];
+   if(Array.isArray(old)){
+    const candidate=old.map((r:any)=>name==='Tools'&&Array.isArray(r.values)&&r.values.length===12?{...r,values:r.values.filter((_:unknown,i:number)=>i!==8)}:r);
+    if(candidate.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string'))){saved=candidate;localStorage.setItem(KEY,JSON.stringify({...current,[name]:saved}));}
+   }
+  }
+  if(Array.isArray(saved)&&saved.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string')))return saved;
+ }catch{}
  return structuredClone(sheet.rows);
 }
 export function saveRows(name:string,rows:RecordRow[]){
