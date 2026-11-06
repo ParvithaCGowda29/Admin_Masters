@@ -1,35 +1,37 @@
 import {useEffect,useMemo,useState} from 'react';
 import {loadRows,saveRows,type RecordRow} from './provider';
 import {newId} from './id';
-import {belongsToOrg,promptCount,ruleExtra,saveRuleExtra,skillRefs,type RuleExtra} from './orgRuleData';
+import {belongsToOrg,nextRuleId,promptCount,ruleExtra,saveRuleExtra,skillRefs,type RuleExtra} from './orgRuleData';
 
 type Props={organization:RecordRow;onBack:()=>void;onChanged:()=>void;onSkill:(id:string)=>void};
 export function OrganizationRules({organization,onBack,onChanged,onSkill}:Props){
  const orgId=organization.values[0],orgName=organization.values[1]||orgId;
  const[rows,setRows]=useState(()=>loadRows('Rules'));const[query,setQuery]=useState('');
- const[draft,setDraft]=useState<RecordRow|null>(null);const[editing,setEditing]=useState<{row:RecordRow;tab:'rule'|'prompts';extra:RuleExtra}|null>(null);
+ const[draft,setDraft]=useState<RecordRow|null>(null);const[menu,setMenu]=useState<{x:number;y:number}|null>(null);const[editing,setEditing]=useState<{row:RecordRow;tab:'rule'|'prompts';extra:RuleExtra}|null>(null);
  const[inline,setInline]=useState<{id:string;column:number;value:string}|null>(null);const[notice,setNotice]=useState('');
  const skills=useMemo(()=>loadRows('Skills'),[]);
  const save=(next:RecordRow[])=>{saveRows('Rules',next);setRows(next);onChanged();setNotice('Saved in this browser. The rule ID and existing links are unchanged.')};
  const updateRow=(row:RecordRow)=>{const current=loadRows('Rules');save(current.some(r=>r.id===row.id)?current.map(r=>r.id===row.id?row:r):[row,...current])};
  const scoped=rows.filter(r=>belongsToOrg(r,orgId));const visible=scoped.filter(r=>r.values.join(' ').toLowerCase().includes(query.toLowerCase()));
  const open=(row:RecordRow,tab:'rule'|'prompts')=>{setEditing({row:structuredClone(row),tab,extra:structuredClone(ruleExtra(row.id))});setInline(null)};
+ const startDraft=()=>{const values=Array(9).fill('');values[0]=nextRuleId(loadRows('Rules'));values[3]=`Org: ${orgId}`;values[6]='Draft';setDraft({id:newId(),values});setQuery('')};
  const saveEditor=()=>{if(!editing)return;if(!editing.row.values[1].trim()){setNotice('Enter rule text before saving.');return}saveRuleExtra(editing.row.id,editing.extra);updateRow(editing.row);setEditing(null)};
- useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape'){setEditing(null);setDraft(null);setInline(null)}if(e.key==='Enter'&&e.ctrlKey&&editing){e.preventDefault();saveEditor()}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[editing]);
+ useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape'){setEditing(null);setDraft(null);setInline(null);setMenu(null)}if(e.key==='Enter'&&e.ctrlKey&&editing){e.preventDefault();saveEditor()}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[editing]);
  const setRuleField=(i:number,v:string)=>setEditing(e=>{if(!e)return e;const row=structuredClone(e.row);row.values[i]=v;return {...e,row}});
  const skillName=(id:string)=>skills.find(s=>s.values[0]===id)?.values[1]||id;
  const openSkill=(id:string)=>{if(skills.some(s=>s.values[0]===id))onSkill(id);else setNotice(`Skill ${id} is referenced by this rule but is not present in the current Skills master. Its link is preserved.`)};
  const renderSkills=(r:RecordRow)=>skillRefs(r.values[8]||'').map(id=><button type="button" className="org-skill-chip" key={id} title={id} onClick={()=>openSkill(id)}>{skillName(id)}</button>);
  const cell=(r:RecordRow,i:number)=>inline?.id===r.id&&inline.column===i?<div className="org-rule-inline" onKeyDown={e=>{if(e.key==='Escape')setInline(null);if(e.key==='Enter'&&e.ctrlKey){const row=structuredClone(r);row.values[i]=inline.value;updateRow(row);setInline(null)}}}><textarea autoFocus aria-label={`Edit ${i===1?'rule text':'status'}`} value={inline.value} onChange={e=>setInline({...inline,value:e.target.value})}/><div><button onClick={()=>setInline(null)}>Cancel</button><button className="primary" onClick={()=>{const row=structuredClone(r);row.values[i]=inline.value;updateRow(row);setInline(null)}}>Save</button></div></div>:<div tabIndex={0} title="Double-click to edit" onDoubleClick={()=>setInline({id:r.id,column:i,value:r.values[i]||''})} onKeyDown={e=>{if(e.key==='Enter')setInline({id:r.id,column:i,value:r.values[i]||''})}}>{r.values[i]||'Not set'}</div>;
- return <div className="org-rules-workspace">
+ return <div className="org-rules-workspace" onClick={()=>setMenu(null)}>
   <button className="org-back" onClick={onBack}>‹ Organisations</button>
-  <p className="org-rules-note">{scoped.length} rules · Double-click text or status to edit · Ctrl+Enter to save · Esc to cancel</p>
+  <p className="org-rules-note">{scoped.length} rules · Double-click text or status to edit · Ctrl+Enter to save · Esc to cancel · Right-click to add a rule</p>
   <div className="org-rules-toolbar"><input type="search" aria-label="Search organization rules" placeholder="Search rules" value={query} onChange={e=>setQuery(e.target.value)}/></div>
-  <div className="org-rules-table-wrap"><table className="org-rules-table" aria-label={`Rules for ${orgName}`}><thead><tr><th>Rule ID</th><th>Rule</th><th>Skills</th><th>Prompts</th><th>Status</th></tr></thead><tbody>
+  <div className="org-rules-table-wrap" onContextMenu={e=>{e.preventDefault();setMenu({x:e.clientX,y:e.clientY})}}><table className="org-rules-table" aria-label={`Rules for ${orgName}`}><thead><tr><th>Rule ID</th><th>Rule</th><th>Skills</th><th>Prompts</th><th>Status</th></tr></thead><tbody>
    {draft&&<tr className="org-draft"><td>{draft.values[0]}<small>Assigned automatically</small></td><td><textarea autoFocus aria-label="New rule text" placeholder="Enter rule text" value={draft.values[1]} onChange={e=>{const d=structuredClone(draft);d.values[1]=e.target.value;setDraft(d)}}/></td><td><label>Link skills<select aria-label="New rule skills" multiple value={skillRefs(draft.values[8])} onChange={e=>{const d=structuredClone(draft);d.values[8]=Array.from(e.target.selectedOptions).map(o=>o.value).join('; ');setDraft(d)}}>{skills.map(s=><option key={s.id} value={s.values[0]}>{s.values[1]||s.values[0]}</option>)}</select></label></td><td>After save</td><td><span>Draft</span><div className="org-draft-actions"><button className="primary" disabled={!draft.values[1].trim()} onClick={()=>{updateRow(draft);setDraft(null)}}>Save</button><button onClick={()=>setDraft(null)}>Cancel</button></div></td></tr>}
    {visible.map(r=><tr key={r.id}><td><button className="org-rule-id" onClick={()=>open(r,'rule')}>{r.values[0]}</button></td><td>{cell(r,1)}</td><td><div className="org-chip-list">{renderSkills(r)}</div><button className="org-link-button" onClick={()=>open(r,'rule')}>Edit links</button></td><td><button className="org-prompts-count" onClick={()=>open(r,'prompts')}>{promptCount(r.id)} prompts ›</button></td><td>{cell(r,6)}</td></tr>)}
    {!visible.length&&!draft&&<tr><td colSpan={5}>No matching rules for this organization.</td></tr>}
   </tbody></table></div>
+  {menu&&<div className="pop-menu context-menu" role="menu" style={{left:menu.x,top:menu.y}} onClick={e=>e.stopPropagation()}><button role="menuitem" className="primary" disabled={!!draft} onClick={()=>{setMenu(null);startDraft()}}>Add rule</button></div>}
   {notice&&<div className="org-save-note" role="status">{notice}<button aria-label="Dismiss rules notice" onClick={()=>setNotice('')}>×</button></div>}
   <p className="org-rules-note">Saved in this browser only · No backend connected</p>
   {editing&&<div className="org-drawer-shade" onMouseDown={()=>setEditing(null)}><section className="org-rule-drawer" role="dialog" aria-modal="true" aria-label="Rule editor" onMouseDown={e=>e.stopPropagation()}>
