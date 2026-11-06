@@ -14,10 +14,11 @@ try{
   const login=page.getByRole('button',{name:/sign in|log in|continue/i});
   if(await login.count()){console.log('login screen present');}
   await page.locator('.ag-header-cell').first().waitFor();
+  const NAV={Organization:'Organisations',Agents:'Agent factory',Rules:'Rules'};
   for(const master of ['Organization','Agents','Rules']){
    await page.evaluate(async m=>{const p=await import('/src/provider.ts');const w=(await import('/src/workbook.json')).default;const s=w.sheets.find(x=>x.name===m);const mk=(c)=>({id:'t'+c,values:s.headers.map((_,i)=>i===1?c:'')});p.saveRows(m,['Beta','Alpha','Gamma'].map(mk))},master);
    await page.reload();await page.locator('.ag-header-cell').first().waitFor();
-   await page.getByRole('button',{name:new RegExp('^'+master)}).first().click().catch(async()=>{await page.getByText(master,{exact:true}).first().click()});
+   await page.getByRole('button',{name:new RegExp('^'+NAV[master])}).first().click();
    await page.locator('.ag-row').first().waitFor();
    const col=async()=>page.locator('.ag-center-cols-container .ag-row').evaluateAll(rs=>rs.sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top).map(r=>r.querySelector('[col-id="1"]')?.textContent.trim()));
    const before=await col();

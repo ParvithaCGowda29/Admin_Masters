@@ -10,6 +10,16 @@ try{for(const theme of ['light','dark']){
  const baseline=await page.evaluate(async()=>{const p=await import('/src/provider.ts');return {org:p.loadRows('Organization'),rules:p.loadRows('Rules'),skills:p.loadRows('Skills')}});
  // Real data and navigation preserved; rule column available after Data Sources.
  assert.equal(await page.getByRole('button',{name:/^Agent factory/}).count(),1);assert.equal(await page.getByRole('button',{name:/^Rules 41/}).count(),1);
+ // Requested removal: no + Add organization button on the Organisations tab.
+ assert.equal(await page.getByRole('button',{name:'+ Add organization'}).count(),0,'add organization button removed');
+ // Right-click on the Organisations grid still adds and deletes a row (the remaining add path).
+ await page.locator('.grid').click({button:'right'});await page.getByRole('menuitem',{name:'Add row',exact:true}).click();await page.waitForTimeout(300);
+ assert.equal(await page.evaluate(async()=>{const p=await import('/src/provider.ts');return p.loadRows('Organization').length}),4,'right-click still adds a row');
+ await page.keyboard.press('Escape');page.once('dialog',d=>void d.accept());
+ await page.locator('.ag-center-cols-container .ag-row').last().click({button:'right'});await page.getByRole('menuitem',{name:'Delete row',exact:true}).click();await page.waitForTimeout(300);
+ assert.equal(await page.evaluate(async()=>{const p=await import('/src/provider.ts');return p.loadRows('Organization').length}),3,'test row deleted, original records preserved');
+ // The tab search position is the reference for the rules screen below.
+ const tabSearch=await page.locator('.search-cmd input').boundingBox();
  await page.waitForTimeout(400);await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=1800);await page.waitForTimeout(200);
  await page.screenshot({path:`${shots}/org-list-${theme}.png`});
  await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=0);
@@ -24,9 +34,10 @@ try{for(const theme of ['light','dark']){
  assert.equal(await page.locator('.org-rules-workspace h2').count(),0,'company heading removed');
  assert.equal(await page.locator('.org-scope-note').count(),0,'membership note removed');
  assert.equal(await page.getByRole('button',{name:'+ Add rule'}).count(),0,'add rule button removed');
- // Search field sits on the right-hand side of the toolbar.
+ // Search field sits in the same top-right place as on the master tabs.
  const box=await page.getByLabel('Search organization rules').boundingBox();const bar=await page.locator('.org-rules-toolbar').boundingBox();
  assert.ok(box&&bar&&Math.abs((box.x+box.width)-(bar.x+bar.width))<24,'search field on the right-hand side');
+ assert.ok(box&&tabSearch&&Math.abs(box.y-tabSearch.y)<=4&&Math.abs((box.x+box.width)-(tabSearch.x+tabSearch.width))<=2,'search bar in the same place as on the tabs');
  await page.screenshot({path:`${shots}/rules-list-${theme}.png`});
  // Example prompts are seeded and open from the Prompts column; closing without edits keeps them examples.
  await page.locator('.org-rules-table tbody tr').first().getByRole('button',{name:'3 prompts ›',exact:true}).click();const seeded=page.getByRole('dialog',{name:'Rule editor'});
@@ -48,6 +59,6 @@ try{for(const theme of ['light','dark']){
  // Search filters the rules and clears back.
  await page.getByLabel('Search organization rules').fill('privacy');const filtered=await page.locator('.org-rules-table tbody tr').count();assert.ok(filtered>0&&filtered<42,'search filters rules');await page.getByLabel('Search organization rules').fill('');assert.equal(await page.locator('.org-rules-table tbody tr').count(),42);
  // Saved prompts and the added rule persist across reload.
- await page.reload();await page.locator('.ag-row').first().waitFor();await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=1800);await page.waitForTimeout(100);await page.waitForTimeout(400);await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=1800);await page.waitForTimeout(200);await page.locator('.ag-center-cols-container .ag-row').first().getByRole('button',{name:'42 rules ›'}).click();await page.locator('.org-rules-table').waitFor();await page.locator('.org-rules-table tbody tr').first().getByRole('button',{name:'2 prompts ›',exact:true}).click();await page.getByLabel('System prompt',{exact:true}).waitFor();assert.equal(await page.getByLabel('System prompt',{exact:true}).inputValue(),'QA system prompt');assert.equal(await page.getByLabel('Micro prompt 1 text').inputValue(),'QA micro prompt');assert.deepEqual(errors,[]);console.log(theme+': organization edit/cancel, rules screen removals, right-click add, right search, example prompts, prompts/counts/reload and preservation PASS');await page.close();
+ await page.reload();await page.locator('.ag-row').first().waitFor();await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=1800);await page.waitForTimeout(100);await page.waitForTimeout(400);await page.locator('.ag-body-horizontal-scroll-viewport').evaluate(e=>e.scrollLeft=1800);await page.waitForTimeout(200);await page.locator('.ag-center-cols-container .ag-row').first().getByRole('button',{name:'42 rules ›'}).click();await page.locator('.org-rules-table').waitFor();await page.locator('.org-rules-table tbody tr').first().getByRole('button',{name:'2 prompts ›',exact:true}).click();await page.getByLabel('System prompt',{exact:true}).waitFor();assert.equal(await page.getByLabel('System prompt',{exact:true}).inputValue(),'QA system prompt');assert.equal(await page.getByLabel('Micro prompt 1 text').inputValue(),'QA micro prompt');assert.deepEqual(errors,[]);console.log(theme+': organization edit/cancel, add-organization button removed, grid right-click add/delete, search place consistent, rules screen removals, right-click add, example prompts, prompts/counts/reload and preservation PASS');await page.close();
 }}
 finally{await browser.close();await server.close()}
