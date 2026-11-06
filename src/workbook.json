@@ -1086,7 +1086,6 @@
     "Status",
     "Source version / checked_at",
     "Refresh Frequency",
-    "Rule refs",
     "Record type",
     "Source tab",
     "BuLLM badge"
@@ -1100,7 +1099,6 @@
     "Record and deployment status",
     "Registry version/date; tool version and freshness noted",
     "Source refresh cadence to confirm",
-    "Governance Rules IDs",
     "Agent, Assistant, MCP server, OSS repo, Skill, API, Framework or Enterprise system",
     "Leaderboard, Repo Library, Skill Library or Tech Stack",
     "BuLLM Recommended, BuLLM Tested, Gap or High fit"
@@ -1117,7 +1115,6 @@
       "Reference",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Leaderboard #7",
       "-"
@@ -1135,7 +1132,6 @@
       "Candidate to pilot",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Leaderboard #13",
       "-"
@@ -1153,7 +1149,6 @@
       "Watch",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Leaderboard #15",
       "-"
@@ -1171,7 +1166,6 @@
       "Candidate to pilot",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Leaderboard #16",
       "-"
@@ -1189,7 +1183,6 @@
       "Watch",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Repo Library classics",
       "-"
@@ -1207,7 +1200,6 @@
       "Watch",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Agent",
       "Repo Library classics",
       "-"
@@ -1225,7 +1217,6 @@
       "Candidate to pilot",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Assistant",
       "Leaderboard #9",
       "-"
@@ -1243,7 +1234,6 @@
       "In use",
       "Snapshot 03-11-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Assistant",
       "Tech Stack",
       "-"
@@ -1261,7 +1251,6 @@
       "Watch",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Assistant",
       "Repo Library classics",
       "-"
@@ -1279,7 +1268,6 @@
       "Reference",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Assistant",
       "Repo Library classics",
       "-"
@@ -1297,7 +1285,6 @@
       "Reference",
       "Snapshot 31-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Leaderboard #3",
       "-"
@@ -1315,7 +1302,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "-"
@@ -1333,7 +1319,6 @@
       "Adopted",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "-"
@@ -1351,7 +1336,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "BuLLM Tested"
@@ -1369,7 +1353,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "BuLLM Tested"
@@ -1387,7 +1370,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "BuLLM Tested"
@@ -1405,7 +1387,6 @@
       "Add to config",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "-"
@@ -1423,7 +1404,6 @@
       "Add to config",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP server",
       "Repo Library",
       "-"
@@ -1441,7 +1421,6 @@
       "Adopted",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1459,7 +1438,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1477,7 +1455,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "-"
@@ -1495,7 +1472,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "-"
@@ -1513,7 +1489,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1531,7 +1506,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "-"
@@ -1549,7 +1523,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1567,7 +1540,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1585,7 +1557,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "OSS repo",
       "Repo Library",
       "BuLLM Recommended"
@@ -1603,7 +1574,6 @@
       "High fit",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1621,7 +1591,6 @@
       "High fit",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1639,7 +1608,6 @@
       "Official",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1657,7 +1625,6 @@
       "Medium fit",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1675,7 +1642,6 @@
       "862k installs",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1693,7 +1659,6 @@
       "613k installs",
       "Snapshot 19-10-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Skill",
       "Skill Library",
       "-"
@@ -1711,7 +1676,6 @@
       "Watch",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "API",
       "Repo Library classics",
       "-"
@@ -1729,7 +1693,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "API",
       "Repo Library",
       "-"
@@ -1747,7 +1710,6 @@
       "In use",
       "Snapshot 03-11-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "API",
       "Tech Stack",
       "-"
@@ -1765,7 +1727,6 @@
       "Planned",
       "Snapshot 03-11-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "API",
       "Tech Stack",
       "-"
@@ -1783,7 +1744,6 @@
       "In use",
       "v5.0.12",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Framework",
       "Tech Stack",
       "-"
@@ -1801,7 +1761,6 @@
       "In use",
       "Snapshot 03-11-2026",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Framework",
       "Tech Stack",
       "-"
@@ -1819,7 +1778,6 @@
       "Adopted",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Framework",
       "Repo Library classics",
       "-"
@@ -1837,7 +1795,6 @@
       "Reference",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Framework",
       "Repo Library classics",
       "-"
@@ -1855,7 +1812,6 @@
       "Watch",
       "Snapshot 27-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "Framework",
       "Repo Library classics",
       "-"
@@ -1873,7 +1829,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "BuLLM Tested"
@@ -1891,7 +1846,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "BuLLM Tested"
@@ -1909,7 +1863,6 @@
       "Watch",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "BuLLM Tested"
@@ -1927,7 +1880,6 @@
       "Pilot",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "BuLLM Recommended"
@@ -1945,7 +1897,6 @@
       "Pilot, scan first",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "BuLLM Recommended"
@@ -1963,7 +1914,6 @@
       "Gap",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "-"
@@ -1981,7 +1931,6 @@
       "Gap",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "-"
@@ -1999,7 +1948,6 @@
       "Gap",
       "Snapshot 24-10-2026",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-RBAC",
       "Enterprise system",
       "Repo Library",
       "-"
@@ -2017,7 +1965,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2035,7 +1982,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2053,7 +1999,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2071,7 +2016,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Internal tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2089,7 +2033,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2107,7 +2050,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Script",
       "Common Masters 26-10-2026",
       "-"
@@ -2125,7 +2067,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2143,7 +2084,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Analytics",
       "Common Masters 26-10-2026",
       "-"
@@ -2161,7 +2101,6 @@
       "Category recorded; configuration pending",
       "Added 2026-10-25 per user; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-LAUNCH",
       "Sandbox",
       "Common Masters 26-10-2026",
       "-"
@@ -2179,7 +2118,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2197,7 +2135,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2215,7 +2152,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2233,7 +2169,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2251,7 +2186,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2269,7 +2203,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2287,7 +2220,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -2305,7 +2237,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2323,7 +2254,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2341,7 +2271,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2359,7 +2288,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2377,7 +2305,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2395,7 +2322,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -2413,7 +2339,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2431,7 +2356,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2449,7 +2373,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2467,7 +2390,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2485,7 +2407,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2503,7 +2424,6 @@
       "[MAPPED from control sheet] Open source | No MCP; PHP test framework (verified repo)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2521,7 +2441,6 @@
       "[MAPPED from control sheet] Open source (GPL, WordPress project) | No MCP; CLI (verified)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2539,7 +2458,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2557,7 +2475,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -2575,7 +2492,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Internal tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2593,7 +2509,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2611,7 +2526,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2629,7 +2543,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2647,7 +2560,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2665,7 +2577,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2683,7 +2594,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -2701,7 +2611,6 @@
       "[MAPPED from control sheet] Open source (MIT) | No MCP; scriptable CLI (verified)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Script",
       "Common Masters 26-10-2026",
       "-"
@@ -2719,7 +2628,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Script",
       "Common Masters 26-10-2026",
       "-"
@@ -2737,7 +2645,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2755,7 +2662,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2773,7 +2679,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2791,7 +2696,6 @@
       "[MAPPED from control sheet] Theme | Free | Suggested: Recommended | Recommended with Astra",
       "WordPress Automation - Master Control Sheet v1 (15 Oct 2026); version n/a; last verified -",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2809,7 +2713,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2827,7 +2730,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation - Master Control Sheet v1 (15 Oct 2026); version n/a; last verified -",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2845,7 +2747,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2863,7 +2764,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2881,7 +2781,6 @@
       "[MAPPED from control sheet] Block Editor | ZipWp | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2899,7 +2798,6 @@
       "[MAPPED from control sheet] Block Editor | ZipWp | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2917,7 +2815,6 @@
       "[MAPPED from control sheet] Duplicating | Free | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2935,7 +2832,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2953,7 +2849,6 @@
       "[MAPPED from control sheet]  | Paid | Suggested:  | Premium tier of decided SEO plugin",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2971,7 +2866,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -2989,7 +2883,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3007,7 +2900,6 @@
       "[MAPPED from control sheet] Schema | Free | Suggested: Mandatory",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3025,7 +2917,6 @@
       "[MAPPED from control sheet] Forms | Free | Suggested: Choose one forms solution",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3043,7 +2934,6 @@
       "[MAPPED from control sheet] Forms | Free | Suggested: Choose one forms solution",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3061,7 +2951,6 @@
       "[MAPPED from control sheet] Forms | Paid | Suggested: Optional / if licensed",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3079,7 +2968,6 @@
       "[MAPPED from control sheet] Security | Free | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3097,7 +2985,6 @@
       "[MAPPED from control sheet] Security | Free | Suggested: Recommended",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3115,7 +3002,6 @@
       "[MAPPED from control sheet] Security | Free | Suggested: Secure Wordpress Login URL",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3133,7 +3019,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3151,7 +3036,6 @@
       "[MAPPED from control sheet] Performance | Paid | Suggested: Optional / based on hosting",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3169,7 +3053,6 @@
       "[MAPPED from control sheet] Performance | Paid | Suggested: Optional / based on hosting",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3187,7 +3070,6 @@
       "[MAPPED from control sheet] Performance | Free | Suggested: Optional / based on hosting",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3205,7 +3087,6 @@
       "[MAPPED from control sheet] Performance | Free | Suggested: Optional / based on hosting",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3223,7 +3104,6 @@
       "[MAPPED from control sheet] Redirects | Free | Suggested: As needed",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3241,7 +3121,6 @@
       "[MAPPED from control sheet] Analytics | Free | Suggested: Recommended if needed",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3259,7 +3138,6 @@
       "[MAPPED from control sheet] Anti-spam | Free | Suggested: As needed",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3277,7 +3155,6 @@
       "[MAPPED from control sheet] Email | Free | Suggested: As needed",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3295,7 +3172,6 @@
       "[MAPPED from control sheet] Downloads | Free | Suggested: Only if required",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3313,7 +3189,6 @@
       "[MAPPED from control sheet] Image Optimization | Free | Suggested: Recommended",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3331,7 +3206,6 @@
       "[MAPPED from control sheet] Image Optimization | Free | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3349,7 +3223,6 @@
       "[MAPPED from control sheet] Image Optimization | Free | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3367,7 +3240,6 @@
       "[MAPPED from control sheet] Image Optimization | Free | Suggested: Optional",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -3385,7 +3257,6 @@
       "[MAPPED from control sheet] Free (Google) | REST API (verified official docs)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Analytics",
       "Common Masters 26-10-2026",
       "-"
@@ -3403,7 +3274,6 @@
       "[MAPPED from control sheet] Free (Google, API key) | REST API (verified official docs)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Analytics",
       "Common Masters 26-10-2026",
       "-"
@@ -3421,7 +3291,6 @@
       "[MAPPED from control sheet] Free (Google) | REST API (verified)",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Analytics",
       "Common Masters 26-10-2026",
       "-"
@@ -3439,7 +3308,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Analytics",
       "Common Masters 26-10-2026",
       "-"
@@ -3457,7 +3325,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "WordPress Automation control sheet v1 (15 Oct 2026); details condensed.",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3475,7 +3342,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -3493,7 +3359,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3511,7 +3376,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3529,7 +3393,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3547,7 +3410,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3565,7 +3427,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3583,7 +3444,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3601,7 +3461,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3619,7 +3478,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3637,7 +3495,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3655,7 +3512,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3673,7 +3529,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3691,7 +3546,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3709,7 +3563,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3727,7 +3580,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3745,7 +3597,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3763,7 +3614,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3781,7 +3631,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3799,7 +3648,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3817,7 +3665,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3835,7 +3682,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3853,7 +3699,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3871,7 +3716,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3889,7 +3733,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3907,7 +3750,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3925,7 +3767,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3943,7 +3784,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3961,7 +3801,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3979,7 +3818,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -3997,7 +3835,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -4015,7 +3852,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "BuLLMaps Workflow v0.1 > Tooling tab (checked 23 Oct 2026); tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE; RULE-POLICY-PRIVACY; RULE-POLICY-SPEND",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -4033,7 +3869,6 @@
       "Mapped from the WordPress control sheet; see source row for details.",
       "Added 2026-10-25 per user; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-LAUNCH",
       "Sandbox",
       "Common Masters 26-10-2026",
       "-"
@@ -4051,7 +3886,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "MCP",
       "Common Masters 26-10-2026",
       "-"
@@ -4069,7 +3903,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Weekly scan",
-      "RULE-POLICY-RESOURCE",
       "API",
       "Common Masters 26-10-2026",
       "-"
@@ -4087,7 +3920,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Open source",
       "Common Masters 26-10-2026",
       "-"
@@ -4105,7 +3937,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Internal tool",
       "Common Masters 26-10-2026",
       "-"
@@ -4123,7 +3954,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "External tool",
       "Common Masters 26-10-2026",
       "-"
@@ -4141,7 +3971,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Script",
       "Common Masters 26-10-2026",
       "-"
@@ -4159,7 +3988,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Plugin",
       "Common Masters 26-10-2026",
       "-"
@@ -4177,7 +4005,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Tool",
       "Common Masters 26-10-2026",
       "-"
@@ -4195,7 +4022,6 @@
       "Category recorded; configuration pending",
       "Registry v0.1 / 2026-10-08; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-RESOURCE",
       "Tool",
       "Common Masters 26-10-2026",
       "-"
@@ -4213,7 +4039,6 @@
       "Category recorded; configuration pending",
       "Added 2026-10-25 per user; tool version unpinned",
       "Monthly re-pull",
-      "RULE-POLICY-LAUNCH",
       "Sandbox",
       "Common Masters 26-10-2026",
       "-"

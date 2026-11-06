@@ -25,6 +25,7 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const categorical=useMemo(()=>{
   const out:{i:number;label:string;values:string[]}[]=[];
   for(let i=1;i<headers.length;i++){
+   if(active==='Agents'&&headers[i]==='Kind')continue;
    const seen=new Map<string,number>();
    for(const r of rows){const v=(r.values[i]||'').trim();if(v)seen.set(v,(seen.get(v)||0)+1)}
    if(seen.size>=2&&seen.size<=12)out.push({i,label:headers[i],values:[...seen.entries()].sort((a,b)=>b[1]-a[1]).map(([v])=>v)});

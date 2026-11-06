@@ -331,6 +331,9 @@
 .kind-seg button span{color:#98a2b3;font-size:12px}
 .kind-seg button.on{background:#ffffff;border-color:#e5e9f0;color:#17222e;font-weight:600;box-shadow:0 1px 2px rgba(16,24,40,.06)}
 .kind-seg button.on span{color:#66707e}
+.kind-row{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.kind-row .kind-seg{margin:0}
+@media(max-width:600px){.kind-row{flex-wrap:wrap;gap:8px}}
 .fixed-cols{margin-left:auto}
 .agent-type{display:inline-block;padding:3px 12px;border-radius:11px;font-size:12px;font-weight:600;border:1px solid #d7dde5;background:#eef1f5;color:#6c7787;white-space:nowrap}
 .agent-type.internal{background:#e4f3fc;border-color:#bfe0f4;color:#0b6ea8}
@@ -376,7 +379,6 @@
 
 /* Import agent modal */
 /* Agents Master import entry point */
-.agents-import-row{display:flex;align-items:center;margin:0 0 8px;min-height:34px}
 .agents-import-wrap{position:relative;display:inline-flex}
 .agents-import-button{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;background:#eaf5fb;border-color:#c6e2f1;color:#087caf;font-weight:600}
 .agents-import-button:hover{background:#dceff9;border-color:#a9d4e9}
@@ -387,7 +389,3 @@
 :root[data-theme=dark] .agents-import-button:hover{background:#204762}
 @media(max-width:600px){.agents-import-tip{left:0;top:calc(100% + 8px);transform:none}.agents-import-tip::before{right:auto;left:16px;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:#253246}}
 /* Keep the Agents import action and search field on the same toolbar row. */
-.toolbar:has(.agents-import-row){justify-content:space-between;flex-wrap:nowrap}
-.agents-import-row{flex:0 0 auto;margin:0;min-height:34px}
-.toolbar:has(.agents-import-row) .search-cmd{margin-left:auto;flex:0 1 290px}
-@media(max-width:600px){.toolbar:has(.agents-import-row){flex-direction:row;align-items:center;gap:10px}.toolbar:has(.agents-import-row) .search-cmd{min-width:0;width:auto;flex:1}.toolbar:has(.agents-import-row) .search-cmd input{min-height:40px}.agents-import-tip{left:0;top:calc(100% + 8px);transform:none}}
