@@ -22,7 +22,7 @@ import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell
 import {SortFilter} from './SortFilter';
 import {OrganizationCellEditor} from './OrganizationCellEditor';
 import {OrganizationRules} from './OrganizationRules';
-import {orgRuleCount} from './organizationRules';
+import {orgRuleCount} from './orgRuleData';
 import {TemplateHeader} from './TemplateHeader';
 import {TEMPLATES,templateForColumn,type MastersTemplate} from './templates';
 import {getSession,logout,switchToPipeline} from './auth/session';
@@ -31,7 +31,7 @@ const lightTheme=themeQuartz.withParams({accentColor:'#0084C2',backgroundColor:'
 const darkTheme=themeQuartz.withParams({accentColor:'#56b8ef',backgroundColor:'#17212f',foregroundColor:'#e2e9f2',headerBackgroundColor:'#202d3e',borderColor:'#36465a',fontFamily:'Inter, Arial, sans-serif',fontSize:14,headerFontSize:16,rowVerticalPaddingScale:1.2});
 const TIPS:Record<string,string>={Masters:'All master tables from the BuLLM source workbook.',Organization:'Business units, locations, customers, systems and certifications.',Rules:'Domain, DFM, sourcing and costing rules for manufacturing.',Agents:'AI agents with their models, repos, prompts, evals and logs.',Skills:'Skill factory: every step is a skill, linked to its agents, rules and tools.',Tools:'Tool Factory: the tool registry - agents, assistants, MCPs, OSS, skills, APIs, frameworks and enterprise systems from the Tech Stack & Tool Factory workbook.'};
 // Display names: the sheet keys stay the workbook names (imports map on them); only labels change.
-const LABELS:Record<string,string>={Agents:'Agent factory',Tools:'Tool Factory',Skills:'Skill factory'};
+const LABELS:Record<string,string>={Organization:'Organisations',Agents:'Agent factory',Tools:'Tool Factory',Skills:'Skill factory'};
 export default function App(){
  const[dark,setDark]=useState(()=>{try{return localStorage.getItem('bullm-masters-theme')==='dark'}catch{return false}});
  const[expanded,setExpanded]=useState(true);

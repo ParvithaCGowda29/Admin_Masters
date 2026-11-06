@@ -11,7 +11,7 @@ const matchesRow=(row:RecordRow,words:string[])=>words.every(w=>row.values.some(
 
 // cmdk search panel anchored to the toolbar search field: chips, browse-by-field and grouped
 // matches drive the existing table filter; the grid stays visible behind the panel.
-const LABELS:Record<string,string>={Agents:'Agent factory',Tools:'Tool Factory',Skills:'Skill factory'};
+const LABELS:Record<string,string>={Organization:'Organisations',Agents:'Agent factory',Tools:'Tool Factory',Skills:'Skill factory'};
 export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const label=LABELS[active]||active;
  const[open,setOpen]=useState(false);

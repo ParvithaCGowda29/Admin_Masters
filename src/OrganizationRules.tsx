@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {loadRows,saveRows,type RecordRow} from './provider';
 import {newId} from './id';
-import {belongsToOrg,nextRuleId,promptCount,ruleExtra,saveRuleExtra,skillRefs,type RuleExtra} from './organizationRules';
+import {belongsToOrg,nextRuleId,promptCount,ruleExtra,saveRuleExtra,skillRefs,type RuleExtra} from './orgRuleData';
 
 type Props={organization:RecordRow;onBack:()=>void;onChanged:()=>void;onSkill:(id:string)=>void};
 export function OrganizationRules({organization,onBack,onChanged,onSkill}:Props){
@@ -22,7 +22,7 @@ export function OrganizationRules({organization,onBack,onChanged,onSkill}:Props)
  const renderSkills=(r:RecordRow)=>skillRefs(r.values[8]||'').map(id=><button type="button" className="org-skill-chip" key={id} title={id} onClick={()=>openSkill(id)}>{skillName(id)}</button>);
  const cell=(r:RecordRow,i:number)=>inline?.id===r.id&&inline.column===i?<div className="org-rule-inline" onKeyDown={e=>{if(e.key==='Escape')setInline(null);if(e.key==='Enter'&&e.ctrlKey){const row=structuredClone(r);row.values[i]=inline.value;updateRow(row);setInline(null)}}}><textarea autoFocus aria-label={`Edit ${i===1?'rule text':'status'}`} value={inline.value} onChange={e=>setInline({...inline,value:e.target.value})}/><div><button onClick={()=>setInline(null)}>Cancel</button><button className="primary" onClick={()=>{const row=structuredClone(r);row.values[i]=inline.value;updateRow(row);setInline(null)}}>Save</button></div></div>:<div tabIndex={0} title="Double-click to edit" onDoubleClick={()=>setInline({id:r.id,column:i,value:r.values[i]||''})} onKeyDown={e=>{if(e.key==='Enter')setInline({id:r.id,column:i,value:r.values[i]||''})}}>{r.values[i]||'Not set'}</div>;
  return <div className="org-rules-workspace">
-  <button className="org-back" onClick={onBack}>‹ Organization</button><h2>{orgName} · Rules</h2>
+  <button className="org-back" onClick={onBack}>‹ Organisations</button><h2>{orgName} · Rules</h2>
   <p className="org-rules-note">{scoped.length} rules · Double-click text or status to edit · Ctrl+Enter to save · Esc to cancel</p>
   <p className="org-scope-note">Membership follows the existing organization references. Proposed scopes and approval status remain as recorded; these are not activated policies.</p>
   <div className="org-rules-toolbar"><input type="search" aria-label="Search organization rules" placeholder="Search rules" value={query} onChange={e=>setQuery(e.target.value)}/><button className="primary" disabled={!!draft} onClick={()=>{const values=Array(9).fill('');values[0]=nextRuleId(loadRows('Rules'));values[3]=`Org: ${orgId}`;values[6]='Draft';setDraft({id:newId(),values});setQuery('')}}>+ Add rule</button></div>
