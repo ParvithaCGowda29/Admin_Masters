@@ -419,3 +419,9 @@ main{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden
 main>header{flex:0 0 auto}
 main>.content{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column}
 .content>.grid{flex:1 1 0;min-height:0;height:auto}
+
+/* Masters sidebar: rows stay clean by default - no info icons, no count badges.
+   The count appears as a plain muted numeral only while its row is hovered (or keyboard-focused). */
+.nav-item small.nav-count{background:none;color:#7b8ba3;opacity:0;transition:opacity .15s ease}
+.nav-branch:hover .nav-count,.nav-branch:focus-within .nav-count{opacity:1}
+:root[data-theme=dark] .nav-item small.nav-count{background:none;color:#93a6c2}
