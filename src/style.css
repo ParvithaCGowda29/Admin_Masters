@@ -411,3 +411,11 @@
 
 /* Skills file-picker entry; the selected file is intentionally not processed yet. */
 .table-note-right{display:flex;align-items:center;justify-content:flex-end;min-width:max-content}.skills-import-control{position:relative;display:inline-flex;align-items:center}.skills-import-button{display:inline-flex;align-items:center;gap:7px;height:32px;padding:6px 13px;background:#f2f9fd;border-color:#c5d0e1;color:#006c99;font-weight:600}.skills-import-button:hover{background:#e6f2fa}.skills-import-input{display:none}:root[data-theme=dark] .skills-import-button{background:#1c2e51;border-color:#1c2e51;color:#5b83f2}:root[data-theme=dark] .skills-import-button:hover{background:#1c2e51}
+
+/* Keep the app chrome fixed to the viewport; AG Grid owns the only grid-page scroll area. */
+html,body,#root{height:100%;overflow:hidden}
+.app{height:100vh;height:100dvh;min-height:0;overflow:hidden}
+main{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+main>header{flex:0 0 auto}
+main>.content{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.content>.grid{flex:1 1 0;min-height:0;height:auto}
