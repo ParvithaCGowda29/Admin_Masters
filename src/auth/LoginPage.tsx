@@ -1,8 +1,8 @@
-// /login: public, no app shell. Ported 1:1 from the Pipeline UI login (frontend3/src/features/login); only the product chip and banner text differ.
+// /login: public, no app shell. Ported 1:1 from the BAM_UI login (BAM_UI/src/features/login); only the banner text differs.
 import {useEffect,useRef,useState,type FormEvent,type KeyboardEvent,type ReactNode} from 'react';
 import {EMAIL_RE,signInRequest,startSession} from './session';
-import logoLight from '../assets/bullm-logo-light.png';
-import logoDark from '../assets/bullm-logo-dark.png';
+import wordmarkLight from '../assets/login/bullm-wordmark-light.png';
+import wordmarkDark from '../assets/login/bullm-wordmark-dark.png';
 import panel from '../assets/login/bull-panel.png';
 import './login.css';
 
@@ -32,20 +32,18 @@ export function LoginPage({fromPipeline}:{fromPipeline:boolean}){
     {fromPipeline&&<div className="login-banner" role="status"><Svg size={14}>{I.info}</Svg>Your Pipeline session has ended - sign in to continue to Masters.</div>}
     <main className={`login-page${fromPipeline?' has-banner':''}`}>
       <div className="login-card">
+        <Showcase/>
         <section className="login-left">
           <div className="login-brand">
-            <div className="login-brand-copy">
-              <img src={logoLight} alt="BuLLM. Enterprise Workflows. Intelligently Done." className="login-lockup-image login-lockup-light"/>
-              <img src={logoDark} alt="" aria-hidden="true" className="login-lockup-image login-lockup-dark"/>
-              <div className="login-product">FDE workspace<span className="login-chip">Masters</span></div>
-            </div>
+            {/* Same lockup as BAM_UI: two-tone wordmark + tagline, swapped by theme (CSS toggle, no store on this page). */}
+            <img src={wordmarkLight} alt="BuLLM. Enterprise Workflows. Intelligently Done." className="login-lockup login-lockup-light"/>
+            <img src={wordmarkDark} alt="" aria-hidden="true" className="login-lockup login-lockup-dark"/>
           </div>
           <h1 className="login-title">Welcome back</h1>
           <p className="login-lede">Sign in to your BuLLM workspace.</p>
           <SignInForm/>
           <p className="login-note">Access is invite-only. Contact your administrator for an account.</p>
         </section>
-        <Showcase/>
       </div>
     </main>
   </>;

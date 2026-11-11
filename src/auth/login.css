@@ -1,38 +1,38 @@
-/* /login only. Ported from the Pipeline UI login (frontend3/src/features/login/login.css). Light tokens by default, dark from the system
+/* /login only. Ported from the BAM_UI login (BAM_UI/src/features/login/login.css). Light tokens by default, dark from the system
    setting or :root[data-theme="dark"]; the blue showcase panel is the same in both. Masters' app style.css is not loaded on this page. */
 body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
 .login-banner, .login-banner *, .login-page, .login-page * { box-sizing: border-box; }
 .login-page {
   --lg-bg: #EEF2F8; --lg-card: #FFFFFF; --lg-border: #D5DBE7; --lg-text: #101828; --lg-muted: #667085;
-  --lg-input: #F5F7FB; --lg-link: #0084C2; --lg-err: #D92D20; --lg-card-shadow: 0 30px 70px rgba(16, 24, 40, .12);
+  --lg-input: #F5F7FB; --lg-link: #1B6FC2; --lg-err: #D92D20; --lg-card-shadow: 0 30px 70px rgba(16, 24, 40, .12);
   --lg-glow: radial-gradient(36% 34% at 0% 0%, rgba(255, 196, 140, .7), transparent 72%),
-    radial-gradient(38% 40% at 100% 100%, rgba(150, 214, 245, .65), transparent 72%);
-  --lg-ring: 0 0 0 3px rgba(0, 132, 194, .25);
+    radial-gradient(38% 40% at 100% 100%, rgba(150, 200, 245, .65), transparent 72%);
+  --lg-ring: 0 0 0 3px rgba(27, 111, 194, .25);
   --lg-pad: clamp(8px, 4vh, 40px);
   min-height: 100vh; display: grid; place-items: center; padding: var(--lg-pad) 20px;
   background: var(--lg-glow), var(--lg-bg); color: var(--lg-text);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-page {
     --lg-bg: #080D18; --lg-card: #141B2B; --lg-border: #2D3750; --lg-text: #F1F4FA; --lg-muted: #9AA4B8;
-    --lg-input: #1B2336; --lg-link: #56B8EF; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+    --lg-input: #1B2336; --lg-link: #5AA9E6; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
     --lg-glow: radial-gradient(38% 34% at 0% 0%, rgba(236, 132, 38, .55), transparent 72%),
-      radial-gradient(40% 42% at 100% 100%, rgba(0, 132, 194, .5), transparent 72%),
+      radial-gradient(40% 42% at 100% 100%, rgba(26, 108, 196, .5), transparent 72%),
       radial-gradient(30% 22% at 50% 100%, rgba(190, 96, 40, .22), transparent 72%);
-    --lg-ring: 0 0 0 3px rgba(86, 184, 239, .45);
+    --lg-ring: 0 0 0 3px rgba(90, 169, 230, .45);
 } }
 :root[data-theme="dark"] .login-page {
   --lg-bg: #080D18; --lg-card: #141B2B; --lg-border: #2D3750; --lg-text: #F1F4FA; --lg-muted: #9AA4B8;
-  --lg-input: #1B2336; --lg-link: #56B8EF; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+  --lg-input: #1B2336; --lg-link: #5AA9E6; --lg-err: #F97066; --lg-card-shadow: 0 40px 90px rgba(0, 0, 0, .55);
   --lg-glow: radial-gradient(38% 34% at 0% 0%, rgba(236, 132, 38, .55), transparent 72%),
-    radial-gradient(40% 42% at 100% 100%, rgba(0, 132, 194, .5), transparent 72%),
+    radial-gradient(40% 42% at 100% 100%, rgba(26, 108, 196, .5), transparent 72%),
     radial-gradient(30% 22% at 50% 100%, rgba(190, 96, 40, .22), transparent 72%);
-  --lg-ring: 0 0 0 3px rgba(86, 184, 239, .45);
+  --lg-ring: 0 0 0 3px rgba(90, 169, 230, .45);
 }
 .login-card {
   /* Whole card fits the window height: sizes below scale with vh, so short or zoomed screens never scroll. */
   width: min(1320px, 90vw); min-height: min(800px, calc(100vh - 2 * var(--lg-pad)));
-  display: grid; grid-template-columns: minmax(0, 580px) minmax(0, 580px); justify-content: space-between; align-items: center;
-  gap: 40px; padding: clamp(12px, 4.4vh, 40px) clamp(12px, 4.4vh, 40px) clamp(12px, 4.4vh, 40px) 60px; border-radius: clamp(22px, 4vh, 34px);
+  display: grid; grid-template-columns: minmax(0, 580px) minmax(0, 580px); /* carousel left, form right */ justify-content: space-between; align-items: center;
+  gap: 40px; padding: clamp(12px, 4.4vh, 40px) 60px clamp(12px, 4.4vh, 40px) clamp(12px, 4.4vh, 40px); border-radius: clamp(22px, 4vh, 34px);
   background: var(--lg-card); border: 1px solid var(--lg-border); box-shadow: var(--lg-card-shadow);
 }
 .login-page :focus-visible { outline: 2px solid var(--lg-link); outline-offset: 2px; box-shadow: none; }
@@ -40,7 +40,7 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 /* Left column */
 .login-left { align-self: stretch; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 .login-brand { display: flex; align-items: center; gap: 16px; }
-.login-logo { width: clamp(44px, 7.5vh, 68px); height: clamp(44px, 7.5vh, 68px); border-radius: 12px; flex: none; object-fit: cover; }
+/* removed small bull */
 .login-name { font-size: clamp(20px, 3vh, 26px); font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
 .login-product { font-size: 14px; color: var(--lg-muted); margin-top: 2px; }
 .login-title { font-size: clamp(26px, 5.2vh, 46px); line-height: 1.1; font-weight: 800; margin: auto 0 0; padding-top: clamp(8px, 4vh, 56px); letter-spacing: .01em; }
@@ -98,8 +98,8 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
   display: flex; flex-direction: column; color: #fff;
   background:
     radial-gradient(55% 36% at 50% 82%, rgba(236, 104, 52, .5), transparent 72%),
-    radial-gradient(48% 40% at 0% 100%, rgba(0, 86, 126, .7), transparent 72%),
-    linear-gradient(180deg, #2E9BD6 0%, #0073AA 58%, #00567E 100%);
+    radial-gradient(48% 40% at 0% 100%, rgba(8, 58, 130, .7), transparent 72%),
+    linear-gradient(180deg, #3D86C0 0%, #14568F 58%, #0A5A96 100%);
 }
 .login-panel-art {
   /* Sized by the height the panel has left (width follows the aspect ratio, never cropped by height), centred, and
@@ -111,7 +111,7 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 .login-panel-body { flex: none; padding: 0 14px clamp(10px, 2vh, 18px); }
 .login-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 clamp(6px, 1.4vh, 12px) 14px; padding: 0; }
 .login-chips li {
-  font-size: 12px; padding: 7px 14px; border-radius: 10px;
+  font-size: 14px; padding: 7px 14px; border-radius: 10px;
   background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .35);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
@@ -160,38 +160,23 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
   .login-page { padding: var(--lg-pad) 20px; }
   .login-card { padding: clamp(16px, 3.4vh, 28px) 20px; border-radius: 24px; }
   .login-title { font-size: 34px; }
-  .login-lede { font-size: 14px; }
+  .login-lede { font-size: 16px; }
   .login-row { flex-wrap: nowrap; gap: 8px; }
   .login-check { gap: 8px; font-size: 14px; }
   .login-link { font-size: 14px; white-space: nowrap; }
 }
-/* BrandLockup (copied from frontend3 components/brand.css): two-tone wordmark over the tracked-out tagline, sized in em from --bl. */
-.brand-lockup { --bl: 38px; display: inline-flex; flex-direction: column; align-items: flex-start; gap: .08em; font-size: var(--bl); line-height: 1; }
-.brand-lockup .brand-mark { font-size: 1em; font-weight: 800; letter-spacing: 0; line-height: .8; white-space: nowrap; color: var(--lg-text); }
-.brand-lockup .brand-bu { color: #FF9800; }
-.brand-lockup .brand-llm { color: #0084C2; }
-.brand-lockup .brand-tag { --track: .0335em; font-size: .171em; font-weight: 400; line-height: 1; text-transform: uppercase; white-space: nowrap;
-  letter-spacing: var(--track); margin-right: calc(-1 * var(--track)); color: var(--lg-muted); }
-.login-logo { background: #0B1526; }
 .login-spin { animation: login-spin .9s linear infinite; }
 @keyframes login-spin { to { transform: rotate(360deg); } }
-/* Login: the shared BrandLockup, larger. */
-.login-lockup { --bl: clamp(30px, 4.4vh, 40px); }
-.login-lockup + .login-product { margin-top: 6px; }
+/* Login: the shared wordmark artwork, larger (same as BAM_UI). */
+.login-lockup { display: block; width: 215px; max-width: 100%; height: auto; margin-bottom: clamp(8px, 1.6vh, 16px); }
 
-/* Product chip after "FDE workspace" (accent tint, login tokens). */
-.login-chip { display: inline-flex; align-items: center; margin-left: 8px; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; vertical-align: 1px;
-  color: var(--lg-link); background: color-mix(in srgb, var(--lg-link) 14%, transparent); }
 /* Arrived from a Pipeline switch: slim full-width amber banner above everything (soft in both themes). */
 .login-banner { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 36px; padding: 6px 16px;
   font-size: 14px; font-weight: 500; text-align: center; color: #9A6200; background: #FFF4DE; border-bottom: 1px solid #F3D9A4; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-banner { color: #F0B54B; background: #241C0F; border-bottom-color: rgba(240, 181, 75, .25); } }
 :root[data-theme="dark"] .login-banner { color: #F0B54B; background: #241C0F; border-bottom-color: rgba(240, 181, 75, .25); }
 .login-page.has-banner { min-height: calc(100vh - 36px); }
-/* The current BuLLM lockup includes the wordmark and tagline as one artwork. */
-.login-brand { align-items: center; gap: 0; }
-.login-brand-copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
-.login-lockup-image { display: block; width: min(100%, 390px); height: auto; object-fit: contain; border-radius: 8px; }
+/* The wordmark artwork swaps between its light and dark versions with the theme. */
 .login-lockup-dark { display: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .login-lockup-light { display: none; } :root:not([data-theme="light"]) .login-lockup-dark { display: block; } }
 :root[data-theme="dark"] .login-lockup-light { display: none; }
