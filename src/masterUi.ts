@@ -5,7 +5,6 @@ const FACETS:Record<string,string[]>={
  Organization:['Company / Type','Location','Certifications'],
  Agents:['Type','Source'],
  Skills:['Workflow step','Status'],
- Rules:['Status','Owner / version'],
  Tools:['Category','Status','Owner / access','Refresh Frequency'],
 };
 export function facetFields(name:string,headers:string[]){return (FACETS[name]||[]).map(label=>({label,index:headers.indexOf(label)})).filter(f=>f.index>=0);}

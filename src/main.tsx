@@ -11,4 +11,4 @@ if(new URLSearchParams(location.search).get('from')==='pipeline')clearSession();
 if(location.pathname===LOGIN_PATH){if(getSession())location.replace('/');else root().render(<React.StrictMode><LoginPage fromPipeline={consumeFromPipeline()}/></React.StrictMode>)}
 else if(!getSession())location.replace(LOGIN_PATH+location.search);
 // App and its global stylesheet load only once signed in, so style.css never touches /login.
-else Promise.all([import('./App'),import('./style.css')]).then(([{default:App}])=>root().render(<React.StrictMode><Refine dataProvider={dataProvider} resources={['Organization','Rules','Agents','Skills','Tooling'].map(name=>({name}))} options={{disableTelemetry:true}}><App/></Refine></React.StrictMode>));
+else Promise.all([import('./App'),import('./style.css')]).then(([{default:App}])=>root().render(<React.StrictMode><Refine dataProvider={dataProvider} resources={['Organization','Agents','Skills','Tooling'].map(name=>({name}))} options={{disableTelemetry:true}}><App/></Refine></React.StrictMode>));
