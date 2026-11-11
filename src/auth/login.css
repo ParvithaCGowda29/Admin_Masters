@@ -134,13 +134,6 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 .login-dot::before { content: ''; width: 8px; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, .55); transition: width .3s ease, background .3s ease; }
 .login-dot[aria-current="true"] { width: 36px; }
 .login-dot[aria-current="true"]::before { width: 26px; background: #FFA63A; }
-.login-arrows { display: flex; gap: 12px; }
-.login-arrow {
-  width: clamp(38px, 5.4vh, 46px); height: clamp(38px, 5.4vh, 46px); display: grid; place-items: center; border-radius: 12px; cursor: pointer; color: #fff;
-  background: rgba(8, 22, 44, .35); border: 1px solid rgba(255, 255, 255, .4);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-}
-.login-arrow:hover { background: rgba(8, 22, 44, .5); }
 .login-panel :focus-visible { outline-color: #fff; }
 
 @media (prefers-reduced-motion: reduce) {
