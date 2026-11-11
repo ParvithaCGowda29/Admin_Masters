@@ -72,7 +72,11 @@ export function StackedHighlight(p:ICellRendererParams<RecordRow,string>&{hlKey:
 const LINK_RE=/^(?:[a-z][a-z0-9+.-]*:\/\/|www\.)\S+$/i;
 export function LinkOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:string}){
  const text=p.value??'';
- const parts=splitTopLevel(text).map(x=>x.value.trim()).filter(Boolean);
+ const heading=p.colDef?.headerName||'';
+ const section=heading==='Customers / Audience'?'audience':heading==='Systems / tools (Software)'?'systems':heading==='Assets (Hardware)'?'assets':'data-sources';
+ const orgId=(p.data?.values[0]||'organization').toLowerCase().replace(/[^a-z0-9-]+/g,'-');
+ const displayText=text.trim().toLowerCase()==='link'?`https://portal.bullm.example/organizations/${orgId}/${section}`:text;
+ const parts=splitTopLevel(displayText).map(x=>x.value.trim()).filter(Boolean);
  if(!parts.some(x=>LINK_RE.test(x)))return StackedHighlight(p);
  const items:string[]=[];
  for(let i=0;i<parts.length;i++){
@@ -81,7 +85,8 @@ export function LinkOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:stri
   else if(part.endsWith(':')&&LINK_RE.test(parts[i+1]||'')){items.push(parts[i+1]);i++;}
   else items.push(capitalizeItem(part));
  }
- return <span className="stacked">{items.map((item,i)=><span className="stacked-item" key={i}>{item}</span>)}</span>;
+ const hrefFor=(item:string)=>{const candidate=/^www\./i.test(item)?`https://${item}`:item;try{const url=new URL(candidate);return url.protocol==='http:'||url.protocol==='https:'?url.href:null}catch{return null}};
+ return <span className="stacked">{items.map((item,i)=>{const href=hrefFor(item);return <span className="stacked-item" key={i}>{href?<a className="cell-link" href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>{item}<svg className="cell-link-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>:item}</span>})}</span>;
 }
 
 // Agents master (2026-11-03 approved wireframes): three agent types, a reference link for
@@ -101,7 +106,7 @@ export function AgentRefCell(p:ICellRendererParams<RecordRow,string>){
   if(cross)return <span className="agent-ref"><span className="agent-ref-verb">{cross[1]}:</span> <span className="agent-ref-cross">{cross[2]}</span></span>;
   return <span>{v}</span>;
  }
- return <span className="agent-ref"><span className="agent-ref-verb">{m[1]}:</span> <span className="agent-ref-target">{m[2]}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span></span>;
+ return <span className="agent-ref"><span className="agent-ref-verb">{m[1]}:</span> <span className="agent-ref-target">{m[2]}<svg className="link-indicator" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span></span>;
 }
 // "Built in BuLLM" stays plain. "Imported · <path>" carries the Imported tag, visible only on row hover.
 export function AgentSourceCell(p:ICellRendererParams<RecordRow,string>){
@@ -134,7 +139,7 @@ export function SkillChipsCell(p:ICellRendererParams<RecordRow,string>){
 export function SkillLinkCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();
  if(!v)return <span className="skill-link-empty">&mdash;</span>;
- return <span className="skill-link">{v}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span>;
+ return <span className="skill-link">{v}<svg className="link-indicator" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span>;
 }
 
 // Skills References column (2026-11-11 approved ISATVON wireframes): each reference is one
