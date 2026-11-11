@@ -5,15 +5,15 @@ import {IconSearch} from './icons';
 
 type SheetMeta={name:string;headers:string[]};
 
-type Props={active:string;sheet:SheetMeta;rows:RecordRow[];query:string;onQuery:(q:string)=>void};
+type Props={active:string;sheet:SheetMeta;rows:RecordRow[];query:string;onQuery:(q:string)=>void;noun?:string};
 
 const matchesRow=(row:RecordRow,words:string[])=>words.every(w=>row.values.some(v=>v.toLowerCase().includes(w)));
 
 // cmdk search panel anchored to the toolbar search field: chips, browse-by-field and grouped
 // matches drive the existing table filter; the grid stays visible behind the panel.
 const LABELS:Record<string,string>={Organization:'Organisations',Agents:'Agent factory',Tools:'Tool Factory',Skills:'Skills'};
-export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
- const label=LABELS[active]||active;
+export function SearchCommand({active,sheet,rows,query,onQuery,noun}:Props){
+ const label=noun||LABELS[active]||active;
  const[open,setOpen]=useState(false);
  const[field,setField]=useState<number|null>(null);
  const wrap=useRef<HTMLDivElement>(null);
@@ -25,7 +25,7 @@ export function SearchCommand({active,sheet,rows,query,onQuery}:Props){
  const categorical=useMemo(()=>{
   const out:{i:number;label:string;values:string[]}[]=[];
   for(let i=1;i<headers.length;i++){
-   if(active==='Agents'&&headers[i]==='Kind')continue;
+   if(sheet.name==='Agents'&&headers[i]==='Kind')continue;
    const seen=new Map<string,number>();
    for(const r of rows){const v=(r.values[i]||'').trim();if(v)seen.set(v,(seen.get(v)||0)+1)}
    if(seen.size>=2&&seen.size<=12)out.push({i,label:headers[i],values:[...seen.entries()].sort((a,b)=>b[1]-a[1]).map(([v])=>v)});
