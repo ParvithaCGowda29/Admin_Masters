@@ -16,8 +16,11 @@ export function loadRows(name:string):RecordRow[]{
   // November 6: removing Tool Factory Rule refs must not hide edits to ANY master.
   // Migrate only a missing current table from the exact previous workbook snapshot.
   // Current edits (including an intentionally empty table) and the old snapshot stay intact.
+  // November 11 (ISATVON Skills): the snapshot chain gains 7428edf1 (the Nov 6 workbook).
+  // Old 9-column Skills rows never match the new 10-column ISATVON sheet, so the
+  // validation below drops them and the mapped workbook rows take over.
   if(saved===undefined){
-   const old=JSON.parse(localStorage.getItem('bullm-masters-v2-c8f5730d')||'{}')[name];
+   const old=JSON.parse(localStorage.getItem('bullm-masters-v2-7428edf1')||'{}')[name]??JSON.parse(localStorage.getItem('bullm-masters-v2-c8f5730d')||'{}')[name];
    if(Array.isArray(old)){
     const candidate=old.map((r:any)=>name==='Tools'&&Array.isArray(r.values)&&r.values.length===12?{...r,values:r.values.filter((_:unknown,i:number)=>i!==8)}:r);
     if(candidate.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string'))){saved=candidate;localStorage.setItem(KEY,JSON.stringify({...current,[name]:saved}));}

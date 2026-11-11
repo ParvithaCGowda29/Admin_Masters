@@ -284,25 +284,27 @@
    "name": "Skills",
    "headers": [
     "Skill ID",
-    "Skill Name",
-    "Steps (each a skill)",
-    "Agents",
-    "Rules",
-    "Tools",
-    "Extracted Information",
-    "Next",
-    "Updated"
+    "Skill",
+    "I \u00b7 Instruction",
+    "S \u00b7 Source data",
+    "A \u00b7 Automation",
+    "T \u00b7 Tech stack",
+    "V \u00b7 Variables",
+    "O \u00b7 Outcome",
+    "N \u00b7 Next",
+    "References"
    ],
    "descriptions": [
-    "Stable skill key",
+    "Stable skill key, assigned automatically when the row is added; not editable",
     "Skill name",
-    "Every step is a skill - no separate knowledge step type",
-    "Agents linked to this skill; agents sit one level above skills",
-    "Rules linked to this skill",
-    "Tools pulled from the Tool Factory",
-    "Extracted information captured by the skill",
-    "The skill that runs next",
-    "Last updated"
+    "Instruction: what the skill does, step by step",
+    "Source data: the inputs the skill reads",
+    "Automation: when the skill runs - schedule or trigger",
+    "Tech stack: the APIs, models and tools the skill runs on",
+    "Variables: the values the skill captures and passes on",
+    "Outcome: what the skill produces",
+    "Next: the skill or step that runs next",
+    "Linked Organisations (blue chips) and Tool Factory entries (grey TF chips). Rules live inside Organisations."
    ],
    "rows": [
     {
@@ -311,12 +313,13 @@
       "SK-01",
       "RFQ Intake",
       "Parse email; Extract line items; Map to masters",
-      "RFQ Intake Agent",
-      "RFQ validation",
+      "Shared RFQ inbox",
+      "Trigger \u00b7 new mail",
       "Email parser; LLM",
       "Customer, parts, due date",
-      "Drawing OCR",
-      "02-11-2026"
+      "Structured RFQ record",
+      "SK-02 Drawing OCR",
+      "Innotech HQ; TF-01 Claude Code; TF-29 pdf"
      ],
      "sourceRow": 2
     },
@@ -326,12 +329,13 @@
       "SK-02",
       "Drawing OCR",
       "Detect tables; Read dimensions; Extract tolerances",
-      "Drawing OCR Agent",
-      "Tolerance defaults",
+      "Part drawings (PDF, DXF)",
+      "On demand",
       "OCR engine",
       "Dimensions, tolerances",
-      "Costing",
-      "30-10-2026"
+      "Dimension table",
+      "SK-03 Costing",
+      "Innotech Unit I; TF-19 PaddleOCR; TF-25 ezdxf"
      ],
      "sourceRow": 3
     },
@@ -341,12 +345,13 @@
       "SK-03",
       "Costing",
       "Material lookup; Machine hour rate; Overheads; Margin",
-      "Costing Agent",
-      "Material Pricing; Machine Hour Rate; Currency Converter",
+      "SK-02 dimension table; Masters rates",
+      "On demand",
       "Costing engine",
       "Unit cost breakdown",
-      "Quote Assembly",
-      "02-11-2026"
+      "Costed part summary",
+      "SK-08 Quote Assembly",
+      "Innotech Unit I; TF-30 xlsx"
      ],
      "sourceRow": 4
     },
@@ -356,12 +361,13 @@
       "SK-04",
       "Supplier Lookup",
       "Match commodity; Rank suppliers; Check certs",
-      "Supplier Lookup Agent",
-      "Supplier qualification",
+      "Approved supplier list",
+      "On demand",
       "Search API; Match DB",
       "Supplier shortlist + certs",
-      "Costing",
-      "28-10-2026"
+      "Ranked supplier list",
+      "SK-03 Costing",
+      "Innotech HQ; TF-35 Exa; TF-12 Postgres MCP Pro"
      ],
      "sourceRow": 5
     },
@@ -371,12 +377,13 @@
       "SK-05",
       "PFD Builder",
       "List operations; Sequence flow; Link controls",
-      "Process Planner",
-      "Surface Finish",
+      "SK-02 dimension table; Part drawings",
+      "On demand",
       "LLM",
       "Operation sequence",
-      "PFMEA",
-      "27-10-2026"
+      "Process flow diagram",
+      "SK-06 PFMEA",
+      "Innotech Unit I; TF-01 Claude Code"
      ],
      "sourceRow": 6
     },
@@ -386,12 +393,13 @@
       "SK-06",
       "PFMEA",
       "Identify failure modes; Score RPN; Recommend actions",
-      "Process Planner",
-      "PFMEA scoring",
+      "SK-05 process flow",
+      "On demand",
       "LLM; Rules check",
       "RPN scores + actions",
-      "Control Plan",
-      "27-10-2026"
+      "PFMEA sheet",
+      "SK-07 Control Plan",
+      "Innotech Unit I; TF-01 Claude Code; TF-30 xlsx"
      ],
      "sourceRow": 7
     },
@@ -401,12 +409,13 @@
       "SK-07",
       "Control Plan",
       "Map characteristics; Set checks; Sampling plan",
-      "Process Planner",
-      "Inspection standards",
+      "SK-06 PFMEA sheet",
+      "On demand",
       "LLM",
       "Control items + sampling",
-      "",
-      "26-10-2026"
+      "Control plan",
+      "SK-08 Quote Assembly",
+      "Innotech Unit I; TF-01 Claude Code"
      ],
      "sourceRow": 8
     },
@@ -416,12 +425,13 @@
       "SK-08",
       "Quote Assembly",
       "Pull costing; Apply margin; Draft quote",
-      "Smart Quote Reviewer",
-      "Margin policy; Currency Converter",
+      "SK-03 costing summary",
+      "On approval",
       "LLM; Costing engine",
       "Quote draft + pricing",
-      "",
-      "01-11-2026"
+      "Customer quote (PDF)",
+      "Manager approval",
+      "Innotech HQ; TF-21 Stirling-PDF"
      ],
      "sourceRow": 9
     }

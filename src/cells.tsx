@@ -137,6 +137,15 @@ export function SkillLinkCell(p:ICellRendererParams<RecordRow,string>){
  return <span className="skill-link">{v}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{marginLeft:3,verticalAlign:'-1px'}}><path d="M7 17L17 7M9 7h8v8"/></svg></span>;
 }
 
+// Skills References column (2026-11-11 approved ISATVON wireframes): each reference is one
+// chip - a blue Organisation chip, or a grey Tool Factory chip when it starts with a TF id.
+// The cell stores semicolon separated references; TF chips reuse the Tool Factory chip style.
+export function ReferenceChipsCell(p:ICellRendererParams<RecordRow,string>){
+ const v=(p.value??'').trim();if(!v)return '';
+ const refs=v.split(';').map(s=>s.trim()).filter(Boolean);
+ return <span className="tool-chips">{refs.map((ref,i)=><span className={/^TF-/i.test(ref)?'tool-chip':'skill-chip'} key={i}>{ref}</span>)}</span>;
+}
+
 // Skill factory Rules column: one green chip per linked rule (semicolon separated).
 export function RuleChipsCell(p:ICellRendererParams<RecordRow,string>){
  const v=(p.value??'').trim();if(!v)return '';
