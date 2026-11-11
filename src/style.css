@@ -426,27 +426,17 @@ main>.content{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-directio
 .nav-branch:hover .nav-count,.nav-branch:focus-within .nav-count{opacity:1}
 :root[data-theme=dark] .nav-item small.nav-count{background:none;color:#93a6c2}
 
-/* Tool Factory rework (approved 2026-11-11 wireframes): the Tools view gets a left
-   sections list; the Agents & Assistants view has no left panel, just the 3-way toggle. */
-.tf-layout{display:flex;gap:16px;align-items:flex-start}
-.tf-layout .grid{flex:1;min-width:0}
-.tf-sections{width:200px;flex-shrink:0;background:#fff;border:1px solid #dce3ee;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:2px}
-.tf-sections-heading{font-size:12px;color:#7b8ba3;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:6px 10px 8px}
-.tf-section{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:none;text-align:left;padding:9px 10px;border-radius:8px;font-size:13px;color:#55667f;font-weight:500;height:auto;white-space:normal}
-.tf-section:hover{background:#f2f9fd}
-.tf-section.on{background:#f2f9fd;color:#006c99;font-weight:600}
-.tf-section-count{flex-shrink:0;font-size:12px;background:#f5f8fd;border-radius:12px;min-width:22px;text-align:center;padding:2px 6px;color:#7b8ba3}
-.tf-section.on .tf-section-count{background:#e6f2fa;color:#006c99}
+/* Tool Factory Tools view (approved 2026-11-11 wireframes): no left pane - the grid runs
+   full width and the Category column merges each category into one tall cell spanning all
+   its tool rows, with the count pill keeping the totals the pane used to show. */
+.tf-cat-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%;width:100%;font-weight:600;color:#0f1b2d}
+.tf-cat-name{font-size:15px}
+.tf-cat-count{font-size:12px;font-weight:500;background:#f5f8fd;border-radius:12px;min-width:22px;text-align:center;padding:2px 8px;color:#7b8ba3}
+:root[data-theme=dark] .tf-cat-cell{color:#e6edf7}
+:root[data-theme=dark] .tf-cat-count{background:#2e4a73;color:#dceaf6}
 button.skill-chip-link{height:auto;padding:3px 9px;border:1px solid transparent;font-weight:400;white-space:nowrap}
 button.skill-chip-link:hover{border-color:#c5d0e1;background:#e6f2fa}
-:root[data-theme=dark] .tf-sections{background:#101e32;border-color:#22395c}
-:root[data-theme=dark] .tf-section{color:#93a6c2}
-:root[data-theme=dark] .tf-section:hover{background:#1a2e4d}
-:root[data-theme=dark] .tf-section.on{background:#1c2e51;color:#5b83f2}
-:root[data-theme=dark] .tf-section-count{background:#2e4a73;color:#dceaf6}
-:root[data-theme=dark] .tf-section.on .tf-section-count{background:#22395c;color:#5b83f2}
 :root[data-theme=dark] button.skill-chip-link:hover{border-color:#2e4a73;background:#22395c}
-@media(max-width:600px){.tf-layout{flex-direction:column}.tf-sections{width:100%}}
 
 /* Import agents and assistants modal */
 .import-agents-dialog{width:min(560px,calc(100vw - 28px))}
