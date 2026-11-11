@@ -39,7 +39,7 @@ body:has(.login-page) { margin: 0; font: 14px/1.5 Inter, system-ui, -apple-syste
 
 /* Left column */
 .login-left { align-self: stretch; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-.login-brand { display: flex; align-items: center; gap: 16px; }
+.login-brand { display: flex; align-items: center; gap: 16px; margin-top: clamp(16px, 4vh, 36px); }
 /* removed small bull */
 .login-name { font-size: clamp(20px, 3vh, 26px); font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
 .login-product { font-size: 14px; color: var(--lg-muted); margin-top: 2px; }
