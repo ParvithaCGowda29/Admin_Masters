@@ -2,7 +2,7 @@ import {useMemo,useRef,useState,useEffect,type MouseEvent as ReactMouseEvent} fr
 import {useList,useUpdate,useDelete} from '@refinedev/core';
 import {AgGridReact} from 'ag-grid-react';
 import Fuse from 'fuse.js';
-import {AllCommunityModule,ModuleRegistry,themeQuartz,type ColDef,type CellValueChangedEvent} from 'ag-grid-community';
+import {AllCommunityModule,ModuleRegistry,themeQuartz,type ColDef,type CellValueChangedEvent,type ICellRendererParams} from 'ag-grid-community';
 import workbook from './workbook.json';
 import {loadRows,saveRows,type RecordRow} from './provider';
 import {ExtractFlow} from './ExtractFlow';
@@ -19,6 +19,7 @@ import {ImportAgents} from './ImportAgents';
 import {SearchCommand} from './SearchCommand';
 import bullmLogoLight from './assets/bullm-logo-light.png';
 import bullmLogoDark from './assets/bullm-logo-dark.png';
+import badgeSeal from './assets/bullm-badge-seal.png';
 import {StackedHighlight,LinkOnlyCell,AgentTypeCell,AgentRefCell,AgentSourceCell,ToolChipsCell,ReferenceChipsCell,type Hits} from './cells';
 import {SortFilter} from './SortFilter';
 import {OrganizationCellEditor} from './OrganizationCellEditor';
@@ -84,6 +85,10 @@ export default function App(){
  const columns=useMemo<ColDef<RecordRow>[]>(()=>{if(!viewSheet)return [];const col=(colId:string,headerName:string,i:number,get:(v:string)=>string,set:(v:string,next:string)=>string,minWidth:number,width:number,pinned?:'left'):ColDef<RecordRow>=>({colId,headerName,headerTooltip:viewSheet.descriptions[i],valueGetter:p=>get(p.data?.values[i]||''),valueSetter:p=>{if(!p.data)return false;p.data.values[i]=set(p.data.values[i]||'',String(p.newValue??''));return true},editable:!viewSheet.readOnly,cellEditor:'agLargeTextCellEditor',cellEditorPopup:true,cellEditorParams:{maxLength:50000,rows:8,cols:45},minWidth,width,pinned,wrapText:true,autoHeight:true,tooltipValueGetter:p=>get(p.data?.values[i]||''),sortable:false,filter:SortFilter,resizable:true,cellRenderer:StackedHighlight,cellRendererParams:{hlKey:colId}});const same=(v:string)=>v,replace=(_:string,next:string)=>next;
   // Admin tables hold 7 columns and fit the content width without horizontal scrolling.
 const defs=viewSheet.headers.flatMap((h,i)=>{const label=h;if((viewSheet.name==='Agents'&&label==='Kind')||(viewSheet.name==='Organization'&&(label==='Documents'||label==='Artifacts'))||(viewSheet.name==='Tools'&&(label==='BuLLM badge'||label==='Source tab')))return [];return i===0?[col('0',label,0,same,replace,200,220,'left')]:[col(String(i),label,i,same,replace,190,i===1?260:230)];});
+  // BuLLM badge: rows whose workbook data carries a badge value show the CREDIBLE seal inline
+  // before the Tooling ID; hovering the cell names the badge. The hidden "BuLLM badge" column
+  // stays the source of truth - no separate grid column.
+  if(viewSheet.name==='Tools'){const idDef=defs.find(d=>d.colId==='0');if(idDef){idDef.cellRenderer=(p:ICellRendererParams<RecordRow,string>&{hlKey:string})=>{const b=p.data?.values[10]||'';if(b.indexOf('BuLLM')!==0)return StackedHighlight(p);return <span className="badge-id-cell"><img className="badge-seal" src={badgeSeal} alt={b}/><span className="badge-id-text">{StackedHighlight(p)}</span></span>};idDef.tooltipValueGetter=(p:{data?:RecordRow})=>{const b=p.data?.values[10]||'';return b.indexOf('BuLLM')===0?b:(p.data?.values[0]||'')};}}
   // Placement A: Organization columns backed by a list template carry the download in their header.
   // The file is generated from the list saved on this device, so it includes uploaded rows.
   if(viewSheet.name==='Organization')for(const def of defs){const template=templateForColumn(def.headerName||'');if(template)def.headerComponentParams={innerHeaderComponent:TemplateHeader,innerHeaderComponentParams:{templateLabel:template.label,onTemplateDownload:()=>downloadTemplate(template)}};}

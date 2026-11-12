@@ -453,3 +453,8 @@ button.skill-chip-link:hover{border-color:#c5d0e1;background:#e6f2fa}
 :root[data-theme=dark] .ia-drop:hover,:root[data-theme=dark] .ia-drop.over{border-color:#5b83f2;background:#1c2e51;color:#5b83f2}
 :root[data-theme=dark] .ia-item{background:#101e32;border-color:#22395c}
 :root[data-theme=dark] .ia-item-desc{color:#93a6c2}
+
+/* BuLLM badge seal inline in the Tooling ID cell (Tools view) */
+.badge-id-cell{display:flex;align-items:center;gap:8px;line-height:1.2}
+.badge-seal{width:30px;height:30px;flex:none}
+.badge-id-text{min-width:0}
