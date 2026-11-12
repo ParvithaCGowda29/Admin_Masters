@@ -458,3 +458,92 @@ button.skill-chip-link:hover{border-color:#c5d0e1;background:#e6f2fa}
 .badge-id-cell{display:flex;align-items:center;gap:8px;line-height:1.2}
 .badge-seal{width:30px;height:30px;flex:none}
 .badge-id-text{min-width:0}
+/* Rules Engine - workflow skill map (Variant 2, approved 2026-11-12) */
+.org-rules-title{font-size:18px;font-weight:700;margin:0}
+.org-org-chip{background:#f2f9fd;color:#006c99;border:1px solid #c5d0e1;border-radius:14px;padding:4px 12px;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.org-rules-toolbar .org-org-chip{margin-right:auto}
+.org-rules-layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:16px;align-items:start}
+.org-map{background:#fff;border:1px solid #dce3ee;border-radius:10px;padding:14px 12px;max-height:calc(100vh - 235px);display:flex;flex-direction:column}
+.org-map-groups{overflow:auto;flex:1;margin:0 -4px;padding:0 4px}
+.org-map h3{font-size:11px;letter-spacing:.08em;color:#7b8ba3;margin:0 4px 10px;font-weight:700}
+.org-map-group{margin-bottom:4px}
+.org-map-workflow{display:flex;align-items:center;gap:7px;width:100%;border:0;background:none;font-weight:700;padding:8px 6px;text-align:left;height:auto;color:#0f1b2d}
+.org-map-workflow .caret{color:#7b8ba3;font-size:11px}
+.org-map-workflow .wf-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.org-map-count{margin-left:auto;background:#f5f8fd;border-radius:11px;padding:2px 9px;font-size:11px;color:#55667f;font-weight:600;flex-shrink:0}
+.org-map-skill{display:flex;align-items:baseline;gap:8px;width:100%;border:0;background:none;padding:6px 8px 6px 24px;text-align:left;border-radius:6px;height:auto;font-weight:400}
+.org-map-skill .sk-id{color:#006c99;font-weight:700;font-size:13px;white-space:nowrap}
+.org-map-skill .sk-name{color:#55667f;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
+.org-map-skill .sk-count{margin-left:auto;background:#f5f8fd;border-radius:10px;font-size:11px;padding:1px 7px;color:#55667f;flex-shrink:0}
+.org-map-skill:hover{background:#f2f9fd}
+.org-map-skill.selected{background:#e6f2fa}
+.org-map-skill.selected .sk-name{color:#006c99}
+.org-map-sub{padding-left:42px}
+.org-map-legend{border-top:1px solid #dce3ee;margin-top:12px;padding:12px 6px 2px;font-size:12px;color:#55667f;display:flex;flex-direction:column;gap:8px;line-height:1.4;flex-shrink:0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;flex-shrink:0}
+.dot-fde{background:#1d64d8}.dot-client{background:#e07b24}
+.org-rules-panel{min-width:0}
+.org-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:2px 0 12px}
+.org-panel-title{font-size:17px;font-weight:700;margin:0}
+.org-panel-sub{font-size:12px;color:#55667f;margin-top:4px}
+.org-open-skill{background:transparent;border:0;color:#006c99;font-size:13px;font-weight:600;padding:4px 0;white-space:nowrap;height:auto}
+.org-open-skill:hover{background:transparent;text-decoration:underline}
+.org-card-list{max-height:calc(100vh - 285px);overflow:auto;padding:2px 4px 2px 2px}
+.org-card{background:#fff;border:1px solid #dce3ee;border-radius:10px;padding:14px 16px;margin-bottom:12px;cursor:pointer}
+.org-card:hover{border-color:#c5d0e1}
+.org-card.open{border-color:#006c99;box-shadow:0 0 0 1px #006c99;cursor:default}
+.org-card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.org-card-type{background:#eef2fa;border:1px solid #dce3ee;color:#44557a;border-radius:6px;font-size:12px;padding:3px 8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.org-status{margin-left:auto;border-radius:12px;padding:3px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+.org-status-active{background:rgba(24,128,79,.12);color:#18804f}
+.org-status-proposed{background:rgba(240,181,75,.20);color:#925d06}
+.org-status-draft,.org-status-archived,.org-status-other{background:#eef1f6;color:#55667f}
+.org-card-text{margin:10px 0 0;font-size:14px;line-height:1.6;color:#0f1b2d}
+.org-card:not(.open) .org-card-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.org-card-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:12px}
+.org-meta{display:flex;align-items:center;gap:7px}
+.org-meta>label{font-size:10px;letter-spacing:.06em;color:#7b8ba3;font-weight:700}
+.org-meta-chip{background:#f2f9fd;border:1px solid #c5d0e1;color:#006c99;border-radius:6px;font-size:12px;padding:3px 8px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap}
+.org-meta-link{height:auto;cursor:pointer}
+.org-meta-link:hover{background:#e6f2fa}
+.org-actor{color:#925d06;background:rgba(240,181,75,.16);border-color:#ecd9ae}
+.org-usage{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.org-usage-panel{background:#f7fafd;border:1px solid #e3eaf4;border-radius:8px;padding:12px 14px}
+.org-usage-panel h4{display:flex;align-items:center;margin:0 0 6px;font-size:13px;font-weight:700;color:#0f1b2d}
+.org-usage-panel p{margin:0;font-size:13px;line-height:1.55;color:#44556f}
+.org-usage-panel .org-muted{color:#93a1b6}
+.org-usage-link{background:transparent;border:0;color:#006c99;font-size:12px;font-weight:600;padding:0;margin-top:8px;height:auto}
+.org-usage-link:hover{background:transparent;text-decoration:underline}
+.org-card-foot{margin-top:12px;padding-top:10px;border-top:1px solid #eef2f8;font-size:12px;color:#7b8ba3;display:flex;gap:22px;flex-wrap:wrap;line-height:1.5}
+.org-fact b{color:#0f1b2d;font-weight:600}
+.org-rules-empty{padding:26px 6px;color:#7b8ba3;font-size:13px}
+.org-rules-footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:900px){.org-rules-layout{grid-template-columns:1fr}.org-map{max-height:none}.org-card-list{max-height:none}.org-usage{grid-template-columns:1fr}.org-rules-toolbar .org-org-chip{display:none}}
+:root[data-theme=dark] .org-rules-title,:root[data-theme=dark] .org-panel-title,:root[data-theme=dark] .org-card-text,:root[data-theme=dark] .org-usage-panel h4{color:#e6edf7}
+:root[data-theme=dark] .org-org-chip{background:#1c2e51;color:#96d6ff;border-color:#2e4a73}
+:root[data-theme=dark] .org-map,:root[data-theme=dark] .org-card{background:#101e32;border-color:#22395c;color:#e6edf7}
+:root[data-theme=dark] .org-card:hover{border-color:#2e4a73}
+:root[data-theme=dark] .org-card.open{border-color:#5b83f2;box-shadow:0 0 0 1px #5b83f2}
+:root[data-theme=dark] .org-map h3,:root[data-theme=dark] .org-map-workflow .caret,:root[data-theme=dark] .org-meta>label,:root[data-theme=dark] .org-card-foot,:root[data-theme=dark] .org-rules-empty{color:#93a6c2}
+:root[data-theme=dark] .org-map-workflow{color:#e6edf7}
+:root[data-theme=dark] .org-map-count,:root[data-theme=dark] .org-map-skill .sk-count{background:#22395c;color:#93a6c2}
+:root[data-theme=dark] .org-map-skill .sk-id{color:#96d6ff}
+:root[data-theme=dark] .org-map-skill .sk-name,:root[data-theme=dark] .org-panel-sub,:root[data-theme=dark] .org-map-legend{color:#93a6c2}
+:root[data-theme=dark] .org-map-skill:hover{background:#1a2e4d}
+:root[data-theme=dark] .org-map-skill.selected{background:#1c2e51}
+:root[data-theme=dark] .org-map-skill.selected .sk-name{color:#5b83f2}
+:root[data-theme=dark] .org-map-legend{border-color:#22395c}
+:root[data-theme=dark] .dot-fde{background:#5b83f2}:root[data-theme=dark] .dot-client{background:#f0a54b}
+:root[data-theme=dark] .org-card-type{background:#142540;border-color:#2e4a73;color:#93a6c2}
+:root[data-theme=dark] .org-status-active{background:rgba(76,195,138,.16);color:#4cc38a}
+:root[data-theme=dark] .org-status-proposed{background:rgba(240,181,75,.16);color:#f0b54b}
+:root[data-theme=dark] .org-status-draft,:root[data-theme=dark] .org-status-archived,:root[data-theme=dark] .org-status-other{background:#22395c;color:#93a6c2}
+:root[data-theme=dark] .org-meta-chip{background:#1c2e51;border-color:#2e4a73;color:#96d6ff}
+:root[data-theme=dark] .org-meta-link:hover{background:#22395c}
+:root[data-theme=dark] .org-actor{background:rgba(240,181,75,.14);border-color:#4a3d22;color:#f0b54b}
+:root[data-theme=dark] .org-usage-panel{background:#142540;border-color:#22395c}
+:root[data-theme=dark] .org-usage-panel p{color:#b8c5d9}
+:root[data-theme=dark] .org-usage-panel .org-muted{color:#66788f}
+:root[data-theme=dark] .org-open-skill,:root[data-theme=dark] .org-usage-link{color:#96d6ff}
+:root[data-theme=dark] .org-card-foot{border-color:#22395c}
+:root[data-theme=dark] .org-fact b{color:#e6edf7}
