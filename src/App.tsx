@@ -114,7 +114,12 @@ const defs=viewSheet.headers.flatMap((h,i)=>{const label=h;if((viewSheet.name===
   // the Category column merges each section into one tall cell spanning all its tool rows.
   // The count pill keeps the totals the pane used to show. Spanned columns can't be edited
   // (AG Grid rule), so the merged Category cell is read-only; every other column still edits.
+  // Tools column order (approved 2026-11-12 wireframes): Category moves between Tooling ID
+  // and Tool Name. Each def stays bound to its workbook index, so only display order moves;
+  // the merged Category cell below follows the column by header name.
   if(viewSheet.name==='Tools'){
+   const toolNameAt=defs.findIndex(d=>d.headerName==='Tool Name'),categoryAt=defs.findIndex(d=>d.headerName==='Category');
+   if(toolNameAt>-1&&categoryAt>toolNameAt){const moved=defs.splice(categoryAt,1)[0];defs.splice(toolNameAt,0,moved);}
    const category=defs.find(d=>d.headerName==='Category');
    if(category){
     category.valueGetter=(p:{data?:RecordRow})=>toolSectionOf(p.data?.values[2]||'');

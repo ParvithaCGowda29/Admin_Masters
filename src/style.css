@@ -379,7 +379,7 @@
 
 /* Import agent modal */
 /* Agents Master import entry point */
-.agents-import-wrap{position:relative;display:inline-flex}
+.agents-import-wrap{position:relative;display:inline-flex}.kind-row .agents-import-wrap{margin-left:auto}
 .agents-import-button{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;background:#f2f9fd;border-color:#c5d0e1;color:#006c99;font-weight:600}
 .agents-import-button:hover{background:#e6f2fa;border-color:#c5d0e1}
 .agents-import-tip{position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%);width:260px;padding:8px 10px;border-radius:6px;background:#253246;color:#fff;font:400 12px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 20px #10203030;z-index:25;opacity:0;visibility:hidden;pointer-events:none}
