@@ -432,11 +432,6 @@ main>.content{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-directio
 /* Tool Factory Tools view (approved 2026-11-11 wireframes): no left pane - the grid runs
    full width and the Category column merges each category into one tall cell spanning all
    its tool rows, with the count pill keeping the totals the pane used to show. */
-.tf-cat-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%;width:100%;font-weight:600;color:#0f1b2d}
-.tf-cat-name{font-size:15px}
-.tf-cat-count{font-size:12px;font-weight:500;background:#f5f8fd;border-radius:12px;min-width:22px;text-align:center;padding:2px 8px;color:#7b8ba3}
-:root[data-theme=dark] .tf-cat-cell{color:#e6edf7}
-:root[data-theme=dark] .tf-cat-count{background:#2e4a73;color:#dceaf6}
 button.skill-chip-link{height:auto;padding:3px 9px;border:1px solid transparent;font-weight:400;white-space:nowrap}
 button.skill-chip-link:hover{border-color:#c5d0e1;background:#e6f2fa}
 :root[data-theme=dark] button.skill-chip-link:hover{border-color:#2e4a73;background:#22395c}

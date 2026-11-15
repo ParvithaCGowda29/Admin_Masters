@@ -16,12 +16,12 @@ export function TemplatePicker({onClose,onRecommended,onUpload,onView}:Props){
   <div className="bulk-body">
    <div className="tpl-cards">
     <section className="tpl-card recommended">
-     <h3><IconStar size={16}/> Recommended templates</h3>
+     <h3><IconStar size={16}/> BuLLM Recommended templates</h3>
      <p>The built-in BuLLM templates for each master, with the workbook columns already in place.</p>
      <ul className="tpl-lists">
       {TEMPLATES.map(t=><li key={t.key}><button type="button" title={`View and edit your ${t.label} list`} onClick={()=>onView(t)}><span>{t.label}</span><small>{loadHeaders(t.key,t).length} columns</small></button></li>)}
      </ul>
-     <button className="primary tpl-action" onClick={onRecommended}>Use recommended</button>
+     <button className="primary tpl-action" onClick={onRecommended}>Use BuLLM Recommended</button>
     </section>
     <section className="tpl-card">
      <h3><IconUpload size={16}/> Use your own</h3>
