@@ -268,7 +268,7 @@
 
 /* Add templates modal (finalised wireframe, 2026-11-02): three source cards. */
 .templates-dialog{width:min(880px,calc(100vw - 28px))}
-.tpl-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tpl-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .tpl-card{display:flex;flex-direction:column;gap:8px;border:1px solid #dce3ee;border-radius:12px;padding:16px;background:#fff;text-align:left}
 .tpl-card h3{display:flex;align-items:center;gap:8px;margin:0;font-size:16px;color:#253246;font-weight:600}
 .tpl-card h3 svg{color:#006c99;flex:none}

@@ -1,10 +1,10 @@
 import {useEffect,useRef} from 'react';
 import {TEMPLATES,type MastersTemplate} from './templates';
 import {loadHeaders} from './templateLists';
-import {IconUpload,IconStar,IconUsers} from './icons';
+import {IconUpload,IconStar} from './icons';
 
-type Props={onClose:()=>void;onRecommended:()=>void;onUpload:(client:boolean)=>void;onView:(template:MastersTemplate)=>void};
-// Add templates modal - the finalised wireframe (2026-11-02): three cards for where a
+type Props={onClose:()=>void;onRecommended:()=>void;onUpload:()=>void;onView:(template:MastersTemplate)=>void};
+// Add templates modal - the finalised wireframe (2026-11-02): two cards for where a
 // master list's template comes from. Each recommended list row opens that list for
 // view/edit; the buttons keep the existing upload dialogs. Downloads stay on the
 // Organization column headers, as the note under the cards says.
@@ -26,14 +26,8 @@ export function TemplatePicker({onClose,onRecommended,onUpload,onView}:Props){
     <section className="tpl-card">
      <h3><IconUpload size={16}/> Use your own</h3>
      <p>Upload a list you already maintain. Its columns and rows replace that template completely; the masters are untouched.</p>
-     <p className="tpl-caption"><span>.xlsx or .csv</span><small>full replacement</small></p>
-     <button className="tpl-action" onClick={()=>onUpload(false)}>Upload your own</button>
-    </section>
-    <section className="tpl-card">
-     <h3><IconUsers size={16}/> Use client's template</h3>
-     <p>Start from the template the client already uses, so their lists land in the masters without reformatting.</p>
-     <p className="tpl-caption"><span>Client workbook</span><small>their columns kept</small></p>
-     <button className="tpl-action" onClick={()=>onUpload(true)}>Upload client's</button>
+     <p className="tpl-caption"><span>.csv</span><small>full replacement</small></p>
+     <button className="tpl-action" onClick={()=>onUpload()}>Upload your own</button>
     </section>
    </div>
    <p className="tpl-note">Download of any template sits next to the columns it fills - on the Organization column headers - so the filled file always matches what the master expects.</p>
