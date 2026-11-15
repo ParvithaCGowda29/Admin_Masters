@@ -89,6 +89,18 @@ export function LinkOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:stri
  return <span className="stacked">{items.map((item,i)=>{const href=hrefFor(item);return <span className="stacked-item" key={i}>{href?<a className="cell-link" href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>{item}<svg className="cell-link-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>:item}</span>})}</span>;
 }
 
+// Data Sources (her call, 2026-11-15): the cell shows the file path/link and nothing else.
+// Descriptive text stored next to a link is not rendered; the stored value itself is unchanged,
+// so older saved rows display the same way without any data reset.
+export function PathOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:string}){
+ const text=(p.value??'').trim();
+ if(!text)return StackedHighlight(p);
+ const parts=splitTopLevel(text).map(x=>x.value.trim()).filter(Boolean);
+ const links=parts.filter(x=>LINK_RE.test(x));
+ if(!links.length)return StackedHighlight(p);
+ return <span className="stacked">{links.map((item,i)=>{const candidate=/^www\./i.test(item)?`https://${item}`:item;let href:string|null=null;try{const url=new URL(candidate);href=url.protocol==='http:'||url.protocol==='https:'?url.href:null}catch{}return <span className="stacked-item" key={i}>{href?<a className="cell-link" href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>{item}<svg className="cell-link-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>:item}</span>})}</span>;
+}
+
 // Agents master (2026-11-03 approved wireframes): three agent types, a reference link for
 // proposed agents, an Imported tag that shows on row hover only, and every step as a skill.
 export function AgentTypeCell(p:ICellRendererParams<RecordRow,string>){

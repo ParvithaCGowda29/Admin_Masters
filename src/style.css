@@ -325,9 +325,15 @@
 .tool-chips{display:inline-flex;flex-wrap:wrap;gap:5px}
 .tool-chip{display:inline-block;padding:3px 9px;border-radius:6px;background:#f5f8fd;border:1px solid #dce3ee;color:#55667f;font-size:12px;white-space:nowrap}
 .agent-ref-cross{color:#55667f}
-.kind-seg{display:inline-flex;gap:2px;flex-wrap:wrap;row-gap:4px;background:#f5f8fd;border:1px solid #dce3ee;border-radius:12px;padding:3px;margin:0 0 8px}
-.kind-seg .kind-group{display:inline-flex;align-items:center;gap:2px}
-.kind-seg .kind-group>em{font-style:normal;font-size:13px;font-weight:600;color:#55667f;padding:0 6px 0 10px}
+.kind-scroll{flex:1;min-width:0;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.kind-scroll::-webkit-scrollbar{height:6px}
+.kind-scroll::-webkit-scrollbar-thumb{background:#c7d2e2;border-radius:3px}
+.kind-seg{display:inline-flex;gap:2px;flex-wrap:nowrap;background:#f5f8fd;border:1px solid #dce3ee;border-radius:12px;padding:3px;margin:0 0 8px}
+.kind-seg .kind-flat{display:inline-flex;align-items:center;gap:2px}
+.kind-seg .kind-label{font-style:normal;font-size:13px;font-weight:600;color:#55667f;padding:0 6px 0 10px;white-space:nowrap}
+.kind-seg button{white-space:nowrap}
+.kind-more{flex:none;width:28px;height:28px;border:1px solid #dce3ee;background:#fff;border-radius:8px;color:#55667f;font-size:15px;line-height:1;cursor:pointer;padding:0}
+.kind-more:hover{background:#f5f8fd}
 .kind-seg button{border:1px solid transparent;background:transparent;border-radius:8px;padding:5px 14px;font-size:13px;color:#55667f;display:inline-flex;gap:7px;align-items:center}
 .kind-seg button:hover{background:#f5f8fd}
 .kind-seg button span{color:#7b8ba3;font-size:12px}
@@ -365,7 +371,10 @@
 :root[data-theme=dark] .kind-seg button:hover{background:#22395c}
 :root[data-theme=dark] .kind-seg button span{color:#93a6c2}
 :root[data-theme=dark] .kind-seg button.on{background:#22395c;border-color:#2e4a73;color:#e6edf7;box-shadow:none}
-:root[data-theme=dark] .kind-seg .kind-group>em{color:#93a6c2}
+:root[data-theme=dark] .kind-seg .kind-label{color:#93a6c2}
+:root[data-theme=dark] .kind-more{background:#142540;border-color:#22395c;color:#93a6c2}
+:root[data-theme=dark] .kind-more:hover{background:#22395c}
+:root[data-theme=dark] .kind-scroll::-webkit-scrollbar-thumb{background:#2e4a73}
 :root[data-theme=dark] .agent-type.internal{background:#1c2e51;border-color:#2e4a73;color:#5b83f2}
 :root[data-theme=dark] .agent-type.third{background:#142540;border-color:#2e4a73;color:#93a6c2}
 :root[data-theme=dark] .agent-type.proposed{background:rgba(240,181,75,.15);border-color:#f0b54b;color:#f0b54b}
