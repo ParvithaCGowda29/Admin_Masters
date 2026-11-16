@@ -8,6 +8,33 @@ let hash=2166136261;
 for(let i=0;i<revision.length;i++)hash=Math.imul(hash^revision.charCodeAt(i),16777619);
 const KEY=`bullm-masters-v2-${(hash>>>0).toString(16)}`;
 function tableMeta(name:string){return workbook.sheets.find(s=>s.name===name);}
+// November 16 merge (she approved on WhatsApp): the external registry Agents and
+// Assistants list inside the built Agents/Assistants grids as External rows. One-time
+// copy into the saved Agents table, mapped to the master columns (Reference keeps the
+// registry link/path, Source marks the import path so Category reads External). The
+// registry originals stay untouched in the Tools sheet. The flag keeps intentionally
+// deleted copies deleted; the ID check keeps a re-run from duplicating rows.
+function mergeExternalAgents(name:string,rows:RecordRow[]):RecordRow[]{
+ if(name!=='Agents')return rows;
+ let done=false;try{done=localStorage.getItem(KEY+':agents-merge')==='1'}catch{}
+ if(done)return rows;
+ try{
+  const seen=new Set(rows.map(r=>r.values[0]));
+  const added:RecordRow[]=[];
+  for(const r of loadRows('Tools')){
+   const category=(r.values[2]||'').trim();
+   if(category!=='Agents'&&category!=='Assistants')continue;
+   if(seen.has(r.values[0]))continue;
+   added.push({id:'ext-'+r.id,values:[r.values[0],r.values[1],category==='Assistants'?'Assistant':'Agent','External',r.values[3],'Imported · GitHub','',''],sourceRow:r.sourceRow});
+  }
+  try{localStorage.setItem(KEY+':agents-merge','1')}catch{}
+  if(!added.length)return rows;
+  const merged=[...rows,...added];
+  let saved:any={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{}
+  try{localStorage.setItem(KEY,JSON.stringify({...saved,[name]:merged}))}catch{}
+  return merged;
+ }catch{return rows}
+}
 export function loadRows(name:string):RecordRow[]{
  const sheet=tableMeta(name)!;
  if(sheet.readOnly)return structuredClone(sheet.rows);
@@ -26,9 +53,9 @@ export function loadRows(name:string):RecordRow[]{
     if(candidate.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string'))){saved=candidate;localStorage.setItem(KEY,JSON.stringify({...current,[name]:saved}));}
    }
   }
-  if(Array.isArray(saved)&&saved.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string')))return saved;
+  if(Array.isArray(saved)&&saved.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string')))return mergeExternalAgents(name,saved);
  }catch{}
- return structuredClone(sheet.rows);
+ return mergeExternalAgents(name,structuredClone(sheet.rows));
 }
 export function saveRows(name:string,rows:RecordRow[]){
  if(tableMeta(name)?.readOnly)throw Error('This table is read-only for FDE.');

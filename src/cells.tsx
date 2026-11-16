@@ -104,8 +104,11 @@ export function PathOnlyCell(p:ICellRendererParams<RecordRow,string>&{hlKey:stri
 // Agents master (2026-11-03 approved wireframes): three agent types, a reference link for
 // proposed agents, an Imported tag that shows on row hover only, and every step as a skill.
 export function AgentTypeCell(p:ICellRendererParams<RecordRow,string>){
- const v=(p.value??'').trim();if(!v)return '';
- const key=/^internal$/i.test(v)?'internal':/^third/i.test(v)?'third':/^proposed$/i.test(v)?'proposed':'';
+ const raw=(p.value??'').trim();if(!raw)return '';
+ // Type reads Internal / External: Third-party is External under her rename (2026-11-16).
+ // Stored values stay as they are; only the pill text changes.
+ const v=/^third/i.test(raw)?'External':raw;
+ const key=/^internal$/i.test(v)?'internal':/^external$/i.test(v)?'third':/^proposed$/i.test(v)?'proposed':'';
  return <span className={'agent-type'+(key?' '+key:'')}>{v}</span>;
 }
 // "Enhances: AG-02 · Costing Agent" - the verb stays quiet, the target reads as a link. Empty shows a dash.
