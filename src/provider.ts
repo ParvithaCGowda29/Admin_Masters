@@ -49,7 +49,9 @@ export function loadRows(name:string):RecordRow[]{
   if(saved===undefined){
    const old=JSON.parse(localStorage.getItem('bullm-masters-v2-7428edf1')||'{}')[name]??JSON.parse(localStorage.getItem('bullm-masters-v2-c8f5730d')||'{}')[name];
    if(Array.isArray(old)){
-    const candidate=old.map((r:any)=>name==='Tools'&&Array.isArray(r.values)&&r.values.length===12?{...r,values:r.values.filter((_:unknown,i:number)=>i!==8)}:r);
+    // Tools, 2026-11-17: old 12-cell rows (with Rule refs at index 8) drop that cell and
+    // gain an empty License cell at the end, matching the new 12-column Tools sheet.
+    const candidate=old.map((r:any)=>name==='Tools'&&Array.isArray(r.values)&&r.values.length===12?{...r,values:[...r.values.filter((_:unknown,i:number)=>i!==8),'']}:r);
     if(candidate.every((r:any)=>typeof r.id==='string'&&Array.isArray(r.values)&&r.values.length===sheet.headers.length&&r.values.every((v:any)=>typeof v==='string'))){saved=candidate;localStorage.setItem(KEY,JSON.stringify({...current,[name]:saved}));}
    }
   }

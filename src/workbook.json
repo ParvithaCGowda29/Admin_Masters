@@ -1098,7 +1098,8 @@
     "Refresh Frequency",
     "Record type",
     "Source tab",
-    "BuLLM badge"
+    "BuLLM badge",
+    "License"
    ],
    "descriptions": [
     "Stable tool/category ID",
@@ -1111,7 +1112,8 @@
     "Source refresh cadence to confirm",
     "Agent, Assistant, MCP server, OSS repo, Skill, API, Framework or Enterprise system",
     "Leaderboard, Repo Library, Skill Library or Tech Stack",
-    "BuLLM Recommended, BuLLM Tested, Gap or High fit"
+    "BuLLM Recommended, BuLLM Tested, Gap or High fit",
+    "Open-source license as the SPDX short ID (e.g. MIT, Apache-2.0); Proprietary for commercial tools, Proprietary (internal) for company-built tools"
    ],
    "rows": [
     {
@@ -1127,7 +1129,8 @@
       "Weekly scan",
       "Agent",
       "Leaderboard #7",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 2
     },
@@ -1144,7 +1147,8 @@
       "Weekly scan",
       "Agent",
       "Leaderboard #13",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 3
     },
@@ -1161,7 +1165,8 @@
       "Weekly scan",
       "Agent",
       "Leaderboard #15",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 4
     },
@@ -1178,7 +1183,8 @@
       "Weekly scan",
       "Agent",
       "Leaderboard #16",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 5
     },
@@ -1195,7 +1201,8 @@
       "Weekly scan",
       "Agent",
       "Repo Library classics",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 6
     },
@@ -1212,7 +1219,8 @@
       "Weekly scan",
       "Agent",
       "Repo Library classics",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 7
     },
@@ -1229,7 +1237,8 @@
       "Weekly scan",
       "Assistant",
       "Leaderboard #9",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 8
     },
@@ -1246,7 +1255,8 @@
       "Weekly scan",
       "Assistant",
       "Tech Stack",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 9
     },
@@ -1263,7 +1273,8 @@
       "Weekly scan",
       "Assistant",
       "Repo Library classics",
-      "-"
+      "-",
+      "Apache-2.0 (modified)"
      ],
      "sourceRow": 10
     },
@@ -1280,7 +1291,8 @@
       "Weekly scan",
       "Assistant",
       "Repo Library classics",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 11
     },
@@ -1297,7 +1309,8 @@
       "Weekly scan",
       "MCP server",
       "Leaderboard #3",
-      "-"
+      "-",
+      "MIT / Apache-2.0 (transition)"
      ],
      "sourceRow": 12
     },
@@ -1314,7 +1327,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 13
     },
@@ -1331,7 +1345,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 14
     },
@@ -1348,7 +1363,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "Apache-2.0"
      ],
      "sourceRow": 15
     },
@@ -1365,7 +1381,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "MIT"
      ],
      "sourceRow": 16
     },
@@ -1382,7 +1399,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "Apache-2.0"
      ],
      "sourceRow": 17
     },
@@ -1399,7 +1417,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "-"
+      "-",
+      "MIT / Apache-2.0 (transition)"
      ],
      "sourceRow": 18
     },
@@ -1416,7 +1435,8 @@
       "Weekly scan",
       "MCP server",
       "Repo Library",
-      "-"
+      "-",
+      "MIT / Apache-2.0 (transition)"
      ],
      "sourceRow": 19
     },
@@ -1433,7 +1453,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "Apache-2.0"
      ],
      "sourceRow": 20
     },
@@ -1450,7 +1471,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "Apache-2.0"
      ],
      "sourceRow": 21
     },
@@ -1467,7 +1489,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 22
     },
@@ -1484,7 +1507,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 23
     },
@@ -1501,7 +1525,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "MPL-2.0"
      ],
      "sourceRow": 24
     },
@@ -1518,7 +1543,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "-"
+      "-",
+      "LGPL-2.1"
      ],
      "sourceRow": 25
     },
@@ -1535,7 +1561,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "MIT"
      ],
      "sourceRow": 26
     },
@@ -1552,7 +1579,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "AGPL-3.0"
      ],
      "sourceRow": 27
     },
@@ -1569,7 +1597,8 @@
       "Monthly re-pull",
       "OSS repo",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "MIT (Community Edition)"
      ],
      "sourceRow": 28
     },
@@ -1586,7 +1615,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 29
     },
@@ -1603,7 +1633,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 30
     },
@@ -1620,7 +1651,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 31
     },
@@ -1637,7 +1669,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 32
     },
@@ -1654,7 +1687,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 33
     },
@@ -1671,7 +1705,8 @@
       "Monthly re-pull",
       "Skill",
       "Skill Library",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 34
     },
@@ -1688,7 +1723,8 @@
       "Weekly scan",
       "API",
       "Repo Library classics",
-      "-"
+      "-",
+      "AGPL-3.0"
      ],
      "sourceRow": 35
     },
@@ -1705,7 +1741,8 @@
       "Weekly scan",
       "API",
       "Repo Library",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 36
     },
@@ -1722,7 +1759,8 @@
       "Weekly scan",
       "API",
       "Tech Stack",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 37
     },
@@ -1739,7 +1777,8 @@
       "Weekly scan",
       "API",
       "Tech Stack",
-      "-"
+      "-",
+      "Apache-2.0 (modified)"
      ],
      "sourceRow": 38
     },
@@ -1756,7 +1795,8 @@
       "Monthly re-pull",
       "Framework",
       "Tech Stack",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 39
     },
@@ -1773,7 +1813,8 @@
       "Monthly re-pull",
       "Framework",
       "Tech Stack",
-      "-"
+      "-",
+      "MIT (Community)"
      ],
      "sourceRow": 40
     },
@@ -1790,7 +1831,8 @@
       "Weekly scan",
       "Framework",
       "Repo Library classics",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 41
     },
@@ -1807,7 +1849,8 @@
       "Weekly scan",
       "Framework",
       "Repo Library classics",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 42
     },
@@ -1824,7 +1867,8 @@
       "Weekly scan",
       "Framework",
       "Repo Library classics",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 43
     },
@@ -1841,7 +1885,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "Proprietary"
      ],
      "sourceRow": 44
     },
@@ -1858,7 +1903,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "Proprietary"
      ],
      "sourceRow": 45
     },
@@ -1875,7 +1921,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "BuLLM Tested"
+      "BuLLM Tested",
+      "Proprietary"
      ],
      "sourceRow": 46
     },
@@ -1892,7 +1939,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "MIT"
      ],
      "sourceRow": 47
     },
@@ -1909,7 +1957,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "BuLLM Recommended"
+      "BuLLM Recommended",
+      "Proprietary"
      ],
      "sourceRow": 48
     },
@@ -1926,7 +1975,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 49
     },
@@ -1943,7 +1993,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 50
     },
@@ -1960,7 +2011,8 @@
       "Weekly scan",
       "Enterprise system",
       "Repo Library",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 51
     },
@@ -1977,7 +2029,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "W3C Software and Document License"
      ],
      "sourceRow": 52
     },
@@ -1994,7 +2047,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 53
     },
@@ -2011,7 +2065,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 54
     },
@@ -2028,7 +2083,8 @@
       "Monthly re-pull",
       "Internal tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 55
     },
@@ -2045,7 +2101,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 56
     },
@@ -2062,7 +2119,8 @@
       "Monthly re-pull",
       "Script",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 57
     },
@@ -2079,7 +2137,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later (Rank Math); Proprietary (GMB Everywhere)"
      ],
      "sourceRow": 58
     },
@@ -2096,7 +2155,8 @@
       "Weekly scan",
       "Analytics",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 59
     },
@@ -2113,7 +2173,8 @@
       "Monthly re-pull",
       "Sandbox",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 61
     },
@@ -2130,7 +2191,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0"
      ],
      "sourceRow": 62
     },
@@ -2147,7 +2209,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 63
     },
@@ -2164,7 +2227,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 64
     },
@@ -2181,7 +2245,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 65
     },
@@ -2198,7 +2263,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 66
     },
@@ -2215,7 +2281,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 67
     },
@@ -2232,7 +2299,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 68
     },
@@ -2249,7 +2317,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 69
     },
@@ -2266,7 +2335,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 70
     },
@@ -2283,7 +2353,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 71
     },
@@ -2300,7 +2371,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 72
     },
@@ -2317,7 +2389,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 73
     },
@@ -2334,7 +2407,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 74
     },
@@ -2351,7 +2425,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0"
      ],
      "sourceRow": 75
     },
@@ -2368,7 +2443,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 76
     },
@@ -2385,7 +2461,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 77
     },
@@ -2402,7 +2479,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 78
     },
@@ -2419,7 +2497,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 79
     },
@@ -2436,7 +2515,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 80
     },
@@ -2453,7 +2533,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 81
     },
@@ -2470,7 +2551,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 82
     },
@@ -2487,7 +2569,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 83
     },
@@ -2504,7 +2587,8 @@
       "Monthly re-pull",
       "Internal tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 84
     },
@@ -2521,7 +2605,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 85
     },
@@ -2538,7 +2623,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 86
     },
@@ -2555,7 +2641,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 87
     },
@@ -2572,7 +2659,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 88
     },
@@ -2589,7 +2677,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 89
     },
@@ -2606,7 +2695,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Sustainable Use License 1.0"
      ],
      "sourceRow": 90
     },
@@ -2623,7 +2713,8 @@
       "Monthly re-pull",
       "Script",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 91
     },
@@ -2640,7 +2731,8 @@
       "Monthly re-pull",
       "Script",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 92
     },
@@ -2657,7 +2749,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 93
     },
@@ -2674,7 +2767,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 94
     },
@@ -2691,7 +2785,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 95
     },
@@ -2708,7 +2803,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 96
     },
@@ -2725,7 +2821,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 97
     },
@@ -2742,7 +2839,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 98
     },
@@ -2759,7 +2857,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 99
     },
@@ -2776,7 +2875,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 100
     },
@@ -2793,7 +2893,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 101
     },
@@ -2810,7 +2911,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 102
     },
@@ -2827,7 +2929,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 103
     },
@@ -2844,7 +2947,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 104
     },
@@ -2861,7 +2965,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 105
     },
@@ -2878,7 +2983,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 106
     },
@@ -2895,7 +3001,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 107
     },
@@ -2912,7 +3019,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 108
     },
@@ -2929,7 +3037,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 109
     },
@@ -2946,7 +3055,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 110
     },
@@ -2963,7 +3073,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 111
     },
@@ -2980,7 +3091,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 112
     },
@@ -2997,7 +3109,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 113
     },
@@ -3014,7 +3127,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 114
     },
@@ -3031,7 +3145,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 115
     },
@@ -3048,7 +3163,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0"
      ],
      "sourceRow": 116
     },
@@ -3065,7 +3181,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 117
     },
@@ -3082,7 +3199,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 118
     },
@@ -3099,7 +3217,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 119
     },
@@ -3116,7 +3235,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 120
     },
@@ -3133,7 +3253,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 121
     },
@@ -3150,7 +3271,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 122
     },
@@ -3167,7 +3289,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later"
      ],
      "sourceRow": 123
     },
@@ -3184,7 +3307,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 124
     },
@@ -3201,7 +3325,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 125
     },
@@ -3218,7 +3343,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 126
     },
@@ -3235,7 +3361,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0"
      ],
      "sourceRow": 127
     },
@@ -3252,7 +3379,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0"
      ],
      "sourceRow": 128
     },
@@ -3269,7 +3397,8 @@
       "Weekly scan",
       "Analytics",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 129
     },
@@ -3286,7 +3415,8 @@
       "Weekly scan",
       "Analytics",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 130
     },
@@ -3303,7 +3433,8 @@
       "Weekly scan",
       "Analytics",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 131
     },
@@ -3320,7 +3451,8 @@
       "Weekly scan",
       "Analytics",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 132
     },
@@ -3337,7 +3469,8 @@
       "Monthly re-pull",
       "Tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "W3C Software and Document License"
      ],
      "sourceRow": 170
     },
@@ -3354,7 +3487,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 171
     },
@@ -3371,7 +3505,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 172
     },
@@ -3388,7 +3523,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 173
     },
@@ -3405,7 +3541,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 174
     },
@@ -3422,7 +3559,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 175
     },
@@ -3439,7 +3577,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 176
     },
@@ -3456,7 +3595,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-2.0-or-later"
      ],
      "sourceRow": 177
     },
@@ -3473,7 +3613,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 178
     },
@@ -3490,7 +3631,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 179
     },
@@ -3507,7 +3649,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "AGPL-3.0"
      ],
      "sourceRow": 180
     },
@@ -3524,7 +3667,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 181
     },
@@ -3541,7 +3685,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 182
     },
@@ -3558,7 +3703,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Apache-2.0"
      ],
      "sourceRow": 183
     },
@@ -3575,7 +3721,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 184
     },
@@ -3592,7 +3739,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 185
     },
@@ -3609,7 +3757,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 186
     },
@@ -3626,7 +3775,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 187
     },
@@ -3643,7 +3793,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 188
     },
@@ -3660,7 +3811,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 189
     },
@@ -3677,7 +3829,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 190
     },
@@ -3694,7 +3847,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 191
     },
@@ -3711,7 +3865,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 192
     },
@@ -3728,7 +3883,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 193
     },
@@ -3745,7 +3901,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 194
     },
@@ -3762,7 +3919,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 195
     },
@@ -3779,7 +3937,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 196
     },
@@ -3796,7 +3955,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 197
     },
@@ -3813,7 +3973,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 198
     },
@@ -3830,7 +3991,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 199
     },
@@ -3847,7 +4009,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 200
     },
@@ -3864,7 +4027,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 201
     },
@@ -3881,7 +4045,8 @@
       "Monthly re-pull",
       "Sandbox",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 216
     },
@@ -3898,7 +4063,8 @@
       "Weekly scan",
       "MCP",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "W3C Software and Document License"
      ],
      "sourceRow": 217
     },
@@ -3915,7 +4081,8 @@
       "Weekly scan",
       "API",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 218
     },
@@ -3932,7 +4099,8 @@
       "Monthly re-pull",
       "Open source",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT"
      ],
      "sourceRow": 219
     },
@@ -3949,7 +4117,8 @@
       "Monthly re-pull",
       "Internal tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 220
     },
@@ -3966,7 +4135,8 @@
       "Monthly re-pull",
       "External tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 221
     },
@@ -3983,7 +4153,8 @@
       "Monthly re-pull",
       "Script",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 222
     },
@@ -4000,7 +4171,8 @@
       "Monthly re-pull",
       "Plugin",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "GPL-3.0-or-later (Rank Math); Proprietary (GMB Everywhere)"
      ],
      "sourceRow": 223
     },
@@ -4017,7 +4189,8 @@
       "Monthly re-pull",
       "Tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary"
      ],
      "sourceRow": 224
     },
@@ -4034,7 +4207,8 @@
       "Monthly re-pull",
       "Tool",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "MIT (Storm); Proprietary (NotebookLM)"
      ],
      "sourceRow": 225
     },
@@ -4051,7 +4225,8 @@
       "Monthly re-pull",
       "Sandbox",
       "Common Masters 26-10-2026",
-      "-"
+      "-",
+      "Proprietary (internal)"
      ],
      "sourceRow": 228
     }
