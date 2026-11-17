@@ -554,3 +554,20 @@ button.skill-chip-link:hover{border-color:#c5d0e1;background:#e6f2fa}
 :root[data-theme=dark] .org-open-skill,:root[data-theme=dark] .org-usage-link{color:#96d6ff}
 :root[data-theme=dark] .org-card-foot{border-color:#22395c}
 :root[data-theme=dark] .org-fact b{color:#e6edf7}
+
+/* Add files dialog repair: the global 34px button height crushed the option, source and
+   access cards (descriptions and badges spilled over the text below them); let those cards
+   size to their content, and compact the dialog chrome so the Source step fits a 1263x590
+   viewport without scrolling. */
+.ex-option,.ex-source,.ex-access-card{height:auto}
+.ex-option{padding:8px 14px}
+.ex-source{padding:10px 16px}
+.ex-options{margin-bottom:8px}
+.ex-label{margin:6px 0 4px}
+.ex-note{margin-top:12px;font-size:13px;padding:8px 12px}
+.bulk-heading{padding:12px 24px}
+.bulk-heading h2{margin-bottom:4px}
+.ex-steps{margin-top:4px}
+.bulk-body{padding:12px 24px}
+.ex-dialog{max-height:calc(100vh - 20px)}
+.ex-dialog .bulk-body{max-height:calc(100vh - 196px)}
